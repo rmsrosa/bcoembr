@@ -170,15 +170,15 @@ var errormessage = new String();
 // Put field checks below this point.
 <?php if (!NHC) { ?>
 if(WithoutContent(document.form1.brewName.value))
-	{ errormessage += "\nThe name of the brew"; }
+	{ errormessage += "\nO nome da cerveja."; }
 <?php } 
 if ((NHC) && ($prefix != "final_")) { ?>
 if(WithoutSelectionValue(document.form1.brewStyle))
-	{ errormessage += "\nA style from the drop-down list."; }
+	{ errormessage += "\nUm estilo da lista."; }
 <?php } ?>
 // Put field checks above this point.
 if(errormessage.length > 2) {
-	alert('To enter your brew, the following information is required:\n' + errormessage <?php if ($_SESSION['prefsHideRecipe'] == "N") { ?>+ '\n\nAlso, to make print-outs of your recipe and bottle labels more complete, you should consider filling out all applicable items.'<?php } ?>);
+	alert('Para cadastrar a sua cerveja, as seguintes informações são obrigatórias:\n' + errormessage <?php if ($_SESSION['prefsHideRecipe'] == "N") { ?>+ '\n\nAlso, to make print-outs of your recipe and bottle labels more complete, you should consider filling out all applicable items.'<?php } ?>);
 	return false;
 	}
 return true;
@@ -189,38 +189,42 @@ function CheckRequiredFields() {
 var errormessage = new String();
 // Put field checks below this point.
 if(WithoutContent(document.form1.user_name.value))
-	{ errormessage += "\nAn email for your user name"; }
+	{ errormessage += "\nSeu email - será também o seu nome de usuário (username)"; }
 if(WithoutContent(document.form1.user_name2.value))
-	{ errormessage += "\nRe-entry of your email address"; }
+	{ errormessage += "\nSeu email novamente, para confirmar"; }
 if(WithoutContent(document.form1.password.value))
-	{ errormessage += "\nA password"; }
+	{ errormessage += "\nUma senha"; }
 <?php if ($section == "register") { ?>
 if(WithoutContent(document.form1.userQuestionAnswer.value))
-	{ errormessage += "\nAn answer to your security question"; }
+	{ errormessage += "\nReposta à pergunta de segurança"; }
 <?php } ?>
 if(WithoutContent(document.form1.brewerFirstName.value))
-	{ errormessage += "\nFirst name"; }
+	{ errormessage += "\nNome"; }
 if(WithoutContent(document.form1.brewerLastName.value))
-	{ errormessage += "\nLast name"; }
+	{ errormessage += "\nSobrenome"; }
 if(WithoutContent(document.form1.brewerAddress.value))
-	{ errormessage += "\nStreet address"; }
+	{ errormessage += "\nEndereço"; }
 if(WithoutContent(document.form1.brewerCity.value))
-	{ errormessage += "\nCity"; }
+	{ errormessage += "\nCidade"; }
 if(WithoutContent(document.form1.brewerState.value))
-	{ errormessage += "\nState or province"; }
+	{ errormessage += "\nEstado"; }
 if(WithoutContent(document.form1.brewerZip.value))
-	{ errormessage += "\nZip or postal code"; }
+	{ errormessage += "\nCEP"; }
 if(WithoutContent(document.form1.brewerPhone1.value))
-	{ errormessage += "\nAt least one phone number"; }
+	{ errormessage += "\nPelo menos um número de telefone"; }
 <?php if ($section == "register") { ?>
 if(WithoutContent(document.form1.captcha_code.value))
-	{ errormessage += "\nThe CAPTCHA code"; }
+	{ errormessage += "\nO código CAPTCHA"; }
 <?php } ?>
 // Put field checks above this point.
 if(errormessage.length > 2) {
-	alert('To register, the following information is required:\n' + errormessage);
+	alert('Para se cadastrar, as seguintes informações são necessárias:\n' + errormessage);
 	return false;
 	}
+if(!validateCPF(document.form1.BrewerCPF.value)){
+	alert('CPF inválido. Por favor insira um número válido, com 11 dígitos e podendo conter também pontos e traços somente.');
+	return false;
+}	
 return true;
 } // end of function CheckRequiredFields()
 <?php } ?>
@@ -232,7 +236,7 @@ if(WithoutContent(document.form1.brewerJudgeID.value))
 	{ errormessage += "\nYour BJCP ID"; }
 // Put field checks above this point.
 if(errormessage.length > 2) {
-	alert('To process, the following information is required:\n' + errormessage);
+	alert('Para prosseguir, as seguintes informações são necessárias:\n' + errormessage);
 	return false;
 	}
 return true;
@@ -243,12 +247,12 @@ function CheckRequiredFields() {
 var errormessage = new String();
 // Put field checks below this point.
 if(WithoutContent(document.form1.passwordOld.value))
-	{ errormessage += "\nOld Password"; }
+	{ errormessage += "\nSenha antiga"; }
 if(WithoutContent(document.form1.password.value))
-	{ errormessage += "\nNew Password"; }
+	{ errormessage += "\nNova senha"; }
 // Put field checks above this point.
 if(errormessage.length > 2) {
-	alert('To process, the following information is required:\n' + errormessage);
+	alert('Para prosseguir, as seguintes informações são necessárias:\n' + errormessage);
 	return false;
 	}
 return true;
@@ -261,12 +265,12 @@ function CheckRequiredFields() {
 var errormessage = new String();
 // Put field checks below this point.
 if(WithoutContent(document.form1.user_name.value))
-	{ errormessage += "\nA valid user name"; }
+	{ errormessage += "\nUm nome de usuário válido"; }
 if(WithoutCheck(document.form1.sure))
-	{ errormessage += "\nCheck the Are You Sure? checkbox"; }
+	{ errormessage += "\nClique no botão de Are You Sure?"; }
 // Put field checks above this point.
 if(errormessage.length > 2) {
-	alert('To process, the following information is required:\n' + errormessage);
+	alert('Para prosseguir, as seguintes informações são necessárias:\n' + errormessage);
 	return false;
 	}
 return true;
@@ -277,16 +281,16 @@ function CheckRequiredFields() {
 var errormessage = new String();
 // Put field checks below this point.
 if(WithoutContent(document.form1.from_name.value))
-	{ errormessage += "\nYour name"; }
+	{ errormessage += "\nSeu nome"; }
 if(WithoutContent(document.form1.from_email.value))
-	{ errormessage += "\nYour email"; }
+	{ errormessage += "\nSeu email"; }
 if(WithoutContent(document.form1.subject.value))
-	{ errormessage += "\nThe subject"; }
+	{ errormessage += "\nAssunto"; }
 if(WithoutContent(document.form1.message.value))
-	{ errormessage += "\nYour message"; }
+	{ errormessage += "\nSua mensagem"; }
 // Put field checks above this point.
 if(errormessage.length > 2) {
-	alert('To process, the following information is required:\n' + errormessage);
+	alert('Para prosseguir, as seguintes informações são necessárias:\n' + errormessage);
 	return false;
 	}
 return true;
@@ -375,6 +379,43 @@ for(var i = 0; i < ss.length; i++) {
 		}
 	}
 return true;
+}
+
+function validateCPF(cpf){
+	    cpf = cpf.replace(/[^\d]+/g,'');    
+	    if(cpf == '') return false; 
+	    // Elimina CPFs invalidos conhecidos    
+	    if (cpf.length != 11 || 
+	        cpf == "00000000000" ||
+	        cpf == "11111111111" || 
+	        cpf == "22222222222" || 
+	        cpf == "33333333333" || 
+	        cpf == "44444444444" || 
+	        cpf == "55555555555" || 
+	        cpf == "66666666666" || 
+	        cpf == "77777777777" || 
+	        cpf == "88888888888" || 
+	        cpf == "99999999999")
+	            return false;       
+	    // Valida 1o digito 
+	    add = 0;    
+	    for (i=0; i < 9; i ++)       
+	        add += parseInt(cpf.charAt(i)) * (10 - i);  
+	        rev = 11 - (add % 11);  
+	        if (rev == 10 || rev == 11)     
+	            rev = 0;    
+	        if (rev != parseInt(cpf.charAt(9)))     
+	            return false;       
+	    // Valida 2o digito 
+	    add = 0;    
+	    for (i = 0; i < 10; i ++)        
+	        add += parseInt(cpf.charAt(i)) * (11 - i);  
+	    rev = 11 - (add % 11);  
+	    if (rev == 10 || rev == 11) 
+	        rev = 0;    
+	    if (rev != parseInt(cpf.charAt(10)))
+	        return false;       
+	    return true;   
 }
 
 //-->

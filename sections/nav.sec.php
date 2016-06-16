@@ -231,15 +231,15 @@ if (($logged_in) && ($admin_user) && ($go != "error_page")) { ?>
         </div>
         <div class="collapse navbar-collapse" id="bcoem-navbar-collapse">
               <ul class="nav navbar-nav">
-                <li<?php if ($section == "default") echo $active_class; ?>><a href="<?php echo $link_home; ?>">Home</a></li>
-                <li<?php if ($section == "entry") echo $active_class; ?>><a href="<?php echo $link_entry_info; ?>">Info</a></li>
-                <li<?php if ($section == "volunteers") echo $active_class; ?>><a href="<?php echo $link_volunteer_info; ?>">Volunteers</a></li>
+                <li<?php if ($section == "default") echo $active_class; ?>><a href="<?php echo $link_home; ?>">Início</a></li>
+                <li<?php if ($section == "entry") echo $active_class; ?>><a href="<?php echo $link_entry_info; ?>">Informações</a></li>
+                <li<?php if ($section == "volunteers") echo $active_class; ?>><a href="<?php echo $link_volunteer_info; ?>">Voluntários</a></li>
                 <?php if ($sponsors) { ?>
                 <li<?php if ($section == "sponsors") echo $active_class; ?>><a href="<?php echo $link_sponsors ?>">Sponsors</a></li>
                 <?php } ?>
-                <li<?php if ($section == "contact") echo $active_class; ?>><a href="<?php echo $link_contacts; ?>">Contact</a></li>
+                <li<?php if ($section == "contact") echo $active_class; ?>><a href="<?php echo $link_contacts; ?>">Contato</a></li>
                 <?php if ((!$logged_in) && ($registration_open == "1") && (!$comp_entry_limit)) { ?>
-                <li<?php if ($section == "register") echo $active_class; ?>><a href="<?php echo $link_register; ?>">Register</a></li>
+                <li<?php if ($section == "register") echo $active_class; ?>><a href="<?php echo $link_register; ?>">Registro de Conta</a></li>
    				<?php } ?>
               </ul>
           <ul class="nav navbar-nav navbar-right">
@@ -253,18 +253,18 @@ if (($logged_in) && ($admin_user) && ($go != "error_page")) { ?>
             <li class="dropdown">
                 <a href="#" title="My Account" class="my-dropdown" data-toggle="dropdown" data-placement="bottom"><span class="fa fa-user"></span> <span class="caret"></span></a>
                 <ul class="dropdown-menu">
-                	<li class="dropdown-header">Logged in as:<br><strong><?php echo $_SESSION['loginUsername']; ?></strong></li>
+                	<li class="dropdown-header">Logado como:<br><strong><?php echo $_SESSION['loginUsername']; ?></strong></li>
                     <li role="separator" class="divider"></li>
-                    <li><a href="<?php echo $link_list; ?>" tabindex="-1">My Account</a></li>
-                    <li><a href="<?php echo $edit_user_info_link; ?>" tabindex="-1">Edit Account</a></li>
-                    <li><a href="<?php echo $edit_user_email_link; ?>" tabindex="-1">Change Email</a></li>
-                    <li><a href="<?php echo $edit_user_password_link; ?>" tabindex="-1">Change Password</a></li> 
-                    <li><a href="<?php echo $link_user_entries; ?>" tabindex="-1">Entries</a></li>
+                    <li><a href="<?php echo $link_list; ?>" tabindex="-1">Minha Conta</a></li>
+                    <li><a href="<?php echo $edit_user_info_link; ?>" tabindex="-1">Editar Conta</a></li>
+                    <li><a href="<?php echo $edit_user_email_link; ?>" tabindex="-1">Mudar Email</a></li>
+                    <li><a href="<?php echo $edit_user_password_link; ?>" tabindex="-1">Mudar Senha</a></li> 
+                    <li><a href="<?php echo $link_user_entries; ?>" tabindex="-1">Amostras</a></li>
                     <?php if (($entry_window_open == "1") && (!$comp_entry_limit)) { ?>
-                    <li><a href="<?php echo $add_entry_link; ?>" tabindex="-1">Add an Entry</a></li>
-                    <?php if ((!NHC) && ($_SESSION['prefsHideRecipe'] == "N")) { ?><li tabindex="-1"><a href="<?php echo $add_entry_beerxml_link; ?>">Import an Entry Using BeerXML</a><?php } ?>
+                    <li><a href="<?php echo $add_entry_link; ?>" tabindex="-1">Adicionar Amostra</a></li>
+                    <?php if ((!NHC) && ($_SESSION['prefsHideRecipe'] == "N")) { ?><li tabindex="-1"><a href="<?php echo $add_entry_beerxml_link; ?>">Importar uma Amostra Usando BeerXML</a><?php } ?>
                     <?php } ?> 
-                    <li><a href="<?php echo $link_pay; ?>">Pay Entry Fees</a></li>
+                    <li><a href="<?php echo $link_pay; ?>">Pagar Taxa de Inscrição</a></li>
                     <li role="separator" class="divider"></li>
                     <li><a href="<?php echo $base_url; ?>includes/logout.inc.php">Log Out</a></li>
                 </ul>

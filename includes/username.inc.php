@@ -1,5 +1,5 @@
 <?php
-if(isSet($_POST['user_name'])) {
+if(isset($_POST['user_name'])) {
 	$user_name = strtolower($_POST['user_name']);
 	include('../paths.php');
 	include(CONFIG.'config.php');  
@@ -14,8 +14,8 @@ if(isSet($_POST['user_name'])) {
 	}
 	else {
 		$sql_check = mysql_query("SELECT user_name FROM ".$users_db_table." WHERE user_name='".$user_name."'");
-		if (mysql_num_rows($sql_check)) echo "<span class=\"text-danger\"><span class=\"glyphicon glyphicon-exclamation-sign\"></span> The email address you entered is already in use. Please choose another.</span>";
-		else echo "<span class=\"text-success\"><span class=\"glyphicon glyphicon-ok\"></span> The email address you entered is not in use.</span>";
+		if (mysql_num_rows($sql_check)) echo "<span class=\"text-danger\"><span class=\"glyphicon glyphicon-exclamation-sign\"></span> O endereço de email informado já está em uso. Por favor, escolha outro.</span>";
+		else echo "<span class=\"text-success\"><span class=\"glyphicon glyphicon-ok\"></span> O endereço de email informado ainda não está cadastrado.</span>";
 	} // end else NHC
 }
 ?>

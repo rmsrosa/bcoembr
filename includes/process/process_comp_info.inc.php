@@ -33,6 +33,8 @@ if (((isset($_SESSION['loginUsername'])) && ($_SESSION['userLevel'] == 0)) || ($
 	
 	// --------------------------------------- Adding (SETUP ONLY) ----------------------------------------
 	
+	mysql_query("SET NAMES 'utf8'");
+	
 	if ($action == "add") {
 		if (($_POST['contestEntryFee2'] == "") || ($_POST['contestEntryFeeDiscountNum'] == "")) $contestEntryFeeDiscount = "N"; 
 		if (($_POST['contestEntryFee2'] != "") && ($_POST['contestEntryFeeDiscountNum'] != "")) $contestEntryFeeDiscount = "Y"; 

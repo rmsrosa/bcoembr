@@ -63,29 +63,29 @@ $page_info8 = "";
 
 
 
-$header1_1 .= "<h2>Judge and Steward Registration is <span class='text-success'>Open</span></h2>"; 
+$header1_1 .= "<h2>O Registro de Juízes e Auxiliares está <span class='text-success'>Aberto</span></h2>"; 
 if (($registration_open == "1") && (!isset($_SESSION['loginUsername']))) { 
-	$page_info1 .= "<p>If you <em>have not</em> registered and are willing to be a judge or steward, <a href='".build_public_url("register","judge","default",$sef,$base_url)."'>please register</a>.</p>";
-	$page_info1 .= sprintf("<p>If you <em>have</em> registered, <a href=\"%s\">log in</a> and then choose <em>Edit Account</em> from the My Account menu indicated by the <span class=\"fa fa-user\"></span> icon on the top menu.</p>",build_public_url("login","default","default","default",$sef,$base_url));
+	$page_info1 .= "<p>Se você <em>não</em> se registrou e gostaria de ser Juiz ou Auxiliar, <a href='".build_public_url("register","judge","default",$sef,$base_url)."'>por favor, faça o registro</a>.</p>";
+	$page_info1 .= sprintf("<p>Se você <em>já está</em> registrado no sistema, faça o <a href=\"%s\">log in</a> e então clique em <em>Editar Conta</em> dentro da opção Minha Conta indicada pelo <span class=\"fa fa-user\"></span> ícone no topo do menu.</p>",build_public_url("login","default","default","default",$sef,$base_url));
 }
 
 elseif (($registration_open == "1") && (isset($_SESSION['loginUsername']))) { 
-	$page_info1 .= "<p>Since you have already registered, you can <a href='".build_public_url("list","default","default","default",$sef,$base_url)."'>check your account info</a> to see whether you have indicated that you are willing to judge and/or steward.</p>";
+	$page_info1 .= "<p>Como você já está registrado no sistema, você pode <a href='".build_public_url("list","default","default","default",$sef,$base_url)."'>conferir os dados da sua conta</a> para ver se você já informou se gostaria de ser Juiz ou Auxiliar.</p>";
 	$page_info1 .= "";
 }
-else $page_info1 .= sprintf("<p>If you are willing to judge or steward, please return to register on or after %s.</p>",$judge_open);
+else $page_info1 .= sprintf("<p>Se você gostaria de ser Juiz ou Auxiliar nessa competição, por favor retorne para fazer o registro a partir de %s.</p>",$judge_open);
 
 
 if ($entry_window_open == 1) {
-	$header1_2 .= "<h2>Entry Registration is <span class='text-success'>Open</a></h2>"; 
+	$header1_2 .= "<h2>O Período de Inscrição está <span class='text-success'>Aberto</a></h2>"; 
 	$page_info2 .= "<p>";
-	$page_info2 .= "To add your entries into the system, ";
-	if (!isset($_SESSION['loginUsername'])) $page_info2 .= "please proceed through the <a href='".build_public_url("register","default","default","default",$sef,$base_url)."'>registration process</a> or <a href='".build_public_url("login","default","default","default",$sef,$base_url)."'>log in</a> if you already have an account.";
-	else $page_info2 .= "use the <a href='".build_public_url("brew","entry","add","default",$sef,$base_url)."'>add an entry form</a>.";
+	$page_info2 .= "Para incluir as suas amostras no sistema, ";
+	if (!isset($_SESSION['loginUsername'])) $page_info2 .= "por favor vá para o <a href='".build_public_url("register","default","default","default",$sef,$base_url)."'>processo de registro</a> ou faça o <a href='".build_public_url("login","default","default","default",$sef,$base_url)."'>log in</a> se você já criou uma conta.";
+	else $page_info2 .= "use o <a href='".build_public_url("brew","entry","add","default",$sef,$base_url)."'>formulário de inclusão de amostra</a>.";
 	$page_info2 .= "</p>";
 }
 
-$header1_3 .= "<a name='rules'></a><h2>Rules</h2>";
+$header1_3 .= "<a name='rules'></a><h2>Regras Gerais</h2>";
 $page_info3 .= $row_contest_rules['contestRules'];
 
 

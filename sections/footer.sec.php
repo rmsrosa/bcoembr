@@ -7,7 +7,7 @@
 $footer = "";
 $current_version = "2.0.1";
 if(!empty($_SESSION['contestName'])) $footer .= $_SESSION['contestName']." &ndash; ";
-$footer .= "<a href='http://www.brewcompetition.com' target='_blank'>BCOE&amp;M</a> ";
+$footer .= "<a href='http://www.brewcompetition.com' target='_blank'>Sistema Baseado no BCOE&amp;M</a> ";
 if (HOSTED) $footer .= $current_version." Hosted Edition";
 else $footer .= $current_version;
 $footer .= " &copy;2009-".date('Y');

@@ -50,6 +50,7 @@ function dropoff_location_info($location_id) {
 	mysql_select_db($database, $brewing);
 	
 	$query_location_info = sprintf("SELECT id,dropLocation,dropLocationName FROM %s WHERE id='%s'",$prefix."drop_off",$location_id);
+	mysql_query("SET NAMES 'utf8'");
 	$location_info = mysql_query($query_location_info, $brewing) or die(mysql_error());
 	$row_location_info = mysql_fetch_assoc($location_info);
 	

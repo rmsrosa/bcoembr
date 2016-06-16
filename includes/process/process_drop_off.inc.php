@@ -4,6 +4,7 @@
  * Description: This module does all the heavy lifting for adding/editing info in the "drop_off" table
  */
 if (((isset($_SESSION['loginUsername'])) && ($_SESSION['userLevel'] <= 1)) || ($section == "setup")) {
+	mysql_query("SET NAMES 'utf8'");
 	if (NHC) {
 		// Place NHC SQL calls below
 		

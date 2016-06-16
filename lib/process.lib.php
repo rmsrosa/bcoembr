@@ -44,13 +44,14 @@ function ucwordspecific($str,$delimiter) {
 
 function capitalize($string1) {
 	require(INCLUDES.'scrubber.inc.php');
-	$output = strtr($string1,$html_remove);
-	$output = ucwords($output);
-	$output = ucwordspecific($output,"-");
-	$output = ucwordspecific($output,".");
-	$output = ucwordspecific($output,"(");
-	$output = ucwordspecific($output,")");
-	$output = strtr($output,$html_string);
+//	$output = strtr($string1,$html_remove);
+//	$output = ucwords($output);
+//	$output = ucwordspecific($output,"-");
+//	$output = ucwordspecific($output,".");
+//	$output = ucwordspecific($output,"(");
+//	$output = ucwordspecific($output,")");
+//	$output = strtr($output,$html_string);
+	$output = $string1;
 	return $output;
 }
 
@@ -125,7 +126,7 @@ function purge_entries($type, $interval) {
 	if ($type == "special") {
 		$query_check = sprintf("SELECT a.id, a.brewUpdated, a.brewInfo, a.brewCategorySort, a.brewSubCategory FROM %s as a, %s as b WHERE a.brewCategorySort=b.brewStyleGroup AND a.brewSubCategory=b.brewStyleNum AND b.brewStyleReqSpec=1 AND (a.brewInfo IS NULL OR a.brewInfo='') AND b.brewStyleVersion = '%s'", $prefix."brewing",$prefix."styles",$_SESSION['prefsStyleSet']);
 		if ($interval > 0) $query_check .=" AND a.brewUpdated < DATE_SUB( NOW(), INTERVAL 1 DAY)";
-		
+		mysql_query("SET NAMES 'utf8'");
 		$check = mysql_query($query_check, $brewing) or die(mysql_error());
 		$row_check = mysql_fetch_assoc($check);
 		
@@ -238,6 +239,7 @@ function bjcp_convert() {
 	mysql_select_db($database, $brewing);
 	
 	$query_brews = sprintf("SELECT id,brewName,brewCategory,brewCategorySort,brewSubCategory,brewStyle FROM %s ORDER BY brewCategorySort,brewSubCategory", $prefix."brewing");
+	mysql_query("SET NAMES 'utf8'");
 	$brews = mysql_query($query_brews, $brewing) or die(mysql_error());
 	$row_brews = mysql_fetch_assoc($brews);
 		

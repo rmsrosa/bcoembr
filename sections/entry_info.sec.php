@@ -103,51 +103,51 @@ $page_info16 = "";
 // Registration Window
 
 if (!$logged_in) {
-	$header1_2 .= "<a name=\"reg_window\"></a><h2>Account Registration</h2>";
-	if ($registration_open == 0) $page_info2 .= sprintf("<p>You will be able to create your account beginning <strong class=\"text-success\">%s</strong> through <strong class=\"text-success\">%s</strong>.</p><p>Judges and stewards may register beginning <strong class=\"text-success\">%s</strong> through <strong class=\"text-success\">%s</strong>.</p>", $reg_open, $reg_closed, $judge_open, $judge_closed);
-	elseif ($registration_open == 1) $page_info2 .= sprintf("<p>You can create your account today through <strong class=\"text-success\">%s</strong>.</p><p>Judges and stewards may register now through <strong class=\"text-success\">%s</strong>.</p>", $reg_closed, $judge_closed);
-	elseif (($registration_open == 2) && ($judge_window_open == 1)) $page_info2 .= sprintf("Account registrations for <strong class=\"text-success\">judges and stewards only</strong> accepted through %s.", $judge_closed); 
-	else $page_info2 .= "<p>Account registration is <strong class=\"text-danger\">closed</strong>.</p>";
+	$header1_2 .= "<a name=\"reg_window\"></a><h2>Registro de Contas</h2>";
+	if ($registration_open == 0) $page_info2 .= sprintf("<p>Você poderá criar a sua conta a partir de <strong class=\"text-success\">%s</strong>, até <strong class=\"text-success\">%s</strong>.</p><p>Juízes e Auxiliares podem se registrar a partir de <strong class=\"text-success\">%s</strong> até <strong class=\"text-success\">%s</strong>.</p>", $reg_open, $reg_closed, $judge_open, $judge_closed);
+	elseif ($registration_open == 1) $page_info2 .= sprintf("<p>Você pode criar a sua conta de hoje até <strong class=\"text-success\">%s</strong>.</p><p>Juízes e Auxiliares podem se registrar de hoje até <strong class=\"text-success\">%s</strong>.</p>", $reg_closed, $judge_closed);
+	elseif (($registration_open == 2) && ($judge_window_open == 1)) $page_info2 .= sprintf("Registro de contas <strong class=\"text-success\">apenas para Juízes e Auxiliares</strong> aberto até %s.", $judge_closed); 
+	else $page_info2 .= "<p>O registro de contas está <strong class=\"text-danger\">fechado</strong>.</p>";
 }
-else $page_info2 .= sprintf("<p class=\"lead\">Welcome %s! <small>View your account information <a href=\"%s\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"See your account details and list of entries\">here</a>.</small></p>",$_SESSION['brewerFirstName'],build_public_url("list","default","default","default",$sef,$base_url));
+else $page_info2 .= sprintf("<p class=\"lead\">Bem-vindo %s! <small>Veja as informações da sua conta <a href=\"%s\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"Veja os detalhes da sua conta e a lista de amostras\">aqui</a>.</small></p>",$_SESSION['brewerFirstName'],build_public_url("list","default","default","default",$sef,$base_url));
 
 // Entry Window
-$header1_3 .= "<a name=\"entry_window\"></a><h2>Entry Registration</h2>";
-if ($entry_window_open == 0) $page_info3 .= sprintf("<p>You will be able to add your entries to the system beginning <strong class=\"text-success\">%s</strong> through <strong class=\"text-success\">%s</strong>.</p>",$entry_open, $entry_closed);
-elseif ($entry_window_open == 1) $page_info3 .= sprintf("<p>You can add your entries to the system today through <strong class=\"text-success\">%s</strong>.</p>",$entry_closed);
-else $page_info3 .= "<p>Entry registration is <strong class=\"text-danger\">closed</strong>.</p>";
+$header1_3 .= "<a name=\"entry_window\"></a><h2>Inclusão de Amostras</h2>";
+if ($entry_window_open == 0) $page_info3 .= sprintf("<p>Você poderá incluir as suas amostras no sistema a partir de <strong class=\"text-success\">%s</strong>, até <strong class=\"text-success\">%s</strong>.</p>",$entry_open, $entry_closed);
+elseif ($entry_window_open == 1) $page_info3 .= sprintf("<p>Você pode incluir as suas amostras no sistema de hoje até <strong class=\"text-success\">%s</strong>.</p>",$entry_closed);
+else $page_info3 .= "<p>A inclusão de amostras na competição está <strong class=\"text-danger\">fechada</strong>.</p>";
 
 
 
 if ($entry_window_open < 2) {
 	
 	// Entry Fees
-	$header1_4 .= "<a name=\"entry\"></a><h2>Entry Fees</h2>";
-	$page_info4 .= sprintf("<p>%s%s (%s) per entry. ",$currency_symbol,number_format($_SESSION['contestEntryFee'],2),$currency_code);
-	if ($_SESSION['contestEntryFeeDiscount'] == "Y") $page_info4 .= sprintf("%s%s per entry after the %s entry. ",$currency_symbol,number_format($_SESSION['contestEntryFee2'],2),addOrdinalNumberSuffix($_SESSION['contestEntryFeeDiscountNum']));
-	if ($_SESSION['contestEntryCap'] != "") $page_info4 .= sprintf("%s%s for unlimited entries. ",$currency_symbol,number_format($_SESSION['contestEntryCap'],2));
+	$header1_4 .= "<a name=\"entry\"></a><h2>Taxa de Inscrição</h2>";
+	$page_info4 .= sprintf("<p>%s%s (%s) por amostra. ",$currency_symbol,number_format($_SESSION['contestEntryFee'],2,',',''),$currency_code);
+	if ($_SESSION['contestEntryFeeDiscount'] == "Y") $page_info4 .= sprintf("%s%s por amostra depois de %s amostras. ",$currency_symbol,number_format($_SESSION['contestEntryFee2'],2),addOrdinalNumberSuffix($_SESSION['contestEntryFeeDiscountNum']));
+	if ($_SESSION['contestEntryCap'] != "") $page_info4 .= sprintf("%s%s por um número ilimitado de amostras. ",$currency_symbol,number_format($_SESSION['contestEntryCap'],2));
 	if (NHC) $page_info4 .= sprintf("%s%s for AHA members.",$currency_symbol,number_format($_SESSION['contestEntryFeePasswordNum'],2));
 	$page_info4 .= "</p>";
 	
 	// Entry Limit
 	if ($row_limits['prefsEntryLimit'] != "") {
-		$header1_5 .= "<a name=\"entry_limit\"></a><h2>Entry Limit</h2>";
-		$page_info5 .= sprintf("<p>There is a limit of %s (%s) entries for this competition.</p>",readable_number($row_limits['prefsEntryLimit']),$row_limits['prefsEntryLimit']);
+		$header1_5 .= "<a name=\"entry_limit\"></a><h2>Limite de Inscrições</h2>";
+		$page_info5 .= sprintf("<p>Há um limite de %s (%s) amostra(s) para essa competição.</p>",readable_number($row_limits['prefsEntryLimit']),$row_limits['prefsEntryLimit']);
 	}
 	
 	if ((!empty($row_limits['prefsUserEntryLimit'])) || (!empty($row_limits['prefsUserSubCatLimit'])) || (!empty($row_limits['prefsUSCLExLimit']))) {
-		$header1_16 .= "<h2>Per Entrant Limits</h2>";
+		$header1_16 .= "<h2>Limites por Inscrição</h2>";
 		
 		if (!empty($row_limits['prefsUserEntryLimit'])) {
-			if ($row_limits['prefsUserEntryLimit'] == 1) $page_info16 .= sprintf("<p>Each entrant is limited to %s entry for this competition.</p>",readable_number($row_limits['prefsUserEntryLimit'])." (".$row_limits['prefsUserEntryLimit'].")");
-			else $page_info16 .= sprintf("<p>Each entrant is limited to %s entries for this competition.</p>",readable_number($row_limits['prefsUserEntryLimit'])." (".$row_limits['prefsUserEntryLimit'].")");
+			if ($row_limits['prefsUserEntryLimit'] == 1) $page_info16 .= sprintf("<p>Cada inscrição está limitada a incluir %s amostra nessa competição.</p>",readable_number($row_limits['prefsUserEntryLimit'])." (".$row_limits['prefsUserEntryLimit'].")");
+			else $page_info16 .= sprintf("<p>Cada inscrição está limitada a incluir até %s amostras nessa competição.</p>",readable_number($row_limits['prefsUserEntryLimit'])." (".$row_limits['prefsUserEntryLimit'].")");
 		}
 		
 		if (!empty($row_limits['prefsUserSubCatLimit'])) { 
 			$page_info16 .= "<p>";
-			if ($row_limits['prefsUserSubCatLimit'] == 1) $page_info16 .= sprintf("Each entrant is limited to %s entry per sub-category ",readable_number($row_limits['prefsUserSubCatLimit'])." (".$row_limits['prefsUserSubCatLimit'].")");
-			else $page_info16 .= sprintf("Each entrant is limited to %s entries per sub-category ",readable_number($row_limits['prefsUserSubCatLimit'])." (".$row_limits['prefsUserSubCatLimit'].")");
-			if (!empty($row_limits['prefsUSCLExLimit'])) $page_info16 .= " (exceptions are detailed below)";
+			if ($row_limits['prefsUserSubCatLimit'] == 1) $page_info16 .= sprintf("Cada inscrição está limitada a incluir %s amostra(s) por sub-categoria ",readable_number($row_limits['prefsUserSubCatLimit'])." (".$row_limits['prefsUserSubCatLimit'].")");
+			else $page_info16 .= sprintf("Cada inscrição está limitada a %s amostras por sub-categoria ",readable_number($row_limits['prefsUserSubCatLimit'])." (".$row_limits['prefsUserSubCatLimit'].")");
+			if (!empty($row_limits['prefsUSCLExLimit'])) $page_info16 .= " (exceções estão detalhadas abaixo)";
 			$page_info16 .= ".";
 			$page_info16 .= "</p>";
 	
@@ -155,9 +155,9 @@ if ($entry_window_open < 2) {
 		
 		if (!empty($row_limits['prefsUSCLExLimit'])) { 
 		$excepted_styles = explode(",",$row_limits['prefsUSCLEx']);
-		if (count($excepted_styles) == 1) $sub = "sub-category"; else $sub = "sub-categories";
-			if ($row_limits['prefsUSCLExLimit'] == 1) $page_info16 .= sprintf("<p>Each entrant is limited to %s for the following %s: </p>",readable_number($row_limits['prefsUSCLExLimit'])." (".$row_limits['prefsUSCLExLimit'].")",$sub);
-			else $page_info16 .= sprintf("<p>Each entrant is limited to %s entries for for the following %s: </p>",readable_number($row_limits['prefsUSCLExLimit'])." (".$row_limits['prefsUSCLExLimit'].")",$sub);
+		if (count($excepted_styles) == 1) $sub = "sub-categoria"; else $sub = "sub-categorias";
+			if ($row_limits['prefsUSCLExLimit'] == 1) $page_info16 .= sprintf("<p>Cada inscrição está limitada a %s para o seguinte %s: </p>",readable_number($row_limits['prefsUSCLExLimit'])." (".$row_limits['prefsUSCLExLimit'].")",$sub);
+			else $page_info16 .= sprintf("<p>Cada inscrição está limitada a %s amostras para o seguinte %s: </p>",readable_number($row_limits['prefsUSCLExLimit'])." (".$row_limits['prefsUSCLExLimit'].")",$sub);
 			$page_info16 .= "<div class=\"row\">";
 			$page_info16 .= "<div class=\"col col-lg-6 col-md-8 col-sm-10 col-xs-12\">";
 			$page_info16 .= style_convert($row_limits['prefsUSCLEx'],"7");
@@ -169,20 +169,20 @@ if ($entry_window_open < 2) {
 	}
 	
 	// Payment
-	$header1_6 .= "<a name=\"payment\"></a><h2>Payment</h2>";
-	$page_info6 .= "<p>After creating your account and adding your entries to the system, you must pay your entry fee(s). Accepted payment methods are:</p>";
+	$header1_6 .= "<a name=\"payment\"></a><h2>Pagamento</h2>";
+	$page_info6 .= "<p>Após criar a sua conta e incluir amostras no sistema, você deverá pagar a taxa de inscrição. As formas de pagamento aceitas são:</p>";
 	$page_info6 .= "<ul>";
-	if ($_SESSION['prefsCash'] == "Y") $page_info6 .= "<li>Cash</li>";
-	if ($_SESSION['prefsCheck'] == "Y") $page_info6 .= sprintf("<li>Check, made out to <em>%s</em></li>",$_SESSION['prefsCheckPayee']);
-	if ($_SESSION['prefsPaypal'] == "Y") $page_info6 .= "<li>Credit/debit card and e-check, via PayPal</li>";
+	if ($_SESSION['prefsCash'] == "Y") $page_info6 .= "<li>Dinheiro</li>";
+	if ($_SESSION['prefsCheck'] == "Y") $page_info6 .= sprintf("<li>Cheque, em nome de  <em>%s</em></li>",$_SESSION['prefsCheckPayee']);
+	if ($_SESSION['prefsPaypal'] == "Y") $page_info6 .= "<li>Cartão de crédito/débito via PayPal</li>";
 	//if ($_SESSION['prefsGoogle'] == "Y") $page_info6 .= "<li>Google Wallet</li>"; 
 	$page_info6 .= "</ul>";
 
 }
 
-if ($totalRows_judging > 1) $header1_7 .= "<h2>Judging Locations/Dates</h2>";
-else $header1_7 .= "<h2>Judging Location/Date</h2>";
-if ($totalRows_judging == 0) $page_info7 .= "<p>Competition judging dates are yet to be determined. Please check back later.</p>";
+if ($totalRows_judging > 1) $header1_7 .= "<h2>Locais e datas do Julgamento</h2>";
+else $header1_7 .= "<h2>Local e Data do Julgamento</h2>";
+if ($totalRows_judging == 0) $page_info7 .= "<p>As datas da competição ainda serão determinadas. Volte mais tarde.</p>";
 else {
 	do {
 		$page_info7 .= "<p>";
@@ -199,8 +199,8 @@ else {
 $header1_8 .= "";
 $page_info8 .= "";
 
-if ($entry_window_open < 2) $header1_8 .= sprintf("<a name=\"categories\"></a><h2>%s Categories Accepted</h2>",str_replace("2"," 2",$row_styles['brewStyleVersion']));
-else $header1_8 .= sprintf("<a name=\"categories\"></a><h2>%s Judging Categories</h2>",str_replace("2"," 2",$row_styles['brewStyleVersion']));
+if ($entry_window_open < 2) $header1_8 .= sprintf("<a name=\"categories\"></a><h2>%s - Categorias Aceitas</h2>",str_replace("2"," 2",$row_styles['brewStyleVersion']));
+else $header1_8 .= sprintf("<a name=\"categories\"></a><h2>%s - Categorias de Julgamento</h2>",str_replace("2"," 2",$row_styles['brewStyleVersion']));
 $page_info8 .= "<table class=\"table table-striped table-bordered table-responsive\">";
 $page_info8 .= "<tr>"; 
 
@@ -234,37 +234,37 @@ $page_info8 .= "</table>";
 
 // Bottle Acceptance
 if (($row_contest_info['contestBottles'] != "") && ($entry_window_open < 2)) {
-	$header1_9 .= "<a name=\"bottle\"></a><h2>Bottle Acceptance Rules</h2>";
+	$header1_9 .= "<a name=\"bottle\"></a><h2>Regras para a Aceitação de Garrafas</h2>";
 	$page_info9 .= $row_contest_info['contestBottles'];
 }
 
 // Shipping Locations
-if (($_SESSION['contestShippingAddress'] != "") && ($entry_window_open < 2)) {
-	$header1_10 .= "<a name=\"shipping\"></a><h2>Shipping Info</h2>";
-	$page_info10 .= sprintf("<p>Entry bottles accepted at our shipping location from <strong class=\"text-success\">%s</strong> through <strong class=\"text-success\">%s</strong>.</p>",$shipping_open,$shipping_closed);
-	$page_info10 .= "<p>Ship entries to:</p>";
+if (($_SESSION['contestShippingAddress'] != "") && ($shipping_window_open < 2)) {
+	$header1_10 .= "<a name=\"shipping\"></a><h2>Informações para o envio das amostras</h2>";
+	$page_info10 .= sprintf("<p>As garrafas serão aceitas no Local de Entrega das Garrafas de <strong class=\"text-success\">%s</strong> até <strong class=\"text-success\">%s</strong>.</p>",$shipping_open,$shipping_closed);
+	$page_info10 .= "<p>Envie as amostras para:</p>";
 	$page_info10 .= "<p>";
 	$page_info10 .= $_SESSION['contestShippingName'];
 	$page_info10 .= "<br>";
 	$page_info10 .= $_SESSION['contestShippingAddress'];
 	$page_info10 .= "</p>";
-    $page_info10 .= "<h3>Packing and Shipping</h3>";
-    $page_info10 .= "<p><strong>Carefully pack your entries in a sturdy box. Line the inside of your carton with a plastic trash bag. Partition and pack each bottle with adequate packaging material. Please do not over pack!</strong>";
-	$page_info10 .= "<p>Write clearly: &quot;Fragile. This Side Up.&quot; on the package. Please refrain from using &quot;messy&quot; packaging materials such a Styrofoam &quot;peanuts&quot; or pellets; please use packaging material such as bubble wrap.</p>";
-    $page_info10 .= "<p>Enclose <em>each</em> of your bottle labels in a small zip-top bag before attaching to their respective bottles. This way it makes it possible for the organizer to identify specifically which entry has broken if there is damage during shipment.</p>";
-    $page_info10 .= "<p>Every reasonable effort will be made to contact entrants whose bottles have broken to make arrangements for sending replacement bottles.</p>";
-    $page_info10 .= "<p>If you live in the United States, please note that it is <strong>illegal</strong> to ship your entries via the United States Postal Service (USPS). Private shipping companies have the right to refuse your shipment if they are informed that the package contains glass and/or alcoholic beverages. Be aware that entries mailed internationally are often required by customs to have proper documentation. These entries might be opened and/or returned to the shipper by customs&rsquo; officials at their discretion. It is solely the entrant&rsquo;s responsibility to follow all applicable laws and regulations.</p>";
+    $page_info10 .= "<h3>Empacotamento e envio</h3>";
+    $page_info10 .= "<p><strong>Embale cuidadosamente suas garrafas em uma caixa resistente. Forre o interior da caixa com um saco plástico. Embale cada carrafa com sua proteção individual! Não sobrecarregue o pacote!</strong>";
+	$page_info10 .= "<p>Escreva claramente na embalagem \"Frágil! Este lado para cima\".  Utilize plástico bolha para embalar cada garrafa. Evitar utilizar pedacinhos de isopor ou papel.</p>";
+    $page_info10 .= "<p>Coloque <em>cada</em> etiqueta das garrafas em um saco plástico (ou utilize fita transparente para plastificar) antes de fixar a mesma com o elástico. Assim, em caso de algum dano com as garrafas, ainda poderemos identificar as amostras.</p>";
+    $page_info10 .= "<p>Caso alguma garrafa chegue danificada e haja tempo suficiente, a organização entrará em contato para solicitar garrafas extras, se necessário.</p>";
+    $page_info10 .= "<p>É de responsabilidade do cervejeiro seguir todas as leis e regulamentos eventualmente aplicáveis ao transporte de líquidos e/ou vidro pela forma de envio escolhida.</p>";
 }
 
 // Drop Off
-if (($totalRows_dropoff > 0) && ($entry_window_open < 2)) {
-	if ($totalRows_dropoff == 1) $header1_11 .= "<a name=\"drop\"></a><h2>Drop Off Location</h2>";
-	else $header1_11 .= "<a name=\"drop\"></a><h2>Drop Off Locations</h2>";
-	$page_info11 .= sprintf("<p>Entry bottles accepted at our drop-off locations from <strong class=\"text-success\">%s</strong> through <strong class=\"text-success\">%s</strong>.</p>",$dropoff_open,$dropoff_closed);
+if (($totalRows_dropoff > 0) && ($dropoff_window_open < 2)) {
+	if ($totalRows_dropoff == 1) $header1_11 .= "<a name=\"drop\"></a><h2>Local para a Entrega das Garrafas</h2>";
+	else $header1_11 .= "<a name=\"drop\"></a><h2>Locais para a Entrega das Garrafas</h2>";
+	$page_info11 .= sprintf("<p>Garrafas aceitas no local de entrega de <strong class=\"text-success\">%s</strong> até <strong class=\"text-success\">%s</strong>.</p>",$dropoff_open,$dropoff_closed);
 	
 	do {
 		$page_info11 .= "<p>";
-		if ($row_dropoff['dropLocationWebsite'] != "") $page_info11 .= sprintf("<a href=\"%s\" target=\"_blank\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"Go to the ".$row_dropoff['dropLocationName']." website\"><strong>%s</strong></a> <span class=\"fa fa-external-link\"></span>",$row_dropoff['dropLocationWebsite'],$row_dropoff['dropLocationName']);
+		if ($row_dropoff['dropLocationWebsite'] != "") $page_info11 .= sprintf("<a href=\"%s\" target=\"_blank\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"Vá para a página ".$row_dropoff['dropLocationName']." \"><strong>%s</strong></a> <span class=\"fa fa-external-link\"></span>",$row_dropoff['dropLocationWebsite'],$row_dropoff['dropLocationName']);
 		else $page_info11 .= sprintf("<strong>%s</strong>",$row_dropoff['dropLocationName']);
 		$page_info11 .= "<br />";
 		$page_info11 .= "<a href=\"".$base_url."output/maps.output.php?section=driving&amp;id=".str_replace(' ', '+', $row_dropoff['dropLocation'])."\" target=\"_blank\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"Map to ".$row_dropoff['dropLocationName']."\">".$row_dropoff['dropLocation']."</a> <span class=\"fa fa-map-marker\"></span>";
@@ -284,15 +284,15 @@ if ($row_contest_info['contestBOSAward'] != "") {
 
 // Awards and Awards Ceremony Location
 if ($row_contest_info['contestAwards'] != "") {
-	$header1_13 .= "<a name=\"awards\"></a><h2>Awards</h2>";
+	$header1_13 .= "<a name=\"awards\"></a><h2>Prêmios</h2>";
 	$page_info13 .= $row_contest_info['contestAwards'];;
 }
 
 if ($_SESSION['contestAwardsLocName'] != "") {
-	$header1_14 .= "<a name=\"ceremony\"></a><h2>Award Ceremony</h2>";
+	$header1_14 .= "<a name=\"ceremony\"></a><h2>Cerimônia de Premiação</h2>";
 	$page_info14 .= "<p>";
 	$page_info14 .= sprintf("<strong>%s</strong>",$_SESSION['contestAwardsLocName']);
-	if ($_SESSION['contestAwardsLocation'] != "") $page_info14 .= sprintf("<br /><a href=\"".$base_url."output/maps.output.php?section=driving&amp;id=".str_replace(' ', '+', $_SESSION['contestAwardsLocation'])."\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"Map to ".$_SESSION['contestAwardsLocName']." \" target=\"_blank\">%s</a> <span class=\"fa fa-map-marker\"></span>",$_SESSION['contestAwardsLocation']);
+	if ($_SESSION['contestAwardsLocation'] != "") $page_info14 .= sprintf("<br /><a href=\"".$base_url."output/maps.output.php?section=driving&amp;id=".str_replace(' ', '+', $_SESSION['contestAwardsLocation'])."\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"Mapa para ".$_SESSION['contestAwardsLocName']." \" target=\"_blank\">%s</a> <span class=\"fa fa-map-marker\"></span>",$_SESSION['contestAwardsLocation']);
 	if ($_SESSION['contestAwardsLocTime'] != "") $page_info14 .= sprintf("<br />%s",getTimeZoneDateTime($_SESSION['prefsTimeZone'], $_SESSION['contestAwardsLocTime'], $_SESSION['prefsDateFormat'],  $_SESSION['prefsTimeFormat'], "long", "date-time"));
 	$page_info14 .= "</p>";
 	

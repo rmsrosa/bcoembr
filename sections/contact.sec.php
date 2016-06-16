@@ -75,18 +75,18 @@ if ($_SESSION['prefsContact'] == "Y") {
    
    	mysql_free_result($contacts);
 
-	$primary_page_info = "<p>Use the form below to contact a competition official. All fields with a star are <span class=\"text-warning\">required</span>.</p>";
-	$label1 = "Contact";
-	$label2 = "Your Name";
-	$label3 = "Your Email";
-	$label4 = "Subject";
-	$label5 = "Message";
-	$label6 = "Are You Human?";
+	$primary_page_info = "<p>Use o formulário abaixo para entrar em contato com os organizadores da competição. Todas os campos marcados com uma estrela são <span class=\"text-warning\">obrigatórios</span>.</p>";
+	$label1 = "Contato";
+	$label2 = "Seu Nome";
+	$label3 = "Seu Email";
+	$label4 = "Assunto";
+	$label5 = "Mensagem";
+	$label6 = "Você é Humano?";
 
-	$required_label = "Required";
+	$required_label = "Obrigatório";
 
 	if ($msg == "1") {
-		$message1 = "<p>Additionally, a copy has been sent to the email address you provided.</p><p>Would you like to send <a href='".build_public_url("contact","default","default","default",$sef,$base_url)."'>another message</a>?</p>";
+		$message1 = "<p>Uma cópia da mensagem foi enviada para o email informado. </p><p>Você gostaria de enviar <a href='".build_public_url("contact","default","default","default",$sef,$base_url)."'>outra mensagem</a>?</p>";
 		echo $message1; 
 	}
 	
@@ -170,7 +170,7 @@ if ($_SESSION['prefsContact'] == "Y") {
             <div class="form-group">
                 <div class="col-lg-offset-2 col-md-offset-3 col-sm-offset-4 col-xs-12">
                 	<!-- Input Here -->
-                  	<button name="submit" type="submit" class="btn btn-primary" >Send Message <span class="fa fa-send"></span> </button>
+                  	<button name="submit" type="submit" class="btn btn-primary" >Enviar Mensagem <span class="fa fa-send"></span> </button>
                 </div>
             </div><!-- Form Group -->
             

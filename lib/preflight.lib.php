@@ -6,6 +6,7 @@ function check_setup($tablename, $database) {
 	mysql_select_db($database, $brewing);
 	
 	$query_log = "SELECT COUNT(*) AS count FROM information_schema.tables WHERE table_schema = '$database' AND table_name = '$tablename'";
+	mysql_query("SET NAMES 'utf8'");
 	$log = mysql_query($query_log, $brewing) or die(mysql_error());
 	$row_log = mysql_fetch_assoc($log);
 

@@ -91,6 +91,7 @@ function bos_entry_info($eid,$table_id,$filter) {
 	}
 	
 	$query_entries_1 = sprintf("SELECT id,brewStyle,brewCategorySort,brewCategory,brewSubCategory,brewName,brewBrewerFirstName,brewBrewerLastName,brewJudgingNumber,brewBrewerID FROM %s WHERE id='%s'", $entry_db_table, $eid);
+	mysql_query("SET NAMES 'utf8'");
 	$entries_1 = mysql_query($query_entries_1, $brewing) or die(mysql_error());
 	$row_entries_1 = mysql_fetch_assoc($entries_1);
 	$style = $row_entries_1['brewCategorySort'].$row_entries_1['brewSubCategory'];
@@ -388,6 +389,7 @@ function participant_choose($brewer_db_table) {
 	mysql_select_db($database, $brewing);
 	
 	$query_brewers = "SELECT uid,brewerFirstName,brewerLastName FROM $brewer_db_table ORDER BY brewerLastName";
+	mysql_query("SET NAMES 'utf8'");
 	$brewers = mysql_query($query_brewers, $brewing) or die(mysql_error());
 	$row_brewers = mysql_fetch_assoc($brewers);
 	
@@ -734,6 +736,7 @@ function table_score_data($eid,$score_table,$suffix) {
 	if ($suffix != "default") $suffix = "_".$suffix; else $suffix = "";
 	
 	$query_entries = sprintf("SELECT id, brewStyle,brewCategorySort,brewCategory,brewSubCategory,brewName,brewBrewerFirstName,brewBrewerLastName,brewJudgingNumber,brewBrewerID FROM %s WHERE id='%s'", $prefix."brewing".$suffix, $eid);
+	mysql_query("SET NAMES 'utf8'");
 	$entries = mysql_query($query_entries, $brewing) or die(mysql_error());
 	$row_entries = mysql_fetch_assoc($entries);
 	$style = $row_entries['brewCategorySort'].$row_entries['brewSubCategory'];
@@ -1117,6 +1120,7 @@ function judge_info($uid) {
 	require(CONFIG.'config.php');
 	mysql_select_db($database, $brewing);
 	$query_brewer_info = sprintf("SELECT brewerFirstName,brewerLastName,brewerJudgeLikes,brewerJudgeDislikes,brewerJudgeMead,brewerJudgeRank,brewerJudgeID,brewerStewardLocation,brewerJudgeLocation,brewerJudgeExp,brewerJudgeNotes FROM %s WHERE uid='%s'", $prefix."brewer", $uid);
+	mysql_query("SET NAMES 'utf8'");
 	$brewer_info = mysql_query($query_brewer_info, $brewing) or die(mysql_error());
 	$row_brewer_info = mysql_fetch_assoc($brewer_info);
 	$r = $row_brewer_info['brewerFirstName']."^".$row_brewer_info['brewerLastName']."^".$row_brewer_info['brewerJudgeLikes']."^".$row_brewer_info['brewerJudgeDislikes']."^".$row_brewer_info['brewerJudgeMead']."^".$row_brewer_info['brewerJudgeRank']."^".$row_brewer_info['brewerJudgeID']."^".$row_brewer_info['brewerStewardLocation']."^".$row_brewer_info['brewerJudgeLocation']."^".$row_brewer_info['brewerJudgeExp']."^".$row_brewer_info['brewerJudgeNotes'];

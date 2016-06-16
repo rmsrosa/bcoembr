@@ -4,6 +4,8 @@
  * Description: This module does all the heavy lifting for adding an admin user to the DB (Setup ONLY)
  */
  
+mysql_query("SET NAMES 'utf8'");
+ 
 if (NHC) {
 	// Place NHC SQL calls below
 	
@@ -11,7 +13,8 @@ if (NHC) {
 }
 else {
 	$username = strtolower($_POST['user_name']);
-	if ((strstr($username,'@')) && (strstr($username,'.'))) {
+//	if ((strstr($username,'@')) && (strstr($username,'.'))) {
+	if (strstr($username,'@')) {
 		$password = md5($_POST['password']);
 		require(CLASSES.'phpass/PasswordHash.php');
 		$hasher = new PasswordHash(8, false);

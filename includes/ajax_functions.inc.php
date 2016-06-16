@@ -8,7 +8,7 @@ include(LIB.'common.lib.php');
 
 if ($action == "username") {
 	
-	if(isSet($_POST['user_name'])) {
+	if(isset($_POST['user_name'])) {
 		$user_name = strtolower($_POST['user_name']);
 		mysql_select_db($database, $brewing);
 		

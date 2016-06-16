@@ -11,6 +11,8 @@ require(DB.'common.db.php');
 require(CLASSES.'phpass/PasswordHash.php');
 $hasher = new PasswordHash(8, false);
 
+mysql_query("SET NAMES 'utf8'");
+
 if (NHC) $base_url = "../";
 else $base_url = $base_url;
 mysql_select_db($database, $brewing);
@@ -34,15 +36,15 @@ if (($action == "email") && ($id != "default")) {
 		
 	$to_recipient = $first_name." ".$last_name;
 	$to_email = $row_forgot['user_name'];
-	$subject = $_SESSION['contestName'].": ID Verification Request";
+	$subject = $_SESSION['contestName'].": Verificação de segurança";
 	$message = "<html>" . "\r\n";
 	$message .= "<body>" . "\r\n";
 	$message .= "<p>".$first_name.",</p>";
-	$message .= "<p>A request was made to verify the account at the ".$_SESSION['contestName']." competition website using the ID Verfication email function. If you did not initiate this, please contact the competition's organizer.</p>";
-	$message .= "<table cellpadding='0' border='0'><tr><td><strong>ID Verfication Question:</strong></td><td>".$row_forgot['userQuestion']."</td>";
-	$message .= "<tr><td><strong>ID Verfication Answer:</strong></td><td>".$row_forgot['userQuestionAnswer']."</td></tr></table>";
-	$message .= "<p><em>*The ID Verification Answer is case sensitive.</em></p>";
-	$message .= "<p>Please do not reply to this email as it is automatically generated. The originating account is not active or monitored.</p>";
+	$message .= "<p>Um pedido de verificação de sua conta na competição ".$_SESSION['contestName']." foi requisitado. Se você não solicitou esse email, entre em contato com a organização.</p>";
+	$message .= "<table cellpadding='0' border='0'><tr><td><strong>Questão de segurança:</strong></td><td>".$row_forgot['userQuestion']."</td>";
+	$message .= "<tr><td><strong>Resposta de verificação:</strong></td><td>".$row_forgot['userQuestionAnswer']."</td></tr></table>";
+	$message .= "<p><em>*A resposta de verificação é sensível ao tipo de caixa, se alta ou baixa (maiúsculas e minúsculas).</em></p>";
+	$message .= "<p>Por favor não responda a esse email. Ele é gerado automaticamente. A conta de envio não está ativa e não é monitorada.</p>";
 	$message .= "</body>" . "\r\n";
 	$message .= "</html>";
 	
@@ -53,7 +55,7 @@ if (($action == "email") && ($id != "default")) {
 	$url = str_replace("www.","",$_SERVER['SERVER_NAME']);
 	
 	$headers  = "MIME-Version: 1.0" . "\r\n";
-	$headers .= "Content-type: text/html; charset=iso-8859-1" . "\r\n";
+	$headers .= "Content-type: text/html; charset=utf-8" . "\r\n";
 	$headers .= "To: ".$to_recipient. " <".$to_email.">, " . "\r\n";
 	$headers .= "From: Competition Server <noreply@".$url. ">\r\n";
 	

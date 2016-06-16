@@ -11,6 +11,8 @@ ini_set('display_errors', '1');
 require('../paths.php');
 require(INCLUDES.'url_variables.inc.php');
 
+mysql_query("SET NAMES 'utf8'");
+
 if (NHC) $base_url = "../";
 else $base_url = $base_url;
 
@@ -37,6 +39,7 @@ if ((isset($_SESSION['prefs'.$prefix_session])) || ($setup_free_access)) {
 require(INCLUDES.'scrubber.inc.php');
 require(LIB.'process.lib.php');
 
+$allowedcompetidores_db_table = $prefix."allowedcompetidores";
 $archive_db_table = $prefix."archive";
 $brewer_db_table = $prefix."brewer";
 $brewing_db_table = $prefix."brewing";
@@ -51,6 +54,8 @@ $judging_scores_db_table = $prefix."judging_scores";
 $judging_scores_bos_db_table = $prefix."judging_scores_bos";
 $judging_tables_db_table = $prefix."judging_tables";
 $mods_db_table = $prefix."mods";
+$pagseguro_db_table = $prefix."pagseguro";
+$payment_db_table = $prefix."payment";
 $preferences_db_table = $prefix."preferences";
 $special_best_data_db_table = $prefix."special_best_data";
 $special_best_info_db_table = $prefix."special_best_info";

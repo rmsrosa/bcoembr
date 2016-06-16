@@ -6,6 +6,11 @@
  */
 if (((isset($_SESSION['loginUsername'])) && (isset($_SESSION['userLevel']))) || ($section == "setup")) {
 	
+	mysql_query("SET NAMES 'utf8'");
+//	mysql_query('SET character_set_connection=utf8');
+//	mysql_query('SET character_set_client=utf8');
+//	mysql_query('SET character_set_results=utf8');	
+	
 	if (NHC) {
 	// Place NHC SQL calls below
 	
@@ -235,8 +240,7 @@ if (((isset($_SESSION['loginUsername'])) && (isset($_SESSION['userLevel']))) || 
 			}
 			else $location_pref2 = "";
 			
-			if ($_POST['brewerJudgeRank'] != "") $rank = implode(",",$_POST['brewerJudgeRank']); else $rank = "";
-			
+			if ($_POST['brewerJudgeRank'] != "") $rank = implode(",",$_POST['brewerJudgeRank']); else $rank = "";		
 			mysql_select_db($database, $brewing);
 			$query_user = sprintf("SELECT id FROM $users_db_table WHERE id = '%s'", $_POST['uid']);
 			$user = mysql_query($query_user, $brewing) or die(mysql_error());
@@ -263,7 +267,8 @@ if (((isset($_SESSION['loginUsername'])) && (isset($_SESSION['userLevel']))) || 
 					$insertSQL = sprintf("INSERT INTO $brewer_db_table (
 					  uid,
 					  brewerFirstName, 
-					  brewerLastName, 
+					  brewerLastName,
+					  brewerCPF,
 					  brewerAddress, 
 					  brewerCity, 
 					  brewerState, 
@@ -291,10 +296,11 @@ if (((isset($_SESSION['loginUsername'])) && (isset($_SESSION['userLevel']))) || 
 					%s, %s, %s, %s, %s, 
 					%s, %s, %s, %s, %s, 
 					%s, %s, %s, %s, %s, 
-					%s, %s, %s)",
+					%s, %s, %s, %s)",
 								   GetSQLValueString($_POST['uid'], "int"),
 								   GetSQLValueString(capitalize($_POST['brewerFirstName']), "text"),
 								   GetSQLValueString(capitalize($_POST['brewerLastName']), "text"),
+								   GetSQLValueString($_POST['brewerCPF'], "text"),
 								   GetSQLValueString(capitalize($_POST['brewerAddress']), "text"),
 								   GetSQLValueString(capitalize($_POST['brewerCity']), "text"),
 								   GetSQLValueString($_POST['brewerState'], "text"),
@@ -345,11 +351,12 @@ if (((isset($_SESSION['loginUsername'])) && (isset($_SESSION['userLevel']))) || 
 					$insertSQL = sprintf("INSERT INTO $brewer_db_table (
 					  uid,
 					  brewerFirstName, 
-					  brewerLastName, 
+					  brewerLastName,
+					  brewerCPF,
 					  brewerAddress, 
 					  brewerCity,
 					  
-					  brewerState, 
+					  brewerState,
 					  brewerZip,
 					  brewerCountry,
 					  brewerPhone1, 
@@ -374,10 +381,11 @@ if (((isset($_SESSION['loginUsername'])) && (isset($_SESSION['userLevel']))) || 
 					%s, %s, %s, %s, %s, 
 					%s, %s, %s, %s, %s, 
 					%s, %s, %s, %s, %s,
-					%s, %s)",
+					%s, %s, %s)",
 								   GetSQLValueString($_POST['uid'], "int"),
 								   GetSQLValueString(capitalize($_POST['brewerFirstName']), "text"),
 								   GetSQLValueString(capitalize($_POST['brewerLastName']), "text"),
+								   GetSQLValueString($_POST['brewerCPF'], "text"),
 								   GetSQLValueString(capitalize($_POST['brewerAddress']), "text"),
 								   GetSQLValueString(capitalize($_POST['brewerCity']), "text"),
 								   GetSQLValueString($_POST['brewerState'], "text"),
@@ -497,10 +505,11 @@ if (((isset($_SESSION['loginUsername'])) && (isset($_SESSION['userLevel']))) || 
 			$updateSQL = sprintf("UPDATE $brewer_db_table SET 
 				uid=%s,
 				brewerFirstName=%s, 
-				brewerLastName=%s, 
+				brewerLastName=%s,
+				brewerCPF=%s,
 				brewerAddress=%s, 
 				brewerCity=%s, 
-				brewerState=%s, 
+				brewerState=%s,
 				
 				brewerZip=%s, 
 				brewerCountry=%s, 
@@ -524,6 +533,7 @@ if (((isset($_SESSION['loginUsername'])) && (isset($_SESSION['userLevel']))) || 
 								   GetSQLValueString($_POST['uid'], "int"),
 								   GetSQLValueString(capitalize($_POST['brewerFirstName']), "text"),
 								   GetSQLValueString(capitalize($_POST['brewerLastName']), "text"),
+								   GetSQLValueString($_POST['brewerCPF'], "text"),
 								   GetSQLValueString(capitalize($_POST['brewerAddress']), "text"),
 								   GetSQLValueString(capitalize($_POST['brewerCity']), "text"),
 								   GetSQLValueString($_POST['brewerState'], "text"),

@@ -169,11 +169,11 @@ if ($totalRows_sbi > 0) {
 				
 				// Build table headers
 				$table_head2 .= "<tr>";
-				if ($row_sbi['sbi_display_places'] == "1") $table_head2 .= "<th width='5%'>Place</th>";
-				$table_head2 .= "<th width='25%'>Brewer(s)</th>";
-				$table_head2 .= "<th width='20%'>Entry Name</th>";
-				$table_head2 .= "<th width='25%'>Style</th>";
-				$table_head2 .= "<th>Club</th>";
+				if ($row_sbi['sbi_display_places'] == "1") $table_head2 .= "<th width='5%'>Lugar</th>";
+				$table_head2 .= "<th width='25%'>Cervejeiro(s)</th>";
+				$table_head2 .= "<th width='20%'>Nome da Amostra</th>";
+				$table_head2 .= "<th width='25%'>Estilo</th>";
+				$table_head2 .= "<th>Clube</th>";
 				
 				// Build table body
 				do {
@@ -202,7 +202,7 @@ if ($totalRows_sbi > 0) {
 					if ($action == "print") $table_body2 .= "<td>";
 					else $table_body2 .= "<td>";
 					$table_body2 .= $brewer_info['0']." ".$brewer_info['1'];
-					if (!empty($entry_info['4'])) $table_body2 .=  "<br />Co-Brewer: ".$entry_info['4'];
+					if (!empty($entry_info['4'])) $table_body2 .=  "<br />Co-Cervejeiro(s): ".$entry_info['4'];
 					$table_body2 .= "</td>";
 					
 					if ($action == "print") $table_body2 .= "<td>";

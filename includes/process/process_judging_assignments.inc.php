@@ -4,7 +4,7 @@
  * Description: This module does all the heavy lifting for adding/editing info in the "judging_assignments" table
  */
 if ((isset($_SESSION['loginUsername'])) && ($_SESSION['userLevel'] <= 1)) {
-	
+	mysql_query("SET NAMES 'utf8'");
 	if (NHC) {
 		// Place NHC SQL calls below
 		

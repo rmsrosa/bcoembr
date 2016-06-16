@@ -19,6 +19,11 @@ session_name($session_name);
 
 session_start();
 
+mysql_query("SET NAMES 'utf8'");
+//mysql_query('SET character_set_connection=utf8');
+//mysql_query('SET character_set_client=utf8');
+//mysql_query('SET character_set_results=utf8');
+			
 if (NHC) {
 	// Place NHC SQL calls below
 	
@@ -181,6 +186,7 @@ else {
 		$_SESSION['brewerID']  = $row_name['id'];
 		$_SESSION['brewerFirstName'] = $row_name['brewerFirstName'];
 		$_SESSION['brewerLastName'] = $row_name['brewerLastName'];
+		$_SESSION['brewerCPF'] = $row_name['brewerCPF'];
 		$_SESSION['brewerAddress'] = $row_name['brewerAddress'];
 		$_SESSION['brewerCity'] = $row_name['brewerCity'];
 		$_SESSION['brewerState'] = $row_name['brewerState'];

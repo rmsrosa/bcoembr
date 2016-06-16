@@ -82,11 +82,13 @@ function getTimeZoneDateTime($timezone_offset, $timestamp, $date_format, $time_f
     
 	$tz = get_timezone($timezone_offset); // convert offset number to PHP timezone
     date_default_timezone_set($tz);
+    
+    setlocale(LC_ALL, "pt_BR", "pt_BR.iso-8859-1", "pt_BR.utf-8", "portuguese");
 	
 	switch($display_format) {
 		case "long": // Long Format
-			if ($date_format == "1") $date = date('l, F j, Y', $timestamp);
-			else $date = date('l j F, Y', $timestamp);
+			if ($date_format == "1") $date = utf8_encode(strftime('%A, %B %d, %Y', $timestamp)); //utf8_encode worked when hosted at acervacarioca but not locally
+			else $date = utf8_encode(strftime('%A, %d de %B de %Y', $timestamp));
 		break;
 		
 		case "short": // Short Format
@@ -109,10 +111,10 @@ function getTimeZoneDateTime($timezone_offset, $timestamp, $date_format, $time_f
 	
 	switch($return_format) {
 		case "date-time":
-			$return = $date." at ".$time.", ".date('T',$timestamp);
+			$return = $date." às ".$time.", ".date('T',$timestamp);
 		break;
 		case "date-time-no-gmt":
-			$return = $date." at ".$time;
+			$return = $date." às ".$time;
 		break;
 		case "date-no-gmt":
 			$return = $date;

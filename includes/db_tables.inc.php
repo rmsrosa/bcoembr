@@ -7,6 +7,7 @@
 
 // echo get_suffix($dbTable);
 if ($dbTable == "default") { 
+	$allowedcompetidores_db_table = $prefix."allowedcompetidores";
 	$archive_db_table = $prefix."archive";
 	$brewer_db_table = $prefix."brewer";
 	$brewing_db_table = $prefix."brewing";
@@ -21,6 +22,8 @@ if ($dbTable == "default") {
 	$judging_scores_bos_db_table = $prefix."judging_scores_bos";
 	$judging_tables_db_table = $prefix."judging_tables";
 	$mods_db_table = $prefix."mods";
+	$pagseguro_db_table = $prefix."pagseguro";
+	$payment_db_table = $prefix."payment";
 	$preferences_db_table = $prefix."preferences";
 	$special_best_data_db_table = $prefix."special_best_data";
 	$special_best_info_db_table = $prefix."special_best_info";
@@ -34,6 +37,7 @@ if ($dbTable == "default") {
 else {
 	$suffix = rtrim(get_suffix($dbTable), "_"); // HACK - could not isolate code where there's an extra "_"
 	$suffix = "_".$suffix;
+	$allowedcompetidores_db_table = $prefix."allowedcompetidores";
 	$archive_db_table = $prefix."archive";
 	$brewer_db_table = $prefix."brewer".$suffix;
 	$brewing_db_table = $prefix."brewing".$suffix;
@@ -48,6 +52,8 @@ else {
 	$judging_scores_bos_db_table = $prefix."judging_scores_bos".$suffix;
 	$judging_tables_db_table = $prefix."judging_tables".$suffix;
 	$mods_db_table = $prefix."mods";
+	$pagseguro_db_table = $prefix."pagseguro".$suffix;
+	$payment_db_table = $prefix."payment".$suffix;
 	$preferences_db_table = $prefix."preferences";
 	$special_best_data_db_table = $prefix."special_best_data".$suffix;
 	$special_best_info_db_table = $prefix."special_best_info".$suffix;

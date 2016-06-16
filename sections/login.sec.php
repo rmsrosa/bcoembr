@@ -64,7 +64,7 @@ if (($action == "forgot") && ($go == "verify") && (!isset($_SESSION['loginUserna
 	$user_check = explode("^",$user_check);
 	
 	if (($user_check[0] == 0) && ($msg == "default")) { 
-		$message2 .= sprintf("<div class='alert alert-danger'><span class=\"fa fa-exclamation-circle\"></span> There is no email address in the system that matches the one you entered. <a class='alert-link' href='%s'>Try again?</a></div>",build_public_url("login","password","forgot","default",$sef,$base_url));
+		$message2 .= sprintf("<div class='alert alert-danger'><span class=\"fa fa-exclamation-circle\"></span> Este email não está cadastrado no sistema. <a class='alert-link' href='%s'>Try again?</a></div>",build_public_url("login","password","forgot","default",$sef,$base_url));
 	}
 	
 }
@@ -73,8 +73,8 @@ else $verify_form_display = FALSE;
 // Build Links
 
 if ($section != "update") {
-	if (($msg != "default") && ($registration_open < "2") && (!$verify_form_display)) $primary_links .= sprintf("<p class='lead'><span class='fa fa-exlamation-circle'></span> Have you <a href='%s'>registered your account</a> yet?</p>",build_public_url("register","default","default","default",$sef,$base_url));
-	if ($login_form_display) $primary_links .= sprintf("<p class='lead'><span class='fa fa-exlamation-circle'></span> Did you forget your password? If so, <a href='%s'>click here to reset it</a>.</p>",$base_url."index.php?section=login&amp;go=password&amp;action=forgot");
+	if (($msg != "default") && ($registration_open < "2") && (!$verify_form_display)) $primary_links .= sprintf("<p class='lead'><span class='fa fa-exlamation-circle'></span> Você já <a href='%s'>cadastrou a sua conta?</a></p>",build_public_url("register","default","default","default",$sef,$base_url));
+	if ($login_form_display) $primary_links .= sprintf("<p class='lead'><span class='fa fa-exlamation-circle'></span> Esqueceu a sua senha? Caso positivo, <a href='%s'>clique aqui para gerar uma nova senha</a>.</p>",$base_url."index.php?section=login&amp;go=password&amp;action=forgot");
 }
 
 
@@ -87,7 +87,7 @@ echo $primary_links;
 <?php if ($login_form_display) { ?>
 <form class="form-horizontal" action="<?php echo $base_url; ?>includes/logincheck.inc.php?section=<?php echo $section; ?>" method="POST" name="form1" id="form1">
 	<div class="form-group">
-		<label for="" class="col-lg-2 col-md-3 col-sm-4 col-xs-12 control-label">Email Address</label>
+		<label for="" class="col-lg-2 col-md-3 col-sm-4 col-xs-12 control-label">Email</label>
 		<div class="col-lg-10 col-md-9 col-sm-8 col-xs-12">
 			<div class="input-group has-warning">
 				<span class="input-group-addon" id="login-addon1"><span class="fa fa-envelope"></span></span>
@@ -98,7 +98,7 @@ echo $primary_links;
 		</div>
 	</div><!-- Form Group -->
 	<div class="form-group">
-		<label for="" class="col-lg-2 col-md-3 col-sm-4 col-xs-12 control-label">Password</label>
+		<label for="" class="col-lg-2 col-md-3 col-sm-4 col-xs-12 control-label">Senha</label>
 		<div class="col-lg-10 col-md-9 col-sm-8 col-xs-12">
 			<div class="input-group has-warning">
 				<span class="input-group-addon" id="login-addon3"><span class="fa fa-key"></span></span>
@@ -118,10 +118,10 @@ echo $primary_links;
 <?php } ?>
 
 <?php if ($forget_form_display) { ?>
-<p class="lead">To reset your password, enter the email address you used when you registered.</p>
+<p class="lead">Para gerar uma nova senha, entre com o email utilizado no seu cadastro.</p>
 <form class="form-horizontal" action="<?php echo build_public_url("login","verify","forgot","default",$sef,$base_url); ?>" method="POST" name="form1" id="form1">
 	<div class="form-group">
-		<label for="" class="col-lg-2 col-md-3 col-sm-4 col-xs-12 control-label">Email Address</label>
+		<label for="" class="col-lg-2 col-md-3 col-sm-4 col-xs-12 control-label">Email</label>
 		<div class="col-lg-10 col-md-9 col-sm-9 col-xs-12">
 			<div class="input-group">
 				<span class="input-group-addon" id="reset-addon1"><span class="fa fa-envelope"></span></span>
@@ -133,24 +133,24 @@ echo $primary_links;
 	<div class="form-group">
 		<div class="col-lg-offset-2 col-md-offset-3 col-sm-offset-4">
 			<!-- Input Here -->
-			<button name="submit" type="submit" class="btn btn-primary" >Verify <span class="fa fa-check-circle" aria-hidden="true"></span> </button>
+			<button name="submit" type="submit" class="btn btn-primary" >Verificar <span class="fa fa-check-circle" aria-hidden="true"></span> </button>
 		</div>
 	</div><!-- Form Group -->
 </form>
 <?php } ?>
 <?php if ($verify_form_display) {
 	if ((empty($message2)) || (empty($msg))) { ?>	
-	<p class="lead">Your ID verification question is... <small class="text-muted"><em><?php echo $user_check[1]; ?></em></small></p>
+	<p class="lead">A sua Pergunta de Segurança é ... <small class="text-muted"><em><?php echo $user_check[1]; ?></em></small></p>
 	<?php if ($_SESSION['prefsContact'] == "Y") { ?>
 	<?php if ($msg =="5") { ?>
-	<p class='lead'><small>If you didn't receive the email, <a href="<?php echo $base_url; ?>includes/forgot_password.inc.php?action=email&amp;id=<?php echo $user_check[2]; ?>" data-confirm="An email will be sent to you with your verification question and answer. Be sure to check your SPAM folder.">click here to resend it to <?php echo $username_check; ?></a>.</small></p>
+	<p class='lead'><small>Se você não recebeu a mensagem, <a href="<?php echo $base_url; ?>includes/forgot_password.inc.php?action=email&amp;id=<?php echo $user_check[2]; ?>" data-confirm="Uma mensagem será enviada com a sua Pergunta de Segurança e a sua resposta. Cheque a sua pasta de SPAM.">clique aqui para re-enviá-la <?php echo $username_check; ?></a>.</small></p>
 	<?php } else { ?>
-	<p class='lead'><small>Can't remember the answer to your ID verification question? <a href="<?php echo $base_url; ?>includes/forgot_password.inc.php?action=email&amp;id=<?php echo $user_check[2]; ?>" data-confirm="An email will be sent to you with your verification question and answer. Be sure to check your SPAM folder.">Get it emailed to <?php echo $username_check; ?></a>.</small></p>
+	<p class='lead'><small>Não lembra a resposta à sua Pergunta de Segurança? <a href="<?php echo $base_url; ?>includes/forgot_password.inc.php?action=email&amp;id=<?php echo $user_check[2]; ?>" data-confirm="Uma mensagem será enviada com a sua Pergunta de Segurança e a sua resposta. Cheque a sua pasta de SPAM.">Enviar informação para <?php echo $username_check; ?></a>.</small></p>
 	<?php } ?>
 	<?php } ?>
 <form class="form-horizontal" action="<?php echo $base_url; ?>includes/forgot_password.inc.php" method="POST" name="form1" id="form1">
 	<div class="form-group">
-		<label for="" class="col-lg-2 col-md-3 col-sm-4 col-xs-12 control-label">Answer</label>
+		<label for="" class="col-lg-2 col-md-3 col-sm-4 col-xs-12 control-label">Resposta</label>
 		<div class="col-lg-10 col-md-9 col-sm-9 col-xs-12">
 			<div class="input-group">
 				<span class="input-group-addon" id="id-verify-addon1"><span class="fa fa-bullhorn"></span></span>
@@ -162,7 +162,7 @@ echo $primary_links;
 	<div class="form-group">
 		<div class="col-lg-offset-2 col-md-offset-3 col-sm-offset-4">
 			<!-- Input Here -->
-			<button name="submit" type="submit" class="btn btn-primary" >Reset Password <span class="fa fa-key" aria-hidden="true"></span></button>
+			<button name="submit" type="submit" class="btn btn-primary" >Gerar Nova Senha <span class="fa fa-key" aria-hidden="true"></span></button>
 		</div>
 	</div><!-- Form Group -->
 <input type="hidden" name="loginUsername" value="<?php echo $username; ?>">

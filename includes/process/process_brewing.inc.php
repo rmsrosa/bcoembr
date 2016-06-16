@@ -14,6 +14,7 @@ if ((isset($_SESSION['loginUsername'])) && (isset($_SESSION['userLevel']))) {
 	else {
 		include(DB.'common.db.php');
 		mysql_select_db($database, $brewing);
+		mysql_query("SET NAMES 'utf8'");
 		
 		$query_user = sprintf("SELECT userLevel FROM $users_db_table WHERE user_name = '%s'", $_SESSION['loginUsername']);
 		$user = mysql_query($query_user, $brewing) or die(mysql_error());
@@ -26,14 +27,54 @@ if ((isset($_SESSION['loginUsername'])) && (isset($_SESSION['userLevel']))) {
 			$query_brews = sprintf("SELECT COUNT(*) as 'count' FROM $brewing_db_table WHERE brewBrewerId = '%s'", $_SESSION['user_id']);
 			$brews = mysql_query($query_brews, $brewing) or die(mysql_error());
 			$row_brews = mysql_fetch_assoc($brews);
+//			echo "brews count = ".$row_brews['count']."<br>";
+//			echo "limit = ".$row_limits['prefsUserEntryLimit']."<br>";
+//			exit();
 			
-				if ($row_brews['count'] >= $row_limits['prefsUserEntryLimit']) {
+				if (($row_brews['count'] >= $row_limits['prefsUserEntryLimit']) && ($action == "add")) {
+//					echo "entrou<br>";
+//					echo "brews count = ".$row_brews['count']."<br>";
+//					echo "limit = ".$row_limits['prefsUserEntryLimit']."<br>";
+//					exit();
 					$insertGoTo = $base_url."index.php?section=list&msg=8";
 					$pattern = array('\'', '"');
 					$insertGoTo = str_replace($pattern, "", $insertGoTo); 
 					header(sprintf("Location: %s", stripslashes($insertGoTo)));
+//					echo "voltou...<br>";
+					exit(); // I added this not to allow the system to add the entry beyond the brewer's limit. Somehow the system is returning from this call and adding the entry, and when this happens apparently the message gets written over and only the following success message shows up.
 				}
 		
+		}
+
+		$separators = array(" ", "/", "-", ".");
+		$cpf = $_SESSION['brewerCPF'];
+		$cpf = str_replace($separators,"",$cpf);
+		$query_cpf_exists = "SELECT COUNT(*) AS count FROM allowedcompetidores WHERE allowedCPF  = '$cpf'";
+		$cpf_exists = mysql_query($query_cpf_exists, $brewing) or die(mysql_error());
+		$row_cpf_exists = mysql_fetch_assoc($cpf_exists);
+	
+// The following echos were used for debugging purposes. Apparently the variable $section is not defined or is not set to "admin" when the administrator is managing the entries (sometimes it shows as "default"), so I first removed the condition && $section != "admin", which apparently was okay even if section should be admin because in this case the row_cpf_exists apparently doesn't work either, so the conditions fail anyway. Actually, the row_cpf_exists was zero because the administror's cpf (Ricardo Rosa) was not yet in the list of allowed cpfs, so I included this cpf and went back with the original condition && $section != "admin"
+//		if ($row_cpf_exists['count']  == 0 && $section != "admin" && $go != "entrant") {
+//			echo "<p> action = ".$action."</p><br>";
+//			echo "<p> row_cpf_exists = ".$row_cpf_exists['count']."</p><br>";
+//			echo "<p> section = ".$section."</p><br>";
+//			echo "<p> go = ".$go."</p><br>";
+//			echo "<p> user = ".$user."</p><br>";
+//			exit();
+//		}
+						 
+		if ($row_cpf_exists['count']  == 0 && $go != "entrant") {
+//			echo "<p> action = ".$action."</p><br>";
+//			echo "<p> row_cpf_exists = ".$row_cpf_exists['count']."</p><br>";
+//			echo "<p> section = ".$section."</p><br>";
+//			echo "<p> go = ".$go."</p><br>";
+//			echo "<p> user = ".$user."</p><br>";
+//			exit();
+			$location = $base_url."index.php?section=".$section."&go=".$go."&msg=10";
+			$pattern = array('\'', '"');
+			$insertGoTo = str_replace($pattern, "", $location); 
+			header(sprintf("Location: %s", stripslashes($insertGoTo)));
+			exit();
 		}
 		
 		if (($action == "add") || ($action == "edit")) {

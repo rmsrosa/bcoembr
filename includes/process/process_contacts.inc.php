@@ -38,6 +38,7 @@ if ($action == "email") {
 		else {
 		
 			mysql_select_db($database, $brewing);
+			mysql_query("SET NAMES 'utf8'");
 			$query_contact = sprintf("SELECT * FROM $contacts_db_table WHERE id='%s'", $_POST['to']);
 			$contact = mysql_query($query_contact, $brewing) or die(mysql_error());
 			$row_contact = mysql_fetch_assoc($contact);
@@ -63,7 +64,7 @@ if ($action == "email") {
 		$message .= "</html>";
 		
 		$headers  = "MIME-Version: 1.0" . "\r\n";
-		$headers .= "Content-type: text/html; charset=iso-8859-1" . "\r\n";
+		$headers .= "Content-type: text/html; charset=utf-8" . "\r\n";
 		$headers .= "To: ".$to_name." <".$to_email.">" . "\r\n";
 		$headers .= "From: ".$_SESSION['contestName']." Server <noreply@".$_SERVER['SERVER_NAME'].">" . "\r\n"; // needed to change due to more stringent rules and mail send incompatibility with Gmail.
 		$headers .= "Reply-To: ".$from_name." <".$from_email.">" . "\r\n";
@@ -114,6 +115,7 @@ elseif ((isset($_SESSION['loginUsername'])) && (isset($_SESSION['userLevel']))) 
 							   GetSQLValueString(strtolower($_POST['contactEmail']), "text"));
 			//echo $insertSQL;				   
 			mysql_select_db($database, $brewing);
+			mysql_query("SET NAMES 'utf8'");
 			mysql_real_escape_string($insertSQL);
 			$result1 = mysql_query($insertSQL, $brewing) or die(mysql_error());
 			$pattern = array('\'', '"');
@@ -136,6 +138,7 @@ elseif ((isset($_SESSION['loginUsername'])) && (isset($_SESSION['userLevel']))) 
 							   GetSQLValueString($id, "int"));
 							   
 			mysql_select_db($database, $brewing);
+			mysql_query("SET NAMES 'utf8'");
 			mysql_real_escape_string($updateSQL);
 			$result1 = mysql_query($updateSQL, $brewing) or die(mysql_error());
 			$pattern = array('\'', '"');

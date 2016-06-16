@@ -143,13 +143,13 @@
 	?>
 
 		<?php if (($registration_open != 1) && ($entry_window_open != 1) && ($_SESSION['userLevel'] > 1)) {  
-			if ($entry_window_open == "0") $alert_message_closed = "Entry registration has not opened yet.";
-			if ($entry_window_open == "2") $alert_message_closed = "Entry registration has closed.";
+			if ($entry_window_open == "0") $alert_message_closed = "O período de inscrições ainda não está aberto.";
+			if ($entry_window_open == "2") $alert_message_closed = "O período de inscrições está encerrado.";
 		?>
         <!-- Entry add/edit registration closed -->
         <div class="alert alert-danger alert-dismissible hidden-print fade in" role="alert">
           <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <span class="fa fa-exclamation-circle"></span> <strong>Adding entries is not available.</strong> <?php echo $alert_message_closed; ?>
+          <span class="fa fa-exclamation-circle"></span> <strong>A inclusão de amostras não está disponível.</strong> <?php echo $alert_message_closed; ?>
         </div>
         <?php } ?>
         
@@ -157,7 +157,7 @@
         <!-- Open but competition entry limit reached - only allow editing -->
         <div class="alert alert-danger alert-dismissible hidden-print fade in" role="alert">
           <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <span class="fa fa-exclamation-circle"></span> <strong>Adding entries is not available.</strong> The competition entry limit has been reached.
+          <span class="fa fa-exclamation-circle"></span> <strong>A inclusão de amostras não está disponível.</strong> O limite de inscrições foi alcançado.
         </div>
         <?php } ?>
         
@@ -165,7 +165,7 @@
         <!-- Open but personal entry limit reached - only allow editing -->
         <div class="alert alert-danger alert-dismissible hidden-print fade in" role="alert">
           <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <span class="fa fa-exclamation-circle"></span> <strong>Adding entries is not available.</strong> Your personal entry limit has been reached.
+          <span class="fa fa-exclamation-circle"></span> <strong>A inclusão de amostras não está disponível.</strong> O seu limite foi alcançado.
         </div>
         <?php } ?>
         
@@ -173,7 +173,7 @@
         <!-- Registration open, but entry window not -->
         <div class="alert alert-success alert-dismissible hidden-print fade in" role="alert">
           <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <span class="fa fa-check-circle"></span> <strong>Adding entries is not available.</strong> You will be able to add entries on or after <?php echo $entry_open; ?>.
+          <span class="fa fa-check-circle"></span> <strong>A inclusão de amostras não está disponível.</strong> Você poderá incluir amostras a partir de <?php echo $entry_open; ?>.
         </div>
         <?php } ?>
         
@@ -204,7 +204,7 @@
         <!-- Account and entry registration not open yet -->
         <div class="alert alert-success alert-dismissible hidden-print fade in" role="alert">
           <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <span class="fa fa-check-circle"></span> <strong>Entry Registration Will Open <?php echo $reg_open; ?>.</strong> Please check back later to add your entries to the system.
+          <span class="fa fa-check-circle"></span> <strong>O período de inscrições abrirá <?php echo $reg_open; ?>.</strong>
         </div>
     <?php } ?>
     
@@ -212,31 +212,31 @@
         <!-- Judge/steward registration not open yet -->
         <div class="alert alert-info alert-dismissible hidden-print fade in" role="alert">
           <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <strong>Judge/Steward Registration Will Open <?php echo $judge_open; ?>.</strong> Please check back later to register as a judge or steward.
+          <strong>Registro de Juízes/Auxiliares Abrirá em <?php echo $judge_open; ?>.</strong>
         </div>
     <?php } ?>
     
-    <?php if (($registration_open == 1) && (!$ua) && ($comp_entry_limit) && ($msg == "default")) { ?>
+    <?php if (($entry_window_open == 1) && (!$ua) && ($comp_entry_limit) && ($msg == "default")) { ?>
         <!-- Account and entry registration open -->
         <div class="alert alert-success alert-dismissible hidden-print fade in" role="alert">
           <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <span class="fa fa-check-circle"></span> <strong>Entry Registration is Open!</strong> A total of <?php echo $total_entries; ?> entries have been added to the system as of <?php echo $current_time; ?>. Registration will close <?php echo $entry_closed; ?>.
+          <span class="fa fa-check-circle"></span> <strong>O período de inscrições está aberto!</strong> No total, <?php echo $total_entries; ?> amostras foram incluídas no sistema até <?php echo $current_time; ?>. O período de inscrições será encerrado em <?php echo $entry_closed; ?>.
         </div>
     <?php } ?>
     
-    <?php if (($registration_open == 1) && (!$ua) && ($comp_entry_limit_near_warning) && ($msg == "default")) { ?>
+    <?php if (($entry_window_open == 1) && (!$ua) && ($comp_entry_limit_near_warning) && ($msg == "default")) { ?>
         <!-- Entry limit nearly reached -->
         <div class="alert alert-warning alert-dismissible hidden-print fade in" role="alert">
           <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <span class="fa fa-info-circle"></span> <strong>Entry Limit Nearly Reached!</strong> <?php echo $total_entries; ?> of <?php echo $row_limits['prefsEntryLimit']; ?> maximum entries have been added into the system as of <?php echo $current_time; ?>.
+          <span class="fa fa-info-circle"></span> <strong>O limite de inscrições está perto de ser alcançado!</strong> <?php echo $total_entries; ?> amostras, de um máximo de <?php echo $row_limits['prefsEntryLimit']; ?>, foram incluídas no sistema até <?php echo $current_time; ?>.
         </div>
     <?php } ?>
     
-    <?php if (($registration_open == 1) && (!$ua) && ($comp_entry_limit) && ($msg == "default")) { ?>
+    <?php if (($entry_window_open == 1) && (!$ua) && ($comp_entry_limit) && ($msg == "default")) { ?>
         <!-- Entry limit reached, account and entry registration closed -->
         <div class="alert alert-danger alert-dismissible hidden-print fade in" role="alert">
           <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <span class="fa fa-exclamation-circle"></span> <strong>Entry Limit Reached.</strong> The limit of <?php echo $row_limits['prefsEntryLimit']; ?> entries has been reached. No further entries will be accepted.
+          <span class="fa fa-exclamation-circle"></span> <strong>O limite de inscrições foi alcançado. </strong> O limite de <?php echo $row_limits['prefsEntryLimit']; ?> amostras foi alcançado. Não estão sendo aceitas mais amostras no momento.
         </div>
     <?php } ?>
     
@@ -244,7 +244,7 @@
         <!-- Account and entry registration closed -->
         <div class="alert alert-danger alert-dismissible hidden-print fade in" role="alert">
           <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <span class="fa fa-exclamation-circle"></span> <strong>Entry Registration is Closed.</strong> A total of <?php echo $total_entries; ?> entries were added into the system.
+          <span class="fa fa-exclamation-circle"></span> <strong>O período de inscrições está encerrado. </strong> Um total de <?php echo $total_entries; ?> amostras foi incluído no sistema.
         </div>
     <?php } 	?>
     
@@ -252,7 +252,7 @@
         <!-- Drop-off window closed -->
         <div class="alert alert-danger alert-dismissible hidden-print fade in" role="alert">
           <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <span class="fa fa-exclamation-circle"></span> <strong>Entry Drop-Off is Closed.</strong> Entry bottles are no longer accepted at drop-off locations.
+          <span class="fa fa-exclamation-circle"></span> <strong>O período de entrega das garrafas está encerrado. </strong> Garrafas não serão mais aceitas no local de entrega.
         </div>
     <?php } 	?>
     
@@ -260,7 +260,7 @@
         <!-- Drop-off window closed -->
         <div class="alert alert-danger alert-dismissible hidden-print fade in" role="alert">
           <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <span class="fa fa-exclamation-circle"></span> <strong>Entry Shipping is Closed.</strong> Entry bottles are no longer accepted at the shipping location.
+          <span class="fa fa-exclamation-circle"></span> <strong>O período de envio das garrafas está encerrado.</strong> Garrafas não serão mais aceitas no local de entrega.
         </div>
     <?php } 	?>
     
@@ -268,8 +268,7 @@
         <!-- Account and entry registration closed, but Judge/steward registration open -->
         <div class="alert alert-info alert-dismissible hidden-print fade in" role="alert">
           <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <span class="fa fa-info-circle"></span> <strong>Judge/Steward Registration is Still Open.</strong> Judges and stewards <a class="alert-link" href="<?php echo build_public_url("register","judge","default","default",$sef,$base_url); ?>">register here</a>. Judge and steward registration will close <?php echo $judge_closed; ?>.
-        </div>
+          <span class="fa fa-info-circle"></span> <strong>O período de registro de Juízes e Auxiliares ainda está aberto</strong> e vai até <?php echo $judge_closed; ?>. Faça o registro <a class="alert-link" href="<?php echo build_public_url("register","judge","default","default",$sef,$base_url); ?>">aqui</a>.        </div>
 	<?php } ?>
     
 <?php } // end if (!$logged_in) ?>

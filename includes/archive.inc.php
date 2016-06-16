@@ -10,6 +10,8 @@ ini_set('display_errors', '1');
 require('../paths.php');
 session_start();
 
+mysql_query("SET NAMES 'utf8'");
+
 //echo $_SESSION['userLevel'];
 
 if ((isset($_SESSION['loginUsername'])) && ($_SESSION['userLevel'] == 0)) { 

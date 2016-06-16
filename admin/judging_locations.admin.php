@@ -175,6 +175,7 @@ if ($section != "step5") {
 	
 		$form_submit_url .= build_form_action($base_url,$section,"default","update",$filter,"default",$brewer_db_table,FALSE);
 		$form_organizer_select = "";
+		$form_submit_button_help = "";
 		
 		if ($filter == "staff") {
 			

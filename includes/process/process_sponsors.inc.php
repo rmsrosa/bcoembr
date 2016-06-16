@@ -6,6 +6,7 @@
 if ((isset($_SESSION['loginUsername'])) && ($_SESSION['userLevel'] <= 1)) {
 	$sponsorURL = check_http($_POST['sponsorURL']);
 	$sponsor_name = capitalize($_POST['sponsorName']);
+	mysql_query("SET NAMES 'utf8'");
 	if (NHC) {
 		// Place NHC SQL calls below
 		

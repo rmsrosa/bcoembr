@@ -71,7 +71,7 @@ $firefox_warning = "";
 
 
 // Build Headers
-$header1_1 .= "<a name=\"entries\"></a><h2>Entries</h2>";
+$header1_1 .= "<a name=\"entries\"></a><h2>Amostras</h2>";
  
 $firefox_warning .= "<div class=\"alert alert-warning\"><span class=\"fa fa-exclamation-triangle\"> <strong>There is a known issue with printing from the Firefox browser.</strong> To print all pages properly from Firefox, RIGHT CLICK on any print link and choose \"Open Link in New Tab.\" Then, use Firefox&rsquo;s native printing function (Edit > Print) to print your documents. Be aware that you should use the browser&rsquo;s File > Page Setup... function to specify portrait or landscape, margins, etc.</div>";
 
@@ -92,13 +92,13 @@ if (($totalRows_log > 0) && ($action != "print")) {
 	
 	if (($totalRows_log - $totalRows_log_confirmed) > 0) { 
 			$warnings .= "<div class=\"alert alert-warning\">";
-			$warnings .= "<span class=\"fa fa-exclamation-triangle\"></span> <strong>You have unconfirmed entries.</strong> For each highlighed entry below with a <span class=\"fa fa-exclamation-circle text-danger\"></span> icon, click the <span class=\"fa fa-pencil text-primary\"></span> icon to review and confirm all your entry data. Unconfirmed entries may be deleted from the system without warning."; 
-			if ($_SESSION['prefsPayToPrint'] == "Y") $warnings .= " You CANNOT pay for your entries until all entries are confirmed."; 
+			$warnings .= "<span class=\"fa fa-exclamation-triangle\"></span> <strong>Você tem amostras não confirmadas.</strong> Para cada amostra marcada abaixo com o ícone <span class=\"fa fa-exclamation-circle text-danger\"></span>, clique no ícone <span class=\"fa fa-pencil text-primary\"></span> para revisar e confirmar todos os dados da amostra. Amostras não confirmadas serão apagadas do sistema sem mais avisos."; 
+			if ($_SESSION['prefsPayToPrint'] == "Y") $warnings .= " Você NÃO pode pagar pelas amostras até que todas as amostras estejam confirmadas."; 
 			$warnings .= "</div>"; 
 		}
 		
 	if (entries_no_special($_SESSION['user_id'])) {
-		$warnings .= "<div class=\"alert alert-warning\"><span class=\"fa fa-exclamation-triangle\"> <strong>You have entries that require you to define special ingredients.</strong> For each highlighted entry below with a <span class=\"fa fa-exlamation-circle text-danger\"></span> icon, click the <span class=\"fa fa-pencil text-primary\"></span> icon to add your special ingredients. Entries without special ingredients in categories that require them may be deleted by the system without warning.</div>";
+		$warnings .= "<div class=\"alert alert-warning\"><span class=\"fa fa-exclamation-triangle\"> <strong>Você tem amostras que precisam de informações de ingredientes especiais.</strong> Para cada amostra marcada abaixo com o ícone <span class=\"fa fa-exlamation-circle text-danger\"></span>, clique no ícone <span class=\"fa fa-pencil text-primary\"></span> para informar os ingredientes especiais. Amostras sem informações de ingredientes especiais em categorias que requerem essas informações serão apagadas do sistema sem mais avisos..</div>";
 	}
 }
 
@@ -128,7 +128,7 @@ do {
 	
 	$entry_output .= "<td>";
 	$entry_output .= $row_log['brewName']; 
-	if ($row_log['brewCoBrewer'] != "") $entry_output .= "<br><em>Co-Brewer: ".$row_log['brewCoBrewer']."</em>";
+	if ($row_log['brewCoBrewer'] != "") $entry_output .= "<br><em>Co-Cervejeiros: ".$row_log['brewCoBrewer']."</em>";
 	$entry_output .= "</td>";
 	
 	$entry_output .= "<td>";
@@ -215,11 +215,11 @@ do {
 	// Print Recipe
 	$print_recipe_link = "<a id=\"modal_window_link\" href=\"".$base_url."output/entry.output.php?go=recipe&amp;id=".$row_log['id']."&amp;bid=".$_SESSION['brewerID']."\" title=\"Print Recipe Form for ".$row_log['brewName']."\"><span class=\"fa fa-book\"><span></a>&nbsp;&nbsp;";
 	
-	if ($comp_entry_limit) $warning_append = "\nAlso, you will not be able to add another entry since the entry limit for the competition has been reached. Click Cancel in this box and then edit the entry instead if you wish to keep it."; else $warning_append = "";
+	if ($comp_entry_limit) $warning_append = "\nAlém disso, você não poderá adicionar outra amostra pois o limite de inscrições para a competição foi alcançado. Clique em Cancelar e depois Edite a amostra se você quiser mantê-la."; else $warning_append = "";
 	
 	if ($entry_window_open == 1) {
-	$delete_alt_title = "Delete ".$row_log['brewName'];
-	$delete_warning = "Delete ".$row_log['brewName']."? This cannont be undone.";
+	$delete_alt_title = "Apagar ".$row_log['brewName'];
+	$delete_warning = "Apagar ".$row_log['brewName']."? Esta ação não pode ser desfeita.";
 	$delete_link = "<a data-toggle=\"tooltip\" title=\"".$delete_alt_title."\" href=\"".$base_url."includes/process.inc.php?section=".$section."&amp;go=".$go."&amp;dbTable=".$brewing_db_table."&amp;action=delete&amp;id=".$row_log['id']."\" data-confirm=\"Are you sure you want to delete the entry called ".$row_log['brewName']."? This cannot be undone.\"><span class=\"fa fa-trash-o\"></a>";
 	//$delete_link = build_action_link("bin_closed",$base_url,$section,$go,"delete",$filter,$row_log['id'],$brewing_db_table,"Delete ".$row_log['brewName']."? This cannot be undone. ".$warning_append,1,"Delete");
 	}
@@ -227,7 +227,9 @@ do {
 	if ((judging_date_return() > 0) && ($action != "print")) {
 		
 		$entry_output .= "<td nowrap class=\"hidden-print\">";
-		if (($registration_open == 1) || ($entry_window_open == 1)) $entry_output .= $edit_link;
+//		if (($registration_open == 1) || ($entry_window_open == 1)) $entry_output .= $edit_link;
+//		if (($shipping_window_open <= 1) && ($entry_window_open >= 1)) $entry_output .= $edit_link;
+		if (($shipping_window_open <= 1) && ($entry_window_open == 1)) $entry_output .= $edit_link;
 		if (pay_to_print($_SESSION['prefsPayToPrint'],$row_log['brewPaid'])) $entry_output .= $print_forms_link;
 		
 		if ((NHC) && ($prefix == "final_")) $entry_output .= $print_recipe_link;
@@ -267,7 +269,7 @@ if (($action != "print") && ($entry_window_open > 0)) {
 	echo $page_info1;
 	echo $page_info2;
 }
-if (($totalRows_log == 0) && ($entry_window_open >= 1)) echo "<p>You have not added any entries to the system.</p>";
+if (($totalRows_log == 0) && ($entry_window_open >= 1)) echo "<p>Você não incluiu nenhuma amostra no sistema.</p>";
 if (($totalRows_log > 0) && ($entry_window_open >= 1)) { 
 ?>
 <script type="text/javascript" language="javascript">
@@ -302,17 +304,17 @@ if (($totalRows_log > 0) && ($entry_window_open >= 1)) {
 <thead>
  <tr>
   	<th>#</th>
-  	<th>Name</th>
-  	<th>Style</th>
-  	<th class="hidden-xs hidden-sm">Confirmed</th> 
-  	<th class="hidden-xs hidden-sm">Paid</th> 
-    <th class="hidden-xs hidden-sm">Updated</th>
+  	<th>Nome</th>
+  	<th>Estilo</th>
+  	<th class="hidden-xs hidden-sm">Confirmada</th> 
+  	<th class="hidden-xs hidden-sm">Paga</th> 
+    <th class="hidden-xs hidden-sm">Atualização</th>
   	<?php if ($show_scores) { ?>
-  	<th>Score</th>
+  	<th>Pontuação</th>
     <th class="hidden-xs hidden-sm" nowrap>Mini-BOS</th>
-  	<th>Winner?</th>
+  	<th>Vencedor?</th>
   	<?php } ?>
-    <th class="hidden-print">Actions</th>
+    <th class="hidden-print">Ações</th>
  </tr>
 </thead>
 <tbody>
@@ -320,7 +322,7 @@ if (($totalRows_log > 0) && ($entry_window_open >= 1)) {
 </tbody>
 </table>
 <?php }
-if ($entry_window_open == 0) echo sprintf("<p>You will be able to add entries on or after %s.</p>",$entry_open); 
+if ($entry_window_open == 0) echo sprintf("<p>Você poderá incluir amostras a partir de  %s.</p>",$entry_open); 
 ?>
 
 <!-- Page Rebuild completed 08.27.15 --> 

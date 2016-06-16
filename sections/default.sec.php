@@ -53,9 +53,7 @@ $header1_20 = "";
 $message1 = "<div class=\"alert alert-warning\"><span class=\"fa fa-exclamation-triangle\"> No drop-off locations have been specified. <a href='index.php?section=admin&amp;action=add&amp;go=dropoff'>Add a drop-off location</a>?</div>";
 $message2 = "<div class=\"alert alert-warning\"><span class=\"fa fa-exclamation-triangle\"> No judging dates/locations have been specified. <a href='index.php?section=admin&amp;action=add&amp;go=judging'>Add a judging location</a>?</div>";
 
-
-
-
+mysql_query("SET NAMES 'utf8'");
 
 if ((judging_date_return() == 0) && ($registration_open == "2")) {
 	
@@ -65,41 +63,41 @@ if ((judging_date_return() == 0) && ($registration_open == "2")) {
 	$style_types_active = styles_active(1);
 	
 	if ($style_types_active > 0) {
-		$header1_10 .= "<h2>Best of Show Winners";
+		$header1_10 .= "<h2>Vencedores do Best of Show";
 		if ($section == "past_winners") $header1_10 .= ": ".$trimmed; 
 		$header1_10 .= "</h2>";
 	}
 	
-	$header1_20 .= "<h2>Winning Entries";
+	$header1_20 .= "<h2>Amostras Vencedoras";
 	if ($section == "past_winners") $header1_20 .= ": ".$trimmed;
 	$header1_20 .= "</h2>";
 
-	$page_info .= sprintf("<h2>Winning Entries</h2><p>Winners will be posted on or after %s.</p>",getTimeZoneDateTime($_SESSION['prefsTimeZone'], ($row_check['judgingDate']+$delay), $_SESSION['prefsDateFormat'],  $_SESSION['prefsTimeFormat'], "long", "date-time"));
+	$page_info .= sprintf("<h2>Amostras Vencedoras</h2><p>As informações sobre os vencedores serão postadas aqui a partir de %s.</p>",getTimeZoneDateTime($_SESSION['prefsTimeZone'], ($row_check['judgingDate']+$delay), $_SESSION['prefsDateFormat'],  $_SESSION['prefsTimeFormat'], "long", "date-time"));
 	
 } // end if ((judging_date_return() == 0) && ($registration_open == "2"))
 
 else {
 	
-	if ($logged_in) $primary_page_info .= sprintf("<p class='lead'>Welcome %s! <small>View your account information <a href='%s' data-toggle='tooltip' title='See your account details and list of entries'>here</a>.</small></p>",$_SESSION['brewerFirstName'],build_public_url("list","default","default","default",$sef,$base_url));
+	if ($logged_in) $primary_page_info .= sprintf("<p class='lead'>Bem-vindo %s! <small>Veja as informações da sua conta <a href='%s' data-toggle='tooltip' title='Veja os detalhes da sua conta e a lista de amostras'>aqui</a>.</small></p>",$_SESSION['brewerFirstName'],build_public_url("list","default","default","default",$sef,$base_url));
 	$primary_page_info .= "<p class='lead'>";
-	$primary_page_info .= sprintf("Thank you for your interest in the %s organized by ",$_SESSION['contestName']);
+	$primary_page_info .= sprintf("Obrigado pelo seu interesse no %s organizado pela  ",$_SESSION['contestName']);
 	if ($_SESSION['contestHostWebsite'] != "") $primary_page_info .= sprintf("<a href='%s' target='_blank'>%s</a>",$_SESSION['contestHostWebsite'],$_SESSION['contestHost']);
 	else $primary_page_info .= $_SESSION['contestHost'];
 	if (!empty($_SESSION['contestHostLocation'])) $primary_page_info .= sprintf(", %s",$_SESSION['contestHostLocation']);
 	$primary_page_info .= ".</p>";
 	
 	if (!isset($_SESSION['loginUsername'])) {
-		$page_info .= "<p class='lead'><small>You only need to register your information once and can return to this site to enter more brews or edit the brews you've entered.";
-		if ($_SESSION['prefsPaypal'] == "Y") $page_info .= " You can even pay your entry fees online if you wish.";
+		$page_info .= "<p class='lead'><small>Você só precisa informar os seus dados pessoais uma vez e pode retornar a esse sistema quando quiser editar essas informações e/ou incluir/editar cervejas para a competição.";
+		if ($_SESSION['prefsPaypal'] == "Y") $page_info .= " O pagamento da taxa de inscrição é via PayPal, com cartão de crédito ou débito.";
 		$page_info .= "</small></p>";
 	}
 	
 	$contact_count = get_contact_count();
 	// Competition Officials
 	if ($contact_count > 0) {
-		if ($contact_count == 1) $header1_10 .= "<a name='officials'></a><h2>Competition Official</h2>";
-		else $header1_10 .= "<a name='officials'></a><h2>Competition Officials</h2>";
-		if ($action != "print") $page_info10 .= sprintf("<p>You can send an email to any of the following individuals via the <a href='%s'>Contact</a> section.</p>",build_public_url("contact","default","default","default",$sef,$base_url));
+		if ($contact_count == 1) $header1_10 .= "<a name='officials'></a><h2>Comissão Organizadora</h2>";
+		else $header1_10 .= "<a name='officials'></a><h2>Comissão Organizadora</h2>";
+		if ($action != "print") $page_info10 .= sprintf("<p>Você pode enviar uma mensagem para qualquer uma das pessoas abaixo através da página de <a href='%s'>Contato</a>.</p>",build_public_url("contact","default","default","default",$sef,$base_url));
 		$page_info10 .= "<ul>";
 		do {
 			$page_info10 .= "<li>";
@@ -152,7 +150,7 @@ if ((judging_date_return() == 0) && ($registration_open == "2")) {
 		}
 		
 		else {
-			echo $page_info;
+			if (isset($page_info)) echo $page_info;
 		}
 	} 
 }

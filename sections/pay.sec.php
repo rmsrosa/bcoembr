@@ -65,33 +65,34 @@ Declare all variables empty at the top of the script. Add on later...
 	$page_info6 = "";
 	$header1_7 = "";
 	$page_info7 = "";
+	$return_entries = "";
 	
 	// Build top of page info: total entry fees, list of unpaid entries, etc.
 	
-	$primary_page_info .= sprintf("<p class=\"lead\">%s, the following are your options for paying your entry fees.</p>",$_SESSION['brewerFirstName']);
+	$primary_page_info .= sprintf("<p class=\"lead\">%s, o pagamento deve ser feito via PayPal.</p>",$_SESSION['brewerFirstName']);
 	$primary_page_info .= "<p class=\"lead\"><small>";
-	$primary_page_info .= sprintf("<span class=\"fa fa-money text-success\"></span> Fees are <strong class=\"text-success\">%s</strong> per entry.",$currency_symbol.number_format($_SESSION['contestEntryFee'],2));
-	if ($_SESSION['contestEntryFeeDiscount'] == "Y") $primary_page_info .= sprintf(" %s per entry after the %s entry. ",$currency_symbol.number_format($_SESSION['contestEntryFee2'], 2),addOrdinalNumberSuffix($_SESSION['contestEntryFeeDiscountNum'])); 
-	if ($_SESSION['contestEntryCap'] != "") $primary_page_info .= sprintf(" %s for unlimited entries. ",$currency_symbol.number_format($_SESSION['contestEntryCap'], 2));
+	$primary_page_info .= sprintf("<span class=\"fa fa-money text-success\"></span> A taxa é de <strong class=\"text-success\">%s</strong> por amostra.",$currency_symbol.number_format($_SESSION['contestEntryFee'],2,',',''));
+	if ($_SESSION['contestEntryFeeDiscount'] == "Y") $primary_page_info .= sprintf(" %s por amostra após a %s amostra. ",$currency_symbol.number_format($_SESSION['contestEntryFee2'], 2),addOrdinalNumberSuffix($_SESSION['contestEntryFeeDiscountNum'])); 
+	if ($_SESSION['contestEntryCap'] != "") $primary_page_info .= sprintf(" %s por amostras ilimitadas. ",$currency_symbol.number_format($_SESSION['contestEntryCap'], 2));
 	$primary_page_info .= "</small></p>";
 	if ($row_brewer['brewerDiscount'] == "Y") {
-		$primary_page_info .= sprintf("<p class=\"lead\"><small><span class=\"fa fa-star-o text-primary\"></span> Your fees have been discounted to <strong class=\"text-success\">%s</strong> per entry.</small></p>",$currency_symbol.number_format($_SESSION['contestEntryFeePasswordNum'], 2));
+		$primary_page_info .= sprintf("<p class=\"lead\"><small><span class=\"fa fa-star-o text-primary\"></span> A taxa, após o desconto, é de <strong class=\"text-success\">%s</strong> por amostra.</small></p>",$currency_symbol.number_format($_SESSION['contestEntryFeePasswordNum'], 2));
 	}
-	$primary_page_info .= sprintf("<p class=\"lead\"><small><span class=\"fa fa-exclamation-triangle text-danger\"></span>  Your total entry fees are <strong class=\"text-success\">%s</strong>. You need to pay <strong class=\"text-danger\">%s</strong>.</small></p>",$currency_symbol.number_format($total_entry_fees,2),$currency_symbol.number_format($total_to_pay,2));
+	$primary_page_info .= sprintf("<p class=\"lead\"><small><span class=\"fa fa-exclamation-triangle text-danger\"></span>  O seu total de taxa de inscrição é de <strong class=\"text-success\">%s</strong>. Você já pagou <strong class=\"text-success\">%s</strong>. Ainda falta pagar <strong class=\"text-danger\">%s</strong>.</small></p>",$currency_symbol.number_format($total_entry_fees,2,',',''),$currency_symbol.number_format($total_paid_entry_fees,2,',',''),$currency_symbol.number_format($total_to_pay,2,',',''));
 	
-	if ($total_not_paid == 0) $primary_page_info .= sprintf("<p class=\"lead\"><small><span class=\"fa fa-thumbs-o-up text-danger\"></span> %s</p>","Your fees have been paid. Thank you!</small></p>");
+	if ($total_not_paid == 0) $primary_page_info .= sprintf("<p class=\"lead\"><small><span class=\"fa fa-thumbs-o-up text-danger\"></span> %s</p>","Todas as amostras foram pagas. Obrigado!</small></p>");
 	
 	
 	else {
 		$primary_page_info .= "<p class=\"lead\"><small>";
-		$primary_page_info .= sprintf("<span class=\"fa fa-exclamation-triangle text-danger\"></span>  You currently have <strong class=\"text-danger\">%s unpaid confirmed ",readable_number($total_not_paid));
-		if ($total_not_paid == "1") $primary_page_info .= "entry</strong>:"; else $primary_page_info .= "entries</strong>:";
+		$primary_page_info .= sprintf("<span class=\"fa fa-exclamation-triangle text-danger\"></span>  No momento você tem <strong class=\"text-danger\">%s  ",readable_number($total_not_paid));
+		if ($total_not_paid == "1") $primary_page_info .= "amostra confirmada não paga</strong>:"; else $primary_page_info .= "amostras confirmadas não pagas</strong>:";
 		$primary_page_info .= "</small></p>";
 		$primary_page_info .= "<ol>";
 			do { 
 				if ($row_log_confirmed['brewPaid'] != "1") {
 					$entry_no = sprintf("%04s",$row_log_confirmed['id']);
-					$primary_page_info .= sprintf("<li>Entry #%s: %s (Category %s)</li>",$entry_no,$row_log_confirmed['brewName'],$row_log_confirmed['brewCategory'].$row_log_confirmed['brewSubCategory']);
+					$primary_page_info .= sprintf("<li>Amostra #%s: %s (Categoria %s)</li>",$entry_no,$row_log_confirmed['brewName'],$row_log_confirmed['brewCategory'].$row_log_confirmed['brewSubCategory']);
 					$entries .= sprintf("%04s",$row_log_confirmed['id']).", ";
 					$return_entries .= $row_log_confirmed['id']."-";
 				}
@@ -121,19 +122,21 @@ Declare all variables empty at the top of the script. Add on later...
 	
 		if ($_SESSION['prefsPaypal'] == "Y")  { 
 					
-			if ($_SESSION['prefsTransFee'] == "Y") $payment_amount = $total_to_pay + number_format((($total_to_pay * .03) + .30), 2, '.', ''); 
+//			if ($_SESSION['prefsTransFee'] == "Y") $payment_amount = $total_to_pay + number_format((($total_to_pay * .03) + .30), 2, '.', ''); 
+//			if ($_SESSION['prefsTransFee'] == "Y") $payment_amount = number_format($total_to_pay * 1.03 + .30, 2, ',', ''); 
+			if ($_SESSION['prefsTransFee'] == "Y") $payment_amount = number_format($total_to_pay * 1.05 + .60,2);
 			else $payment_amount = number_format($total_to_pay, 2);
-			$fee = number_format((($total_to_pay * .03) + .30), 2, '.', ''); 
+			$fee = number_format((($total_to_pay * .05) + .60), 2); 
 		
 			// Online
-			$header1_3 .= "<h2>Pay Online</h2>";
-			$page_info3 .= "<p>Your payment confirmation email is your entry receipt. Include a copy with your entries as proof of payment.</p>";
+			$header1_3 .= "<h2>Pague Online</h2>";
+			$page_info3 .= "<p>O email de confirmação será o seu recibo. Inclua uma cópia do email de confirmação junto com as amostras.</p>";
 		
 			// PayPal
 			$header2_4 .= "<h3>PayPal <span class=\"fa fa-cc-paypal\"></span> <span class=\"fa fa-cc-visa\"></span> <span class=\"fa fa-cc-mastercard\"></span> <span class=\"fa fa-cc-discover\"></span> <span class=\"fa fa-cc-amex\"></span></h3>";
-			$page_info4 .= "<p>Click the &ldquo;Pay with PayPal&rdquo; button below to pay online.";
-			if ($_SESSION['prefsTransFee'] == "Y") $page_info4 .= sprintf(" Please note that a transaction fee of %s will be added into your total.</p>",$currency_symbol.$fee);
-			//$page_info4 .= "<div class=\"alert alert-warning\"><span class=\"fa fa-exclamation-triangle\"> <strong>Be sure to click the &quot;Return to...&quot; link on PayPal&rsquo;s confirmation screen after you have sent your payment.</strong> This will ensure that your entries are marked as &quot;paid&quot; on <em>this site</em>.</div>";
+			$page_info4 .= "<p>Clique no botão &ldquo;Pay with PayPal&rdquo; abaixo para pagar online.";
+			if ($_SESSION['prefsTransFee'] == "Y") $page_info4 .= sprintf(" Observe que uma taxa de transação de <strong class=\"text-danger\">%s</strong> será adicionada ao seu pagamento, totalizando <strong class=\"text-danger\">%s</strong>.</p>",$currency_symbol.number_format($fee,2,',',''),$currency_symbol.number_format($payment_amount,2,',',''));
+			//$page_info4 .= "<div class=\"alert alert-warning\"><span class=\"fa fa-exclamation-triangle\"> <strong>IMPORTANTE! Clique no linke &quot;Retorne para ...&quot; na página de confirmação de pagamento do PayPal.</strong> Isso irá garantir que a sua amostra será marcada como &quot;paga&quot; no <em>nosso sistema</em>. Caso isso não seja feito, entre imediatamente em contato com a organização do concurso, caso contráio a inclusão da sua amostra corre o risco de ser cancelada. </div>";
 			$page_info4 .= "<form role=\"form\" id=\"formfield\"  name=\"PayPal\" action=\"https://www.paypal.com/cgi-bin/webscr\" method=\"post\" name=\"form1\">";
 			$page_info4 .= "<input type=\"hidden\" name=\"action\" value=\"add_form\" />";
 			$page_info4 .= "<input type=\"hidden\" name=\"cmd\" value=\"_xclick\">";
@@ -158,13 +161,13 @@ Declare all variables empty at the top of the script. Add on later...
 			$page_info4 .= "<div class=\"modal-content\">";
 			$page_info4 .= "<div class=\"modal-header\">";
 			$page_info4 .= "<button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\"><span aria-hidden=\"true\">&times;</span></button>";
-			$page_info4 .= "<h4 class=\"modal-title\">Make Sure to Click &ldquo;Return To...&rdquo; After Paying Your Fees</h4>";
+			$page_info4 .= "<h4 class=\"modal-title\">NÃO Se Esqueça de Clicar em &ldquo;Clique aqui para voltar para...&rdquo; Após Enviar o Pagamento</h4>";
 			$page_info4 .= "</div>";
-			$page_info4 .= "<div class=\"modal-body\"><p>To make sure your PayPal payment is marked <strong>paid</strong> on <strong>this site</strong>, make sure to click the &ldquo;Return to...&rdquo; link on PayPal&rsquo;s confirmation screen <strong>after</strong> you have sent your payment.</p><p>Also, make sure to print your payment receipt and attach it to one of your entry bottles.</p>";
+			$page_info4 .= "<div class=\"modal-body\"><p><strong class=\"text-danger\">IMPORTANTE!</strong> Para garantir que a sua amostra apareça como tendo sido <strong>paga</strong> no <strong>nosso sistema</strong>, não esqueça de clicar no link &ldquo;Clique aqui para voltar para ...&rdquo; na página de confirmação de pagamento do PayPal <strong>após</strong> você ter enviado o seu pagamento.</p><p>Além disso, não se esqueça de imprimir o recibo do seu pagamento e de incluir uma cópia do recibo junto com as suas amostras.</p>";
 			$page_info4 .= "</div>";
 			$page_info4 .= "<div class=\"modal-footer\">";
-			$page_info4 .= "<button type=\"button\" class=\"btn btn-danger\" data-dismiss=\"modal\">Cancel</button>";
-			$page_info4 .= "<a href=\"#\" id=\"submit\" class=\"btn btn-success success\">I Understand</a>";
+			$page_info4 .= "<button type=\"button\" class=\"btn btn-danger\" data-dismiss=\"modal\">Cancelar</button>";
+			$page_info4 .= "<a href=\"#\" id=\"submit\" class=\"btn btn-success success\">Eu estou ciente</a>";
 			$page_info4 .= "</div>";
 			$page_info4 .= "</div>";
 			$page_info4 .= "</div>";
@@ -210,10 +213,10 @@ Declare all variables empty at the top of the script. Add on later...
 		$page_info7 .= "</form>";
 	}
 	
-	if (($total_entry_fees > 0) && ($total_entry_fees == $total_paid_entry_fees)) $page_info6 .= "<span class=\"fa fa-thumbs-o-up\"></span> Your fees have been paid. Thank you!</p>";
-	if ($total_entry_fees == 0) $page_info6 .= "<p>You have not logged any entries yet.</p>";
+	if (($total_entry_fees > 0) && ($total_entry_fees == $total_paid_entry_fees)) $page_info6 .= "<span class=\"fa fa-thumbs-o-up\"></span> Todas as amostras foram pagas. Obrigado!</p>";
+	if ($total_entry_fees == 0) $page_info6 .= "<p>Você ainda não incluiu nenhuma amostra em sua inscrição.</p>";
 	
-	if (($_SESSION['prefsPayToPrint'] == "Y") && ($unconfirmed > 0)) $warning1 .= "<div class=\"alert alert-danger\"><span class=\"fa fa-exclamation-circle\"></span> <strong>You cannot pay for your entries because one or more of your entries is unconfirmed.</strong> Click &ldquo;My Account&rdquo; above to review your unconfirmed entries.</div>"; 
+	if (($_SESSION['prefsPayToPrint'] == "Y") && ($unconfirmed > 0)) $warning1 .= "<div class=\"alert alert-danger\"><span class=\"fa fa-exclamation-circle\"></span> <strong>Você não pode pagar pelas amostras porque uma ou mais de suas amostras não estão confirmadas.</strong> Clique em &ldquo;Minha Conta&rdquo; acima para revisar as suas amostras não confirmadas.</div>"; 
 	
 		
 	// --------------------------------------------------------------
@@ -224,7 +227,7 @@ Declare all variables empty at the top of the script. Add on later...
 	
 	if ($total_entry_fees > 0) { 
 		
-		if (($_SESSION['prefsPayToPrint'] == "N") && (($totalRows_log - $totalRows_log_confirmed) > 0)) $warning2 .= "<div class=\"alert alert-warning\"><span class=\"fa fa-exclamation-triangle\"> <strong>You have unconfirmed entries that are <em>not</em> reflected in your fee totals below.</strong> Please go to <a class=\"alert-link\" href=\"".build_public_url("list","default","default","default",$sef,$base_url)."#entries\">your entry list</a> to confirm all your entry data. Unconfirmed entries may be deleted from the system without warning.</div>";
+		if (($_SESSION['prefsPayToPrint'] == "N") && (($totalRows_log - $totalRows_log_confirmed) > 0)) $warning2 .= "<div class=\"alert alert-warning\"><span class=\"fa fa-exclamation-triangle\"> <strong>Você possui amostras não confirmadas que  <em>não</em> estão incluídas na taxa total abaixo.</strong> Por favor, clique em <a class=\"alert-link\" href=\"".build_public_url("list","default","default","default",$sef,$base_url)."#entries\">sua lista de amostras</a> para confirmar todas as suas amostras. Amostras não confirmadas podem ser apagadas do sistema sem mais avisos.</div>";
 		
 		echo $warning1;
 		echo $warning2;

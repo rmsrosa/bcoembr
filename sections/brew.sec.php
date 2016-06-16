@@ -186,7 +186,7 @@ $(document).ready(function()
 <input type="hidden" name="brewJudgingNumber" value="<?php echo $row_log['brewJudgingNumber']; ?>">
 	<!-- Enter or Select Brewer Name -->
     <div class="form-group"><!-- Form Group REQUIRED Text Input -->
-        <label for="brewBrewerID" class="col-lg-2 col-md-3 col-sm-3 col-xs-12 control-label">Brewer</label>
+        <label for="brewBrewerID" class="col-lg-2 col-md-3 col-sm-3 col-xs-12 control-label">Cervejeiro</label>
         <div class="col-lg-10 col-md-9 col-sm-9 col-xs-12">
             <div class="input-group has-warning">
                 <!-- Input Here -->
@@ -198,7 +198,7 @@ $(document).ready(function()
     </div><!-- ./Form Group -->
     <!-- Enter Co-Brewer(s) Name(s) -->
 	<div class="form-group"><!-- Form Group NOT REQUIRED Text Input -->
-        <label for="brewCoBrewer" class="col-lg-2 col-md-3 col-sm-3 col-xs-12 control-label">Co-Brewer</label>
+        <label for="brewCoBrewer" class="col-lg-2 col-md-3 col-sm-3 col-xs-12 control-label">Co-Cervejeiros</label>
         <div class="col-lg-10 col-md-9 col-sm-9 col-xs-12">
         	<!-- Input Here -->
             <input class="form-control" name="brewCoBrewer" type="text" value="<?php if ($disable_fields) echo "Not Available"; if ($action == "edit") echo $row_log['brewCoBrewer']; ?>" placeholder="" <?php if ($disable_fields) echo "disabled";  ?>>
@@ -206,7 +206,7 @@ $(document).ready(function()
     </div><!-- ./Form Group -->
     <!-- Enter Entry Name -->
 	<div class="form-group"><!-- Form Group REQUIRED Text Input -->
-        <label for="brewName" class="col-lg-2 col-md-3 col-sm-3 col-xs-12 control-label">Entry Name</label>
+        <label for="brewName" class="col-lg-2 col-md-3 col-sm-3 col-xs-12 control-label">Nome da amostra</label>
         <div class="col-lg-10 col-md-9 col-sm-9 col-xs-12">
             <div class="input-group has-warning">
                 <!-- Input Here -->
@@ -278,18 +278,18 @@ $(document).ready(function()
             	 <input class="form-control" name="brewInfo" id="brewInfo" type="text" value="<?php if ($action == "edit") echo $row_log['brewInfo'];?>" maxlength="<?php echo $_SESSION['prefsSpecialCharLimit']; ?>" <?php if ($highlight_special) echo "autofocus"; elseif (($action == "edit") && ($special_required)) echo "autofocus"; ?>>
             
             <span id="helpBlock" class="help-block">
-            	<p><strong class="text-primary">This sub-category requires that you specify a specific type, any special ingredients, a classic style, strength (for beer entries), or color.</strong> Click the appropriate number below for entry requirements.</p>
-                <p><strong class="text-danger">Required for categories:</strong> <?php echo $specials; ?>.</p>
-                <p><strong class="text-danger">Use the Brewer&rsquo;s Specifics field below to add information NOT essential to judging your entry.</strong></p>
-                <p>Judges <strong>will not know</strong> the name of your entry. If your specific type, special ingredient(s), classic style, strength (for beer), or color is part of your entry&rsquo;s name, be sure each is specified above.</p>
-                <p>Enter the base style (if appropriate) and specialty nature of your beer/mead/cider in the following format: <em>base style, special nature</em>.
+            	<p><strong class="text-primary">Esta sub-categoria precisa de informações adicionais, sobre ingredientes especiais, um estilo clássico, teor alcoólico ou cor.</strong> Clique no número apropriado abaixo para os requisitos para essa amostra.</p>
+                <p><strong class="text-danger">Necessário para as categorias:</strong> <?php echo $specials; ?>.</p>
+                <p><strong class="text-danger">Use o campo Informações Adicionais abaixo para incluir informações que NÃO são essenciais para o julgamento da sua amostra.</strong></p>
+                <p>Os Juízes <strong>não</strong> terão conhecimento do nome da sua amostra durante o julgamento. Se as informações especiais necessárias para a sua amostra são parte do nome da amostra, certifique-se de que esses dados são informados abaixo.</p>
+                <p>Informe o estilo base (se apropriado) e a natureza especial da sua amostra no formato a seguir: <em>estilo base, natureza especial</em>.
                     <ul>
-                        <li>Beer example: <em>robust porter, clover honey, sour cherries</em> or <em>wheat ale, anaheim/jalape&ntilde;o chiles</em>, etc.</li>
+                        <li>Exemplo para cerveja: <em>robust porter, mel de laranjeiras, pimenta malagueta</em> ou <em>wheat ale, umbú</em>, etc.</li>
                         <li>Mead example: <em>wildflower honey, blueberries</em> or <em>traditional tej with gesho</em>, etc.</li>
                         <li>Cider example: <em>golden russet apples, clove, cinnamon</em> or <em>strawberry and rhubarb</em>, etc.</li>
                     </ul>
                 </p>
-                <p><strong><?php echo $_SESSION['prefsSpecialCharLimit']; ?> character limit</strong> - use keywords and abbreviations. Characters remaining: <span id="count"><?php echo $_SESSION['prefsSpecialCharLimit']; ?></span></p>
+                <p><strong><?php echo $_SESSION['prefsSpecialCharLimit']; ?> limite de caracteres</strong> - use palavras-chave e abreviações. Caracteres restantes: <span id="count"><?php echo $_SESSION['prefsSpecialCharLimit']; ?></span></p>
                 
             </span>
         </div>
@@ -297,14 +297,14 @@ $(document).ready(function()
     
     <!-- Enter Brewer's Specifics -->
     <div class="form-group"><!-- Form Group NOT REQUIRED Text Input -->
-        <label for="brewComments" class="col-lg-2 col-md-3 col-sm-3 col-xs-12 control-label">Brewer&rsquo;s Specifics</label>
+        <label for="brewComments" class="col-lg-2 col-md-3 col-sm-3 col-xs-12 control-label">Informações Adicionais</label>
         <div class="col-lg-10 col-md-9 col-sm-9 col-xs-12">
         	<!-- Input Here -->
             <input class="form-control" name="brewComments" id="brewComments" type="text" value="<?php if ($action == "edit") echo $row_log['brewComments']; ?>" maxlength="<?php echo $_SESSION['prefsSpecialCharLimit']; ?>">
             <span id="helpBlock" class="help-block">
-            	<p><strong class="text-danger">DO NOT use this field to specify special ingredients, classic style, strength (for beer entries), or color.</strong></p>
-                <p>Use to record specifics that you would like judges to consider when evaluating your entry (e.g., mash technique, hop variety, honey variety, grape variety, pear variety, etc.). <strong class="text-primary">Provide only if you wish the judges to fully consider what you specify when evaluating and scoring your entry.</strong> What you specify here will be on the printed pullsheets competition personnel use to retrieve entries for judging.</p>
-                <p><strong><?php echo $_SESSION['prefsSpecialCharLimit']; ?> character limit</strong> - use keywords and abbreviations. Characters remaining: <span id="count-comments"><?php echo $_SESSION['prefsSpecialCharLimit']; ?></span></p>
+            	<p><strong class="text-danger">NÃO use este campo para informar ingredientes especiais, estilo clássico, teor alcoólico ou cor.</strong></p>
+                <p>Use para informar características especiais que você gostaria que os juízes avaliassem, como técnicas de mostura, variedade de lúpulo, etc. <strong class="text-primary">Informe apenas se você quiser que os juízes considerem essa informação na sua avaliação e pontuação.</strong> O que você especificar aqui será impresso para apreciação dos juízes.</p>
+                <p><strong><?php echo $_SESSION['prefsSpecialCharLimit']; ?> limite de caracteres</strong> - use palavras-chave e abreviações. Caracteres restantes: <span id="count-comments"><?php echo $_SESSION['prefsSpecialCharLimit']; ?></span></p>
             </span>
         </div>
     </div><!-- ./Form Group -->

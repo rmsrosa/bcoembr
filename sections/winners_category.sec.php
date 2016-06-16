@@ -51,7 +51,7 @@ foreach (array_unique($a) as $style) {
 	include(DB.'winners_category.db.php');
 	
 	// Display all winners 
-	if ($row_entry_count['count'] > 1) $entries = "entries"; else $entries = "entry";
+	if ($row_entry_count['count'] > 1) $entries = "amostras"; else $entries = "amostra";
 	if ($row_score_count['count'] > "0")   {
 		
 		$primary_page_info = "";
@@ -66,18 +66,18 @@ foreach (array_unique($a) as $style) {
 		
 		// Build headers		
 		$header1_1 .= "<h3>";
-		$header1_1 .= "Category ".ltrim($style,"0").": ".style_convert($style,"1")." (".$row_entry_count['count']." ".$entries.")";
+		$header1_1 .= "Categoria ".ltrim($style,"0").": ".style_convert($style,"1")." (".$row_entry_count['count']." ".$entries.")";
 		$header1_1 .= "</h3>";
 		
 		
 		// Build table headers
 		$table_head1 .= "<tr>";
-		$table_head1 .= "<th nowrap>Place</th>";
-		$table_head1 .= "<th>Brewer(s)</th>";
-		$table_head1 .= "<th><span class=\"hidden-xs hidden-sm hidden-md\">Entry </span>Name</th>";
-		$table_head1 .= "<th>Style</th>";
-		$table_head1 .= "<th class=\"hidden-xs hidden-sm hidden-md\">Club</th>";
-		if ($filter == "scores") $table_head1 .= "<th class=\"hidden-xs hidden-sm hidden-md\" nowrap>Score</th>";
+		$table_head1 .= "<th nowrap>Lugar</th>";
+		$table_head1 .= "<th>Cervejeiro(a)(s)</th>";
+		$table_head1 .= "<th><span class=\"hidden-xs hidden-sm hidden-md\">Nome da </span>Amostra</th>";
+		$table_head1 .= "<th>Estilo</th>";
+		$table_head1 .= "<th class=\"hidden-xs hidden-sm hidden-md\">Clube</th>";
+		if ($filter == "scores") $table_head1 .= "<th class=\"hidden-xs hidden-sm hidden-md\" nowrap>Pontuação</th>";
 		$table_head1 .= "</tr>";
 		
 		// Build table body
@@ -103,7 +103,7 @@ foreach (array_unique($a) as $style) {
 			
 			$table_body1 .= "<td>";
 			$table_body1 .= $row_scores['brewerFirstName']." ".$row_scores['brewerLastName'];
-			if ($row_scores['brewCoBrewer'] != "") $table_body1 .= "<br>Co-Brewer: ".$row_scores['brewCoBrewer'];
+			if ($row_scores['brewCoBrewer'] != "") $table_body1 .= "<br>Co-Cervejeiro(a)(s): ".$row_scores['brewCoBrewer'];
 			$table_body1 .= "</td>";
 			
 			$table_body1 .= "<td>";

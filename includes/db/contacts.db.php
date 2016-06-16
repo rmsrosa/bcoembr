@@ -6,7 +6,7 @@ if (NHC) {
 }
 // end if (NHC)
 else {
-	
+	mysql_query("SET NAMES 'utf8'");	
 	$query_contact = "SELECT * FROM $contacts_db_table";
 	if ($action == "edit")  $query_contact .= " WHERE id='$id'"; else $query_contact .= " ORDER BY contactLastName,contactPosition"; 
 	$contact = mysql_query($query_contact, $brewing) or die(mysql_error());

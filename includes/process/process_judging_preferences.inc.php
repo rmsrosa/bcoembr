@@ -69,7 +69,7 @@ if (((isset($_SESSION['loginUsername'])) && ($_SESSION['userLevel'] <= 1))  || (
 				$message .= "</html>";
 				
 				$headers  = "MIME-Version: 1.0" . "\r\n";
-				$headers .= "Content-type: text/html; charset=iso-8859-1" . "\r\n";
+				$headers .= "Content-type: text/html; charset=utf-8" . "\r\n";
 				$headers .= "To: BCOEM Admin <prost@brewcompetition.com>, " . "\r\n";
 				$headers .= "From: BCOEM Server <noreply@".$server.">" . "\r\n";
 				

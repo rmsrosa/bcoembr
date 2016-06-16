@@ -53,27 +53,27 @@ $page_info_vol_2 = "";
 $header_vol_1_3 = "";
 $page_info_vol_3 = "";
 
-$header_vol_1_1 .= "<h2>Judges and Stewards</h2>";
+$header_vol_1_1 .= "<h2>Juízes e Auxiliares</h2>";
 if (($judge_window_open > 0) && (!$logged_in)) { 
-	$page_info_vol_1 .= sprintf("<p>If you <em>have</em> registered, <a href=\"%s\">log in</a> and then choose <em>Edit Account</em> from the My Account menu indicated by the <span class=\"fa fa-user\"></span> icon on the top menu.</p>",build_public_url("login","default","default","default",$sef,$base_url));
-	if ($registration_open < 2) $page_info_vol_1 .= sprintf("<p>If you <em>have not</em> registered and are willing to be a judge or steward, <a href=\"%s\">please register</a>.</p>",build_public_url("register","judge","default","default",$sef,$base_url));
+	$page_info_vol_1 .= sprintf("<p>Se você <em>está</em> registrado no sistema, faça o <a href=\"%s\">log in</a> e escolha <em>Editar Conta</em> no menu Minha Conta indicado pelo ícone <span class=\"fa fa-user\"></span> no topo do menu.</p>",build_public_url("login","default","default","default",$sef,$base_url));
+	if ($registration_open < 2) $page_info_vol_1 .= sprintf("<p>Se você <em>não</em> está registrado no sistema e gostaria de ser Juiz ou Auxiliar, <a href=\"%s\">por favor registre-se</a>.</p>",build_public_url("register","judge","default","default",$sef,$base_url));
 }
 
 elseif (($judge_window_open > 0) && ($logged_in)) {
-	$page_info_vol_1 .= sprintf("<p>Since you have already registered, <a href=\"%s\">access your account</a> to see if you have volunteered to be a judge or steward.</p>",build_public_url("list","default","default","default",$sef,$base_url));
+	$page_info_vol_1 .= sprintf("<p>Como você já está registrado, <a href=\"%s\">acesse a sua conta</a> para ver se você já se ofereceu para ser Juiz ou Auxiliar.</p>",build_public_url("list","default","default","default",$sef,$base_url));
 }
 
 else {
-	$page_info_vol_1 .= sprintf("<p>If you are willing to judge or steward, please return to register on or after %s.</p>",getTimeZoneDateTime($_SESSION['prefsTimeZone'], $row_contest_dates['contestJudgeOpen'], $_SESSION['prefsDateFormat'],  $_SESSION['prefsTimeFormat'], "long", "date-time"));
+	$page_info_vol_1 .= sprintf("<p>Se você gostaria de ser Juiz ou Auxiliar, por favor faça o registro a partir de %s.</p>",getTimeZoneDateTime($_SESSION['prefsTimeZone'], $row_contest_dates['contestJudgeOpen'], $_SESSION['prefsDateFormat'],  $_SESSION['prefsTimeFormat'], "long", "date-time"));
 }
 
 if ($registration_open < 2) {
-$header_vol_1_2 .= "<h2>Staff</h2>";
-$page_info_vol_2 .= sprintf("<p>If you would like to volunteer to be a competition staff member, <a href=\"%s\">contact</a> the appropriate competition official.", build_public_url("contact","default","default","default",$sef,$base_url));
+$header_vol_1_2 .= "<h2>Equipe</h2>";
+$page_info_vol_2 .= sprintf("<p>Se você gostaria de se oferecer para participar como ajudante na equipe da competição, <a href=\"%s\">entre em contato</a> com os organizadores.", build_public_url("contact","default","default","default",$sef,$base_url));
 }
 
 if (!empty($row_contest_info['contestVolunteers'])) {
-	$header_vol_1_3 .= "<h2>Other Volunteer Info</h2>";
+	$header_vol_1_3 .= "<h2>Outras Informações</h2>";
 	$page_info_vol_3 .= $row_contest_info['contestVolunteers'];
 }
 

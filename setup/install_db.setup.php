@@ -2,6 +2,8 @@
 if ($setup_free_access == TRUE) {
 
 	$output = "";
+	
+	mysql_query("SET NAMES 'utf8'");
 
 	if ($action == "default") { 
 	
@@ -34,7 +36,42 @@ if ($setup_free_access == TRUE) {
 		$output .= "<p>Status of database tables installation.</p>";
 		$output .= "</div>";
 		$output .= "<ul class=\"list-group\">";
+
+		// ------------------- 
+		// Allowed CPFs Table 
+		// -------------------
 		
+		$sql = "
+		CREATE TABLE IF NOT EXISTS `$allowedcompetidores_db_table` (
+			`allowedCPF` varchar(11) DEFAULT NULL,
+			`allowedName` varchar(200) DEFAULT NULL,
+			`allowedPhone` varchar(25) DEFAULT NULL,
+			`allowedEmail` varchar(255) DEFAULT NULL,
+			PRIMARY KEY (`allowedCPF`)
+		) ENGINE=MyISAM DEFAULT CHARSET=utf8 ;
+		";
+		mysql_select_db($database, $brewing);
+		mysql_real_escape_string($sql);
+		mysql_real_escape_string($sql);
+		$result = mysql_query($sql, $brewing);
+		
+		$output .= "<li class=\"list-group-item\"><span class=\"fa fa-check text-success\"></span> The <strong>Allowed Competidores</strong> table was installed successfully.</li>";
+	
+// The following lines, adding a couple of CPFs, are for testing purposes. You may comment them out when you have the table of CPFs ready.
+		$sql = "
+		INSERT INTO `$allowedcompetidores_db_table` (`allowedCPF`, `allowedName`, `allowedPhone`, `allowedEmail`) VALUES
+		('19019019000', 'Zé das Lagers', NULL, NULL),
+		('91191191100', 'Maria das Ales', NULL, NULL);
+		";
+		mysql_select_db($database, $brewing);
+		mysql_real_escape_string($sql);
+		mysql_real_escape_string($sql);
+		$result = mysql_query($sql, $brewing);
+		 //echo "<p>".$sql."</p>";
+		
+		$output .= "<li class=\"list-group-item\"><span class=\"fa fa-check text-success\"></span> <strong>Allowed Competidores</strong> data installed successfully.</li>";
+
+
 		// ------------------- 
 		// Archive Table
 		// ------------------- 
@@ -69,6 +106,7 @@ if ($setup_free_access == TRUE) {
 		  `uid` int(8) DEFAULT NULL,
 		  `brewerFirstName` varchar(200) DEFAULT NULL,
 		  `brewerLastName` varchar(200) DEFAULT NULL,
+		  `brewerCPF` varchar(20) DEFAULT NULL,
 		  `brewerAddress` varchar(255) DEFAULT NULL,
 		  `brewerCity` varchar(255) DEFAULT NULL,
 		  `brewerState` varchar(255) DEFAULT NULL,
@@ -795,6 +833,54 @@ if ($setup_free_access == TRUE) {
 		mysql_real_escape_string($sql);
 		mysql_real_escape_string($sql);
 		$result = mysql_query($sql, $brewing);
+
+		// ------------------- 
+		// PagSeguro Table (v1.3.0.0 done)
+		// -------------------
+		
+		$sql = "
+		CREATE TABLE IF NOT EXISTS `$payment_db_table` (
+			`id` int(11) NOT NULL,
+			`transacao` varchar(255) COLLATE latin1_general_ci NOT NULL,
+			`status` int(11) NOT NULL,
+			`date_created` date NOT NULL,
+			`date_modified` date DEFAULT NULL
+			PRIMARY KEY (`id`)
+		) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+		";
+		
+		mysql_select_db($database, $brewing);
+		mysql_real_escape_string($sql);
+		mysql_real_escape_string($sql);
+		$result = mysql_query($sql, $brewing);
+		 //echo "<p>".$sql."</p>";
+
+		$output .= "<li class=\"list-group-item\"><span class=\"fa fa-check text-success\"></span> <strong>PagSeguro</strong> table installed successfully.</li>";
+
+		// ------------------- 
+		// Payment Table for PagSeguro (v1.3.0.0 done)
+		// -------------------
+		
+		$sql = "
+		CREATE TABLE IF NOT EXISTS `$payment_db_table` (
+			`id` int(11) NOT NULL AUTO_INCREMENT,
+			`idUser` int(11) NOT NULL,
+			`idBrewing` int(11) DEFAULT NULL,
+			`datePayment` date DEFAULT NULL,
+			`statusPayment` varchar(100) DEFAULT NULL,
+			`keyPayment` varchar(100) DEFAULT NULL,
+			`idTransaction` varchar(100) DEFAULT NULL,
+			PRIMARY KEY (`id`)
+		) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+		";
+		
+		mysql_select_db($database, $brewing);
+		mysql_real_escape_string($sql);
+		mysql_real_escape_string($sql);
+		$result = mysql_query($sql, $brewing);
+		 //echo "<p>".$sql."</p>";
+		$output .= "<li class=\"list-group-item\"><span class=\"fa fa-check text-success\"></span> <strong>Payment</strong> table for PagSeguro installed successfully.</li>";
+
 		
 		// ------------------- 
 		// Preferences Table

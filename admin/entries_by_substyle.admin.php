@@ -27,6 +27,8 @@ $style_mead_count_logged[] = 0;
 $style_cider_count_logged[] = 0;
 $style_other_count_logged[] = 0;
 
+mysql_query("SET NAMES 'utf8'");
+
 foreach ($subcats as $subcat) {
 	
 	// Perform query in appropriate db table rows

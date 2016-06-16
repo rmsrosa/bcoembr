@@ -1,4 +1,26 @@
-Brew Competition Online Entry & Management (BCOE&M)
+This code is based on the Brew Competition Online Entry & Management (BCOE&M)
+
+It is a modification of the original code developed by Geoff Humpfrey. The modifications were implemented by Ricardo Rosa, based on version 2.0.1 of the original BCOE&M. They were motivated, inspired, and to some extent adapted from an earlier similar modification of the original BCOE&M version 1.3.1.0, for which the credits go to Gean Carlo Vila Lobos, Luis Balbinot, Marcelo Minghelli and Paulo Dalla Santa.
+
+The main modifications done here were the following:
+- Include form for users to add their CPF
+- Include a database of CPFs of people allowed to enter a given competition (as it is usually done in competitions organized by the ACervAs, in which only members are allowed to enter).
+- Check whether the entrant's CPF is on the list of allowed entrants.
+- Include a php script to insert/update to the aproppriate table the list of cpfs of the members of the ACervAs (in folder /setup_cpfs)
+- Inclusion of the option "Beer Sommelier" for the judges.
+- Translations to Portuguese of (hopefully) all the parts that an entrant will see. Most of the admin parts were not translated and some stuff for Judges might not have been translated either.
+- Fixed some bugs in the original 2.0.1 version, in particular one that allows the entrant to add more entries than the limit for entrants set for the competition, and the value for PayPal in case there are decimals in the amount (usually arising from the choice of letting the users pay the fee, which turned out is not the choice we are making, but I fixed it anyway).
+- Fixed the encoding problems with UTF-8, by adding, in several files, the command mysql_query("SET NAMES 'utf8'"); prior to queries to the database.
+
+This software is free, open source, and is covered under the General Public
+License (GPL) from the Open Source Initiative. Therefore, you are permitted to 
+download the full source code of the software for your own use and customize it 
+for your own purposes
+
+***********************************************************************************
+From here one, everything is as in the original README.txt of BCOE&M 2.0.1
+***********************************************************************************
+
 Developed by Geoff Humphrey with code contributions by Mark Alston, Bruce Buerger, 
 Oskar Stephens, and Luis Balbinot.
 

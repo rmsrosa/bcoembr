@@ -9,6 +9,8 @@ if ((isset($_SESSION['loginUsername'])) && ($_SESSION['userLevel'] == "0")) {
 	
 	// User initiated purging of data 
 	
+	mysql_query("SET NAMES 'utf8'");
+	
 	if ($action == "purge") {
 		
 		// Purge unconfirmed and/or entries that require special ingredients that do not have special ingredient data

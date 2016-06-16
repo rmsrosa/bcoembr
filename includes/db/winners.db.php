@@ -6,6 +6,7 @@ if (NHC) {
 }
 // end if (NHC)
 else {
+	mysql_query("SET NAMES 'utf8'");
 	if (table_exists($special_best_info_db_table)) { 
 		$query_sbi = "SELECT * FROM $special_best_info_db_table";
 		if ($action == "edit") $query_sbi .= " WHERE id='$id'"; else $query_sbi .= " ORDER BY sbi_rank ASC";

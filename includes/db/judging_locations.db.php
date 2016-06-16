@@ -6,7 +6,7 @@ if (NHC) {
 }
 // end if (NHC)
 else {
-		
+	mysql_query("SET NAMES 'utf8'");	
 	$query_judging = "SELECT * FROM $judging_locations_db_table";
 	if (($go == "styles") && ($bid != "default")) $query_judging .= " WHERE id='$bid'";
 	elseif (($go == "judging") && ($action == "update") && ($bid != "default")) $query_judging .= " WHERE id='$bid'";

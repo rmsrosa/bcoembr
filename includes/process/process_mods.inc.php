@@ -4,8 +4,9 @@
  * Description: This module does all the heavy lifting for adding/editing info in the "mods" table
  */
 if ((isset($_SESSION['loginUsername'])) && ($_SESSION['userLevel'] <= 1)) {
-if (($_POST['mod_extend_function_admin'] == "") && ($_POST['mod_extend_function'] == 9)) $mod_extend_function_admin = "default"; 
-else $mod_extend_function_admin = $_POST['mod_extend_function_admin'];
+	if (($_POST['mod_extend_function_admin'] == "") && ($_POST['mod_extend_function'] == 9)) $mod_extend_function_admin = "default"; 
+	else $mod_extend_function_admin = $_POST['mod_extend_function_admin'];
+	mysql_query("SET NAMES 'utf8'");
 	if (NHC) {
 		// Place NHC SQL calls below
 		

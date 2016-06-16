@@ -101,10 +101,9 @@ if ($flights > 0) $flights = $flights; else $flights = "0";
 		if (($row_entries['brewInfo'] != "") && ($special == "1")) echo "<p><strong>Special Ingredients/Classic Style: </strong>".$row_entries['brewInfo']."</p>"; 
 		if ($row_entries['brewComments'] != "") echo "<p><strong>Specifics: </strong>".$row_entries['brewComments']."</p>"; 
 		if (style_convert($style,"5")) echo "<p>"; 
-		if (!empty($row_entries['brewMead1'])) echo "<strong>Carbonation:</strong> ".$row_entries['brewMead1']."<br>"; 
-		if (!empty($row_entries['brewMead2'])) echo "<strong>Sweetness:</strong> ".$row_entries['brewMead2']."<br>"; 
-		if (!empty($row_entries['brewMead3'])) echo "<strong>Strength:</strong> ".$row_entries['brewMead3'];
-		echo "</p>"; 
+		if (($row_entries['brewMead1'] != '') && ($strengh == "1")) echo $row_entries['brewMead1']."&nbsp;&nbsp;"; 
+		if (($row_entries['brewMead2'] != '') && ($carb == "1")) echo $row_entries['brewMead2']."&nbsp;&nbsp;"; 
+		if (($row_entries['brewMead3'] != '') && ($sweet == "1")) echo $row_entries['brewMead3']."</p>"; 
 		?>
         </td>
         <td nowrap><?php echo $row_entries['brewBoxNum']; ?></td>
@@ -212,10 +211,9 @@ if ($flights > 0) $flights = $flights; else $flights = "0";
 		if (($row_entries['brewInfo'] != "") && ($special == "1")) echo "<p><strong>Special Ingredients/Classic Style: </strong>".$row_entries['brewInfo']."</p>"; 
 		if ($row_entries['brewComments'] != "") echo "<p><strong>Specifics: </strong>".$row_entries['brewComments']."</p>"; 
 		if (style_convert($style,"5")) echo "<p>"; 
-		if (!empty($row_entries['brewMead1'])) echo "<strong>Carbonation:</strong> ".$row_entries['brewMead1']."<br>"; 
-		if (!empty($row_entries['brewMead2'])) echo "<strong>Sweetness:</strong> ".$row_entries['brewMead2']."<br>"; 
-		if (!empty($row_entries['brewMead3'])) echo "<strong>Strength:</strong> ".$row_entries['brewMead3'];
-		echo "</p>"; 
+		if (($row_entries['brewMead1'] != '') && ($strengh == "1")) echo $row_entries['brewMead1']."&nbsp;&nbsp;"; 
+		if (($row_entries['brewMead2'] != '') && ($carb == "1")) echo $row_entries['brewMead2']."&nbsp;&nbsp;"; 
+		if (($row_entries['brewMead3'] != '') && ($sweet == "1")) echo $row_entries['brewMead3']."</p>"; 
 		?>
         </td>
         <td nowrap><?php echo $row_entries['brewBoxNum']; ?></td>
@@ -323,10 +321,9 @@ if (($row_table_round['count'] >= 1) || ($round == "default")) {
 		if (($row_entries['brewInfo'] != "") && ($special == "1")) echo "<p><strong>Special Ingredients/Classic Style: </strong>".$row_entries['brewInfo']."</p>";
 		if ($row_entries['brewComments'] != "") echo "<p><strong>Specifics: </strong>".$row_entries['brewComments']."</p>"; 
 		if (style_convert($style,"5")) echo "<p>"; 
-		if (!empty($row_entries['brewMead1'])) echo "<strong>Carbonation:</strong> ".$row_entries['brewMead1']."<br>"; 
-		if (!empty($row_entries['brewMead2'])) echo "<strong>Sweetness:</strong> ".$row_entries['brewMead2']."<br>"; 
-		if (!empty($row_entries['brewMead3'])) echo "<strong>Strength:</strong> ".$row_entries['brewMead3'];
-		echo "</p>"; 
+		if (($row_entries['brewMead1'] != '') && ($strengh == "1")) echo $row_entries['brewMead1']."&nbsp;&nbsp;"; 
+		if (($row_entries['brewMead2'] != '') && ($carb == "1")) echo $row_entries['brewMead2']."&nbsp;&nbsp;"; 
+		if (($row_entries['brewMead3'] != '') && ($sweet == "1")) echo $row_entries['brewMead3']."</p>"; 
 		?>
         </td>
         <td nowrap><?php echo $row_entries['brewBoxNum']; ?></td>
@@ -417,10 +414,9 @@ $entry_count = get_table_info(1,"count_total",$row_tables['id'],$dbTable,"defaul
 		if (($row_entries['brewInfo'] != "") && ($special == "1")) echo "<p><strong>Special Ingredients/Classic Style: </strong>".$row_entries['brewInfo']."</p>"; 
 		if ($row_entries['brewComments'] != "") echo "<p><strong>Specifics: </strong>".$row_entries['brewComments']."</p>"; 
 		if (style_convert($style,"5")) echo "<p>"; 
-		if (!empty($row_entries['brewMead1'])) echo "<strong>Carbonation:</strong> ".$row_entries['brewMead1']."<br>"; 
-		if (!empty($row_entries['brewMead2'])) echo "<strong>Sweetness:</strong> ".$row_entries['brewMead2']."<br>"; 
-		if (!empty($row_entries['brewMead3'])) echo "<strong>Strength:</strong> ".$row_entries['brewMead3'];
-		echo "</p>";  
+		if (($row_entries['brewMead1'] != '') && ($strengh == "1")) echo $row_entries['brewMead1']."&nbsp;&nbsp;"; 
+		if (($row_entries['brewMead2'] != '') && ($carb == "1")) echo $row_entries['brewMead2']."&nbsp;&nbsp;"; 
+		if (($row_entries['brewMead3'] != '') && ($sweet == "1")) echo $row_entries['brewMead3']."</p>";  
 		?>
         </td>
         <td nowrap><?php echo $row_entries['brewBoxNum']; ?></td>
@@ -527,10 +523,9 @@ if ($style_type_info[0] == "Y") {
 		if (($row_entries_1['brewInfo'] != "") && ($special == "1")) echo "<p><strong>Special Ingredients/Classic Style: </strong>".$row_entries_1['brewInfo']."</p>";
 		if ($row_entries_1['brewComments'] != "") echo "<p><strong>Specifics: </strong>".$row_entries_1['brewComments']."</p>";  
 		if (style_convert($style,"5")) echo "<p>"; 
-		if (!empty($row_entries['brewMead1'])) echo "<strong>Carbonation:</strong> ".$row_entries['brewMead1']."<br>"; 
-		if (!empty($row_entries['brewMead2'])) echo "<strong>Sweetness:</strong> ".$row_entries['brewMead2']."<br>"; 
-		if (!empty($row_entries['brewMead3'])) echo "<strong>Strength:</strong> ".$row_entries['brewMead3'];
-		echo "</p>"; 
+		if (($row_entries_1['brewMead1'] != '') && ($strengh == "1")) echo $row_entries_1['brewMead1']."&nbsp;&nbsp;"; 
+		if (($row_entries_1['brewMead2'] != '') && ($carb == "1")) echo $row_entries_1['brewMead2']."&nbsp;&nbsp;"; 
+		if (($row_entries_1['brewMead3'] != '') && ($sweet == "1")) echo $row_entries_1['brewMead3']."</p>"; 
 		?>
         </td>
         <td nowrap><?php echo $row_entries['brewBoxNum']; ?></td>

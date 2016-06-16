@@ -4,6 +4,7 @@
  * Description: This module does all the heavy lifting for adding/editing info in the "judging_locations" table
  */
 if (((isset($_SESSION['loginUsername'])) && ($_SESSION['userLevel'] <= 1)) || ($section == "setup")) {
+	mysql_query("SET NAMES 'utf8'");
 	$judgingDate = strtotime($_POST['judgingDate']." ".$_POST['judgingTime']);
 	if (NHC) {
 		// Place NHC SQL calls below

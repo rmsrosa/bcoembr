@@ -10,6 +10,8 @@ require(INCLUDES.'url_variables.inc.php');
 
 if ((isset($_SESSION['loginUsername'])) && (isset($_SESSION['userLevel']))) { 
 
+	mysql_query("SET NAMES 'utf8'");
+	
 	if (NHC) {
 		// Place NHC SQL calls below
 		

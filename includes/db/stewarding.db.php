@@ -6,7 +6,7 @@ if (NHC) {
 }
 // end if (NHC)
 else {
-	
+	mysql_query("SET NAMES 'utf8'");	
 	$query_stewarding = "SELECT * FROM $judging_locations_db_table";
 	if ($section == "list") $query_stewarding .= sprintf(" WHERE id='%s'", $row_brewer['brewerStewardLocation']);
 	if (($section == "brewer") || ($section == "admin") || ($section == "register")) $query_stewarding .= " ORDER BY judgingDate,judgingLocName ASC";

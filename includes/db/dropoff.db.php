@@ -6,7 +6,7 @@ if (NHC) {
 }
 // end if (NHC)
 else {
-	
+	mysql_query("SET NAMES 'utf8'");
 	$query_dropoff = "SELECT * FROM $drop_off_db_table";
 	if (($section == "admin") && ($action == "edit")) $query_dropoff .= " WHERE id='$id'";
 	else $query_dropoff .= " ORDER BY dropLocationName ASC";

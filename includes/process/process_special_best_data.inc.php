@@ -8,6 +8,8 @@ $table_id = $id;
 
 if ((isset($_SESSION['loginUsername'])) && ($_SESSION['userLevel'] <= 1)) {
 	
+	mysql_query("SET NAMES 'utf8'");
+	
 	if (NHC) {
 		// Place NHC SQL calls below
 		

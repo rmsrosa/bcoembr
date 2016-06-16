@@ -7,6 +7,11 @@
  
 // Custom Code for AHA NHC
 
+mysql_query("SET NAMES 'utf8'");
+//mysql_query('SET character_set_connection=utf8');
+//mysql_query('SET character_set_client=utf8');
+//mysql_query('SET character_set_results=utf8');
+
 if (NHC) {
 	
 	include (DB.'common.db.php');
@@ -34,8 +39,8 @@ if (NHC) {
 			exit();
 		}
 		
-		
-		$aha = $_POST['brewerAHA']; 
+		$cpf = $_POST['brewerCPF'];
+		$aha = ""; //$_POST['brewerAHA']; 
 		if ($aha != "") {
 			$query_aha_exists = "SELECT COUNT(*) AS count FROM nhcentrant WHERE AHANumber = '$aha'";
 			$aha_exists = mysql_query($query_aha_exists, $brewing) or die(mysql_error());
@@ -97,6 +102,7 @@ if (NHC) {
 	setcookie("userQuestionAnswer", $_POST['userQuestionAnswer'], 0, "/");
 	setcookie("brewerFirstName", $_POST['brewerFirstName'], 0, "/");
 	setcookie("brewerLastName", $_POST['brewerLastName'], 0, "/");
+	setcookie("brewerCPF", $_POST['brewerCPF'], 0, "/");
 	setcookie("brewerAddress", $_POST['brewerAddress'], 0, "/");
 	setcookie("brewerCity", $_POST['brewerCity'], 0, "/");
 	setcookie("brewerState", $_POST['brewerState'], 0, "/");
@@ -120,6 +126,7 @@ if (NHC) {
 	setcookie("userQuestionAnswer", $_POST['userQuestionAnswer'], 0, "/");
 	setcookie("brewerFirstName", $_POST['brewerFirstName'], 0, "/");
 	setcookie("brewerLastName", $_POST['brewerLastName'], 0, "/");
+	setcookie("brewerCPF", $_POST['brewerCPF'], 0, "/");
 	setcookie("brewerAddress", $_POST['brewerAddress'], 0, "/");
 	setcookie("brewerCity", $_POST['brewerCity'], 0, "/");
 	setcookie("brewerState", $_POST['brewerState'], 0, "/");
@@ -142,9 +149,14 @@ else {
 // Check to see if email address is already in the system. If so, redirect.
 $username = strtolower($_POST['user_name']);
 
-if ((strstr($username,'@')) && (strstr($username,'.'))) {
+//if ((strstr($username,'@')) && (strstr($username,'.'))) {
+if (strstr($username,'@')) {
 	
 	// Sanity check from AJAX widget
+	mysql_query("SET NAMES 'utf8'");
+	mysql_query('SET character_set_connection=utf8');
+	mysql_query('SET character_set_client=utf8');
+	mysql_query('SET character_set_results=utf8');
 	mysql_select_db($database, $brewing);
 	$query_userCheck = "SELECT user_name FROM $users_db_table WHERE user_name = '$username'";
 	$userCheck = mysql_query($query_userCheck, $brewing) or die(mysql_error());
@@ -157,6 +169,7 @@ if ((strstr($username,'@')) && (strstr($username,'.'))) {
 		setcookie("userQuestionAnswer", $_POST['userQuestionAnswer'], 0, "/");
 		setcookie("brewerFirstName", $_POST['brewerFirstName'], 0, "/");
 		setcookie("brewerLastName", $_POST['brewerLastName'], 0, "/");
+		setcookie("brewerCPF", $_POST['brewerCPF'], 0, "/");
 		setcookie("brewerAddress", $_POST['brewerAddress'], 0, "/");
 		setcookie("brewerCity", $_POST['brewerCity'], 0, "/");
 		setcookie("brewerState", $_POST['brewerState'], 0, "/");
@@ -192,6 +205,10 @@ if ((strstr($username,'@')) && (strstr($username,'.'))) {
 		//echo $insertSQL."<br />";
 	// Get the id from the "users" table to insert as the uid in the "brewer" table
 		$query_user= "SELECT id FROM $users_db_table WHERE user_name = '$username'";
+		mysql_query("SET NAMES 'utf8'");
+		mysql_query('SET character_set_connection=utf8');
+		mysql_query('SET character_set_client=utf8');
+		mysql_query('SET character_set_results=utf8');
 		$user = mysql_query($query_user, $brewing) or die(mysql_error());
 		$row_user = mysql_fetch_assoc($user);
 		
@@ -216,6 +233,7 @@ if ((strstr($username,'@')) && (strstr($username,'.'))) {
 			  uid,
 			  brewerFirstName, 
 			  brewerLastName, 
+			  brewerCPF,
 			  brewerAddress, 
 			  brewerCity, 
 			  brewerState, 
@@ -235,10 +253,11 @@ if ((strstr($username,'@')) && (strstr($username,'.'))) {
 			  brewerJudgeLocation,
 			  brewerStewardLocation,
 			  brewerAHA
-			) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
+			) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
 						   GetSQLValueString($row_user['id'], "int"),
 						   GetSQLValueString(capitalize($_POST['brewerFirstName']), "text"),
 						   GetSQLValueString(capitalize($_POST['brewerLastName']), "text"),
+						   GetSQLValueString($_POST['brewerCPF'], "text"),
 						   GetSQLValueString(capitalize($_POST['brewerAddress']), "text"),
 						   GetSQLValueString(capitalize($_POST['brewerCity']), "text"),
 						   GetSQLValueString($_POST['brewerState'], "text"),
@@ -263,7 +282,8 @@ if ((strstr($username,'@')) && (strstr($username,'.'))) {
 			$insertSQL = sprintf("INSERT INTO $brewer_db_table (
 			  uid,
 			  brewerFirstName, 
-			  brewerLastName, 
+			  brewerLastName,
+			  brewerCPF, 
 			  brewerAddress, 
 			  brewerCity, 
 			  brewerState, 
@@ -282,10 +302,11 @@ if ((strstr($username,'@')) && (strstr($username,'.'))) {
 			  brewerJudgeRank,
 			  brewerJudgeLocation,
 			  brewerStewardLocation
-			) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
+			) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
 						   GetSQLValueString($row_user['id'], "int"),
 						   GetSQLValueString(capitalize($_POST['brewerFirstName']), "text"),
 						   GetSQLValueString(capitalize($_POST['brewerLastName']), "text"),
+						   GetSQLValueString($_POST['brewerCPF'], "text"),
 						   GetSQLValueString(capitalize($_POST['brewerAddress']), "text"),
 						   GetSQLValueString(capitalize($_POST['brewerCity']), "text"),
 						   GetSQLValueString($_POST['brewerState'], "text"),
@@ -348,6 +369,10 @@ if ((strstr($username,'@')) && (strstr($username,'.'))) {
 		// Redirect to Judge Info section if willing to judge
 		if ($_POST['brewerJudge'] == "Y") {
 			$query_brewer= sprintf("SELECT id FROM $brewer_db_table WHERE uid = '%s'", $row_user['id']);
+			mysql_query("SET NAMES 'utf8'");
+			mysql_query('SET character_set_connection=utf8');
+			mysql_query('SET character_set_client=utf8');
+			mysql_query('SET character_set_results=utf8');
 			$brewer = mysql_query($query_brewer, $brewing) or die(mysql_error());
 			$row_brewer = mysql_fetch_assoc($brewer);
 			header(sprintf("Location: %s", $base_url."index.php?section=brewer&action=edit&go=judge&id=".$row_brewer['id']."#judge"));

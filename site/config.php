@@ -22,21 +22,18 @@ INSERT YOUR USERNAME BETWEEN THE DOUBLE-QUOTATION MARKS ("").
 For example, if your username is fred then the line should read $username = "fred".
 */
 //$username = "";
-$username = "";
 
 /* 
 INSERT YOUR PASSWORD BETWEEN THE DOUBLE-QUOTATION MARKS ("").
 For example, if your password is flintstone then the line should read $password = "flintsone".
 */
 //$password = "";
-$password = "";
 
 /*
 The following line is the name of your MySQL database you set up already.  
 If you haven't set up the database yet, please refer to http://www.brewcompetition.com/index.php?page=install for setup instructions. 
 */
 //$database = "";
-$database = "";
 
 /* 
 This line strings the information together and connects to MySQL.  
@@ -116,7 +113,7 @@ to FALSE!
  
 */
 
-$setup_free_access = FALSE;
+$setup_free_access = TRUE;
 
 
 /*

@@ -14,6 +14,10 @@ if (($action == "add") && ($section == "setup")) 	include_once (PROCESS.'process
 
 // --------------------------- Adding a user (Admin only) -------------------------- //
 
+mysql_query("SET NAMES 'utf8'");
+//mysql_query('SET character_set_connection=utf8');
+//mysql_query('SET character_set_client=utf8');
+//mysql_query('SET character_set_results=utf8');	
 
 if (NHC) {
 // Place NHC SQL calls below
@@ -27,7 +31,8 @@ else {
 	// Check to see if email address is already in the system. If so, redirect.
 	$username = strtolower($_POST['user_name']);
 	
-	if ((strstr($username,'@')) && (strstr($username,'.'))) {
+//	if ((strstr($username,'@')) && (strstr($username,'.'))) {
+	if (strstr($username,'@')) {
 	mysql_select_db($database, $brewing);
 	$query_userCheck = "SELECT user_name FROM $users_db_table WHERE user_name = '$username'";
 	$userCheck = mysql_query($query_userCheck, $brewing) or die(mysql_error());
@@ -106,14 +111,15 @@ else {
 	// Check to see if email address is already in the system. If so, redirect.
 	$username = strtolower($_POST['user_name']);
 	$usernameOld = strtolower($_POST['user_name_old']);
-	if ((strstr($username,'@')) && (strstr($username,'.'))) {
+//	if ((strstr($username,'@')) && (strstr($username,'.'))) {
+	if (strstr($username,'@')) {
 	
 	mysql_select_db($database, $brewing);
 	$query_brewerCheck = "SELECT brewerEmail FROM $brewer_db_table WHERE brewerEmail = '$usernameOld'";
 	$brewerCheck = mysql_query($query_brewerCheck, $brewing) or die(mysql_error());
 	$row_brewerCheck = mysql_fetch_assoc($brewerCheck);
 	$totalRows_brewerCheck = mysql_num_rows($brewerCheck);
-	
+
 	mysql_select_db($database, $brewing);
 	$query_userCheck = "SELECT * FROM $users_db_table WHERE user_name = '$username'";
 	$userCheck = mysql_query($query_userCheck, $brewing) or die(mysql_error());

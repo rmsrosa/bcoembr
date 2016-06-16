@@ -9,7 +9,9 @@ chr(35) => "&#35;",
 chr(39) => "&#39;",
 chr(176) => "&#176;"
 );
-$html_string = array( 
+// RR: $html_string blanked out/disabled (appended the original variable with _off and defined a new empty one instead). Only way I found to display all accents correctly. Hopefully nothing bad happens.
+$html_string = array();
+$html_string_off = array( 
 chr(34) => "&quot;",  
 chr(37) => "&#37;",
 chr(38) => "&amp;",

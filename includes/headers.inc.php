@@ -28,73 +28,73 @@ switch($section) {
 		if (($setup_free_access == TRUE) && ($action != "print")) $output_extend .= "<div class='alert alert-warning hidden-print'><span class=\"fa fa-exclamation-triangle\"> Additionally, the &#36;setup_free_access variable in config.php is currently set to TRUE. For security reasons, the setting should returned to FALSE. You will need to edit config.php directly and re-upload to your server to do this.</div>"; 
 	}
 	
-	if     ($msg == "1") $output = "<strong>Info added successfully.</strong>"; 
-	elseif ($msg == "2") $output = "<strong>Info edited successfully.</strong>";
-	elseif ($msg == "3") $output = "<strong>There was an error. </strong>Please try again.";
-	elseif ($msg == "4") $output = "<strong>You must be an administrator to access the admin functions. </strong>";
+	if     ($msg == "1") $output = "<strong>Informação adicionada com sucesso.</strong>"; 
+	elseif ($msg == "2") $output = "<strong>Informação editada com sucesso.</strong>";
+	elseif ($msg == "3") $output = "<strong>Houve um erro. </strong>Por favor, tente novamente.";
+	elseif ($msg == "4") $output = "<strong>Você precisa ser administrador para acessar as funções de administração. </strong>";
 	break;
 
 	case "user":
-	$header_output = "Change "; 
-	if ($action == "username") $header_output .= "Email Address"; 
-	if ($action == "password") $header_output .= "Password";
-	if     ($msg == "1") $output = "<strong>The email address provided is already in use, please provide another email address.</strong>";
-	elseif ($msg == "2") $output = "<strong>There was a problem with the last request, please try again.</strong>";
-	elseif ($msg == "3") $output = "<strong>Your current password was incorrect.</strong> Please try again.";
-	elseif ($msg == "4") $output = "<strong>Please provide an email address.</strong>";
+	$header_output = "Alterar "; 
+	if ($action == "username") $header_output .= "Email"; 
+	if ($action == "password") $header_output .= "Senha";
+	if     ($msg == "1") $output = "<strong>O endereço de email informado já está em uso.  Por favor, informe outro email.</strong>";
+	elseif ($msg == "2") $output = "<strong>Houve um problema com a sua última ação. Tente novamente.</strong>";
+	elseif ($msg == "3") $output = "<strong>Sua senha atual está incorreta.</strong> Tente novamente.";
+	elseif ($msg == "4") $output = "<strong>Por favor, informe um endereço de email.</strong>";
 	else $output = "";
 	break;
 	
 	case "register":
-	$header_output = $_SESSION['contestName']." - Register";
-	if     ($msg == "1") $output = "<strong>Sorry, there was a problem with your last login attempt.</strong> Please try again.";
-	elseif ($msg == "2") { $output = "<strong>Sorry, the user name you entered is already in use.</strong>"; $output_extend = "<p>Perhaps you have already created an account? If so, <a href=\"index.php?section=login\">log in here</a>.</p>"; }
-	elseif ($msg == "3") $output = "<strong>The user name provided is not a valid email address.</strong> Please enter a valid email address.";
-	elseif ($msg == "4") $output = "<strong>The characters you entered in the CAPTCHA section below were not correct.</strong> Please try again.";
-	elseif ($msg == "5") $output = "<strong>The email addresses you entered do not match.</strong> Please check and try again.";
+	$header_output = $_SESSION['contestName']." - Registro";
+	if     ($msg == "1") $output = "<strong>Houve um problema com a sua última tentativa de login.</strong> Tente novamente.";
+	elseif ($msg == "2") { $output = "<strong>Sinto muito, o nome de usuário que você informou já está em uso.</strong>"; $output_extend = "<p>Talvez você já tenha se registrado? Caso positivo, <a href=\"index.php?section=login\">faça o login aqui</a>.</p>"; }
+	elseif ($msg == "3") $output = "<strong>O nome de usuário informado não é um endereço de email válido.</strong> Por favor, informe um endereço de email válido.";
+	elseif ($msg == "4") $output = "<strong>Os caracteres informados no CAPTCHA não estão corretos.</strong> Tente novamente.";
+	elseif ($msg == "5") $output = "<strong>Os endereços de email informados não coincidem.</strong> Confira e tente novamente.";
 	elseif ($msg == "6") $output = "<strong>The AHA number you entered is already in the system.</strong> Please check the number and try again.";
 	else $output = "";
 	break;
 
 	case "pay":
-	$header_output = $_SESSION['contestName']." - Pay Entry Fees";
-	if     ($msg == "1") $output = "<strong>Info added successfully.</strong>"; 
-	elseif ($msg == "2") $output = "<strong>Info edited successfully.</strong>";
-	elseif ($msg == "3") $output = "<strong>There was an error.</strong> Please try again.";
-	elseif ($msg == "10") $output = "<strong>Your online payment has been received.</strong> Please make sure to print the receipt and attach it to one of your entries as proof of payment."; 
-	elseif ($msg == "11") $output = "<strong>Your online payment has been cancelled.</strong>";
-	elseif ($msg == "12") $output = "<strong>The code has been verified.</strong>";
-	elseif ($msg == "13") $output = "<strong>Sorry, the code you entered was incorrect.</strong>";
+	$header_output = $_SESSION['contestName']." - Pagar Taxa de Inscrição";
+	if     ($msg == "1") $output = "<strong>Informação adicionada com sucesso.</strong>"; 
+	elseif ($msg == "2") $output = "<strong>Informação editada com sucesso.</strong>";
+	elseif ($msg == "3") $output = "<strong>Houve um erro. </strong>Por favor, tente novamente.";
+	elseif ($msg == "10") $output = "<strong>O seu pagamento online foi recebido.</strong> Por favor, imprima o recibo e não se esqueça de anexá-lo a uma das suas amostras como prova de pagamento."; 
+	elseif ($msg == "11") $output = "<strong>O seu pagamento online foi cancelado.</strong>";
+	elseif ($msg == "12") $output = "<strong>O código foi verificado.</strong>";
+	elseif ($msg == "13") $output = "<strong>Sinto muito, o código informado não está correto.</strong>";
 	else $output = "";
 	break;
 	
 	case "login":
-	if ($action == "forgot") $header_output = $_SESSION['contestName']." - Reset Password"; 
+	if ($action == "forgot") $header_output = $_SESSION['contestName']." - Alterar Senha"; 
 	elseif ($action == "logout") $header_output = $_SESSION['contestName']." - Logged Out"; 
 	else $header_output = $_SESSION['contestName']." - Log In";
 	if ($msg == "0") $output = "<strong>You must log in and have admin privileges to access the ".$_SESSION['contestName']." administration functions.</strong> "; 
-	elseif     ($msg == "1") { $output = "<strong>Sorry, there was a problem with your last login attempt.</strong> Please make sure your email address and password are correct."; $output_extend = ""; }
-	elseif ($msg == "2") { $output = "<strong>Your password has been randomly generated and reset to ".$go."</strong>."; $output_extend = "<p>You can now log in using your current username and the new password above.</p>"; }
-	elseif ($msg == "3") $output = "<strong>You have been logged out.</strong> Log in again?"; 
-	elseif ($msg == "4") $output = "<strong>Your verification question does not match what is in the database.</strong> Please try again."; 
-	elseif ($msg == "5") $output = "<strong>Your ID verification information has been sent to the email address associated with your account.</strong>"; 
+	elseif     ($msg == "1") { $output = "<strong>Houve um problema com o seu login.</strong> Por favor verifique se seu email e senha estão corretos."; $output_extend = ""; }
+	elseif ($msg == "2") { $output = "<strong>Sua senha foi alterada para ".$go."</strong>."; $output_extend = "<p>Você pode acessar sua conta utilizando essa senha.</p>"; }
+	elseif ($msg == "3") $output = "<strong>Você saiu do sistema. </strong> Para retornar, faça login novamente."; 
+	elseif ($msg == "4") $output = "<strong>Sua resposta à pergunta de segurança não confere com os nossos registros. </strong> Por favor, tente novamente."; 
+	elseif ($msg == "5") $output = "<strong>As informações sobre a sua pergunta de segurança foram enviadas para o email associado à sua conta.</strong>"; 
 	else $output = ""; 
 	break;
 	
 	case "entry":
-	if     ($msg == "1") $output = "<strong>Info added successfully.</strong>"; 
-	elseif ($msg == "2") $output = "<strong>Info edited successfully.</strong>";
-	elseif ($msg == "3") $output = "<strong>There was an error.</strong> Please try again.";
+	if     ($msg == "1") $output = "<strong>Informação adicionada com sucesso.</strong>"; 
+	elseif ($msg == "2") $output = "<strong>Informação editada com sucesso.</strong>";
+	elseif ($msg == "3") $output = "<strong>Houve um erro.</strong> Por favor, tente novamente.";
 	else $output = "";
-	$header_output = $_SESSION['contestName']." Info";
+	$header_output = $_SESSION['contestName']." - Informações";
 	break;
 	
 	case "sponsors":
-	if     ($msg == "1") $output = "<strong>Info added successfully.</strong>"; 
-	elseif ($msg == "2") $output = "<strong>Info edited successfully.</strong>";
-	elseif ($msg == "3") $output = "<strong>There was an error.</strong> Please try again.";
+	if     ($msg == "1") $output = "<strong>Informação adicionada com sucesso.</strong>"; 
+	elseif ($msg == "2") $output = "<strong>Informação editada com sucesso.</strong>";
+	elseif ($msg == "3") $output = "<strong>Houve um erro.</strong> Por favor, tente novamente.";
 	else $output = "";
-	$header_output = $_SESSION['contestName']." Sponsors";
+	$header_output = $_SESSION['contestName']." - Patrocinadores";
 	break;
 	
 	case "rules":
@@ -102,15 +102,15 @@ switch($section) {
 	elseif ($msg == "2") $output = "<strong>Info edited successfully.</strong>";
 	elseif ($msg == "3") $output = "<strong>There was an error.</strong> Please try again.";
 	else $output = "";
-	$header_output = $_SESSION['contestName']." Rules";
+	$header_output = $_SESSION['contestName']." - Regras Gerais";
 	break;
 	
 	case "volunteers":
-	if     ($msg == "1") $output = "<strong>Info added successfully.</strong>"; 
-	elseif ($msg == "2") $output = "<strong>Info edited successfully.</strong>";
-	elseif ($msg == "3") $output = "<strong>There was an error.</strong> Please try again.";
+	if     ($msg == "1") $output = "<strong>Informação adicionada com sucesso.</strong>"; 
+	elseif ($msg == "2") $output = "<strong>Informação editada com sucesso.</strong>";
+	elseif ($msg == "3") $output = "<strong>Houve um erro.</strong> Por favor, tente novamente.";
 	else $output = "";
-	$header_output = $_SESSION['contestName']." Volunteer Info";
+	$header_output = $_SESSION['contestName']." - Voluntários";
 	break;	
 	
 	case "past_winners":
@@ -122,7 +122,7 @@ switch($section) {
 	break;
 	
 	case "contact":
-	$header_output = $_SESSION['contestName']." - Contact";
+	$header_output = $_SESSION['contestName']." - Contato";
 	if ($msg == "1") {
 	
 	if (NHC) {
@@ -136,21 +136,22 @@ switch($section) {
 	
 		mysql_select_db($database, $brewing);
 		$query_contact = sprintf("SELECT contactFirstName,contactLastName,contactPosition FROM $contacts_db_table WHERE id='%s'", $id);
+		mysql_query("SET NAMES 'utf8'");
 		$contact = mysql_query($query_contact, $brewing) or die(mysql_error());
 		$row_contact = mysql_fetch_assoc($contact);
 		
 	}
 	
 	
-	$output = "<strong>Your message has been sent to ".$row_contact['contactFirstName']." ".$row_contact['contactLastName'].", ".$row_contact['contactPosition'].".</strong>";
+	$output = "<strong>Sua mensagem foi enviada para ".$row_contact['contactFirstName']." ".$row_contact['contactLastName'].", ".$row_contact['contactPosition'].".</strong>";
 	}
-	elseif ($msg == "2") $output = "<strong>The characters you entered in the CAPTCHA section below were not correct.</strong> Please try again.";
+	elseif ($msg == "2") $output = "<strong>Os caracteres digitados no CAPTCHA abaixo não estão corretos.</strong> Por favor, tente novamente.";
 	else $output = "";
 	break;
 	
 	case "brew":
-	if ($action == "add") $header_output = "Add an Entry"; 
-	else $header_output = "Edit an Entry";
+	if ($action == "add") $header_output = "Adicionar uma Amostra"; 
+	else $header_output = "Editar uma Amostra.";
 		if ($_SESSION['prefsStyleSet'] == "BJCP2008") {
 			switch ($msg) {
 				case "1-6-D":  $output = "<strong>See the area(s) highlighted in RED below.</strong> You MUST specify if wheat or rye is used.<br /> If you do not specify the required items above, your entry cannot be confirmed. "; break;
@@ -180,8 +181,8 @@ switch($section) {
 				case "1-28-B": $output = "<strong>See the area(s) highlighted in RED below.</strong> You MUST specify carbonation level (still, petillant, or sparkling) AND sweetness (dry, medium, sweet). You MUST specify what fruit(s) and/or fruit juice(s) were added.<br /> If you do not specify the required items above, your entry cannot be confirmed. "; break;
 				case "1-28-C": $output = "<strong>See the area(s) highlighted in RED below.</strong> You MUST specify carbonation level (still, petillant, or sparkling) AND sweetness (dry, medium, sweet).<br /> If you do not specify the required items above, your entry cannot be confirmed. "; break;
 				case "1-28-D": $output = "<strong>See the area(s) highlighted in RED below.</strong> You MUST specify all major ingredients and adjuncts. You MUST specify carbonation level (still, petillant, or sparkling) AND sweetness (dry, medium, sweet).<br /> If you do not specify the required items above, your entry cannot be confirmed. "; break;
-				case "2": $output = "<strong>Info edited successfully.</strong><br />"; break;
-				case "3": $output = "<strong>There was an error.</strong> Please try again.<br />"; break;
+				case "2": $output = "<strong>Dados adicionados com sucesso.</strong><br />"; break;
+				case "3": $output = "<strong>Houve um erro.</strong> Por favor, tente novamente.<br />"; break;
 				case "4": $output = "<strong>This competition utilizes custom entry categories.</strong> All custom entry categories require that you specify the special ingredients, classic style, or special procedures of the entry.<br>If you DO NOT specify these items, your entry cannot be confirmed. Unconfirmed entries may be deleted from the system without warning.<br />"; break;
 				default: $output = "<strong>This entry has not yet been confirmed.</strong> Please review the information as listed and correct any errors. "; break;
 			}
@@ -189,24 +190,24 @@ switch($section) {
 	
 	else {
 		switch ($msg) {
-				case "2": $output = "<strong>Info edited successfully.</strong><br />"; break;
-				case "3": $output = "<strong>There was an error.</strong> Please try again.<br />"; break;
-				case "4": $output = "<strong>This competition utilizes custom entry categories.</strong> All custom entry categories require that you specify the special ingredients, classic style, or special procedures of the entry.<br>If you DO NOT specify these items, your entry cannot be confirmed. Unconfirmed entries may be deleted from the system without warning.<br />"; break;
-				default: $output = "<strong>More information is required for your entry to be accepted and confirmed.</strong> See the area(s) highlighted in RED below."; break;
+				case "2": $output = "<strong>Dados adicionados com sucesso.</strong><br />"; break;
+				case "3": $output = "<strong>Houve um erro.</strong> Por favor, tente novamente.<br />"; break;
+				case "4": $output = "<strong>Essa competição permite categorias com amostras customizadas. </strong> Todas as amostras customizadas precisam que ingredientes especiais, estilos clássicos ou procedimentos especiais sejam informados. <br>Se você NÃO especificar esses itens, o cadastro dessa amostra não será confirmado. Amostras com cadastro não confirmado serão apagadas do sistema sem aviso prévio. <br />"; break;
+				default: $output = "<strong>Mais informações são necessárias para que o cadastro dessa amostra seja aceito e confirmado. </strong> Observe a(s) área(s) marcadas em VERMELHO abaixo."; break;
 		}
 	}
 	
-	if ((strstr($msg,"1-")) && ($_SESSION['prefsAutoPurge'] == 1)) $output .= "Unconfirmed entries may be deleted from the system without warning.";
+	if ((strstr($msg,"1-")) && ($_SESSION['prefsAutoPurge'] == 1)) $output .= "O cadastro de amostras não confirmadas pode ser apagado do sistema sem aviso prévio.";
 	break;
 	
 	case "brewer":
-		if     ($msg == "1") $output = "<strong>Info added successfully.</strong>"; 
-		elseif ($msg == "2") $output = "<strong>Info edited successfully.</strong>";
-		elseif ($msg == "3") $output = "<strong>There was an error.</strong> Please try again.";
+		if     ($msg == "1") $output = "<strong>Dados adicionados com sucesso.</strong>"; 
+		elseif ($msg == "2") $output = "<strong>Dados alterados com sucesso.</strong>";
+		elseif ($msg == "3") $output = "<strong>Houve um erro.</strong> Por favor, tente novamente.";
 		else $output = "";
-		if ($action == "add") $header_output = "Step 2: Account Info"; 
-		elseif ($go == "admin")  $header_output = "Edit User Account";
-		else  $header_output = "Edit Account";
+		if ($action == "add") $header_output = "Step 2: Informação da Conta"; 
+		elseif ($go == "admin")  $header_output = "Editar Conta";
+		else  $header_output = "Editar Conta";
 		
 	break;
 	
@@ -219,16 +220,17 @@ switch($section) {
 	break;
 
 	case "list":
-	$header_output = "My Account";
-	if ($msg == "1") $output = "<strong>Info added successfully.</strong>"; 
-	elseif ($msg == "2") $output = "<strong>Info edited successfully.</strong>"; 
-	elseif ($msg == "3") $output = "<strong>Your email address has been updated.</strong>"; 
-	elseif ($msg == "4") $output = "<strong>Your password has been updated.</strong>"; 
-	elseif ($msg == "5") $output = "<strong>Info deleted successfully.</strong>"; 
-	elseif ($msg == "6") $output = "<strong>You should verify all your entries imported using BeerXML.</strong>"; 
-	elseif ($msg == "7") $output = "<strong>You have registered as a judge or steward.</strong> Thank you.";
-	elseif ($msg == "8") $output = "<strong>You have reached the entry limit.</strong> Your entry was not added.";
-	elseif ($msg == "9") $output = "<strong>You have reached the entry limit for the sub-category.</strong> Your entry was not added."; 
+	$header_output = "Minha Conta";
+	if ($msg == "1") $output = "<strong>Dados adicionados com sucesso.</strong>"; 
+	elseif ($msg == "2") $output = "<strong>Dados alterados com sucesso.</strong>"; 
+	elseif ($msg == "3") $output = "<strong>Seu endereço de email foi atualizado.</strong>"; 
+	elseif ($msg == "4") $output = "<strong>Sua senha foi atualizada.</strong>"; 
+	elseif ($msg == "5") $output = "<strong>Dados apagados com sucesso.</strong>"; 
+	elseif ($msg == "6") $output = "<strong>Você deve verificar os dados de todas as suas amostras cadastradas usando BeerXML.</strong>"; 
+	elseif ($msg == "7") $output = "<strong>Você se inscreveu como Juiz ou Auxiliar.</strong> Obrigado.";
+	elseif ($msg == "8") $output = "<strong>Você alcançou o limite de amostras por inscrição.</strong> Essa amostra não será incluída. ";
+	elseif ($msg == "9") $output = "<strong>Você alcançou o limite de amostras por sub-category.</strong> Essa amostra não será incluída.";
+	elseif ($msg == "10") $output = "<strong>Só é permitido o cadastro de amostras de sócios das ACervAs. A checagem é via CPF; confira o CPF informado. Caso você seja associado em dia de alguma ACervA e o sistema não está permitindo o cadastro das suas amostras, entre em contato com a Organização do Concurso, informando de qual ACervA você é membro, para verificarmos se a sua ACervA nos enviou o seu CPF na lista de sócios.  </strong>";	
 	else $output = "";
 	break;
 	

@@ -233,7 +233,7 @@ function purge_entries($type, $interval) {
 	if ($type == "special") {
 		$query_check = sprintf("SELECT a.id, a.brewUpdated, a.brewInfo, a.brewCategorySort, a.brewSubCategory FROM %s as a, %s as b WHERE a.brewCategorySort=b.brewStyleGroup AND a.brewSubCategory=b.brewStyleNum AND b.brewStyleReqSpec=1 AND (a.brewInfo IS NULL OR a.brewInfo='') AND b.brewStyleVersion = '%s'", $prefix."brewing",$prefix."styles",$_SESSION['prefsStyleSet']);
 		if ($interval > 0) $query_check .=" AND a.brewUpdated < DATE_SUB( NOW(), INTERVAL 1 DAY)";
-		
+		mysql_query("SET NAMES 'utf8'");
 		$check = mysql_query($query_check, $brewing) or die(mysql_error());
 		$row_check = mysql_fetch_assoc($check);
 		
@@ -1977,6 +1977,7 @@ function table_location($table_id,$date_format,$time_zone,$time_format,$method) 
 	mysql_select_db($database, $brewing);
 	
 	$query_table = sprintf("SELECT tableLocation FROM %s WHERE id='%s'", $prefix."judging_tables", $table_id);
+	mysql_query("SET NAMES 'utf8'");
 	$table = mysql_query($query_table, $brewing) or die(mysql_error());
 	$row_table = mysql_fetch_assoc($table);
 	
@@ -2131,6 +2132,7 @@ function brewer_info($uid,$filter="default") {
 	if ($filter == "default") $brewer_db_table = $prefix."brewer";
 	else $brewer_db_table = $prefix."brewer_".$filter;
 	$query_brewer_info = sprintf("SELECT brewerFirstName,brewerLastName,brewerPhone1,brewerJudgeRank,brewerJudgeID,brewerJudgeBOS,brewerEmail,uid,brewerClubs,brewerDiscount,brewerAddress,brewerCity,brewerState,brewerZip,brewerCountry FROM %s WHERE uid='%s'", $brewer_db_table, $uid);
+	mysql_query("SET NAMES 'utf8'");
 	$brewer_info = mysql_query($query_brewer_info, $brewing) or die(mysql_error());
 	$row_brewer_info = mysql_fetch_assoc($brewer_info);
 	$r = 
@@ -2239,6 +2241,7 @@ function entry_info($id) {
 	require(CONFIG.'config.php');
 	mysql_select_db($database, $brewing);
 	$query_entry_info = sprintf("SELECT brewName,brewCategory,brewCategorySort,brewSubCategory,brewStyle,brewCoBrewer,brewJudgingNumber FROM %s WHERE id='%s'", $prefix."brewing", $id);
+	mysql_query("SET NAMES 'utf8'");
 	$entry_info = mysql_query($query_entry_info, $brewing) or die(mysql_error());
 	$row_entry_info = mysql_fetch_assoc($entry_info);
 	$r = $row_entry_info['brewName']."^".$row_entry_info['brewCategorySort']."^".$row_entry_info['brewSubCategory']."^".$row_entry_info['brewStyle']."^".$row_entry_info['brewCoBrewer']."^".$row_entry_info['brewCategory']."^".$row_entry_info['brewJudgingNumber'];
@@ -2454,6 +2457,7 @@ function data_integrity_check() {
 	
 		// Get Brewer Info
 		$query_brewer = sprintf("SELECT id,uid,brewerEmail,brewerFirstName,brewerLastname FROM %s WHERE brewerEmail='%s'",$prefix."brewer",$row_user_check['user_name']);
+		mysql_query("SET NAMES 'utf8'");
 		$brewer = mysql_query($query_brewer, $brewing) or die(mysql_error());
 		$row_brewer = mysql_fetch_assoc($brewer);
 		$totalRows_brewer = mysql_num_rows($brewer);
@@ -2515,6 +2519,7 @@ function data_integrity_check() {
 	
 	// Check if there are "blanks" in the brewer table. If so, delete.
 	$query_blank1 = sprintf("SELECT id FROM %s WHERE (brewerFirstName IS NULL OR brewerFirstName = '') AND (brewerLastName IS NULL OR brewerLastName = '')",$prefix."brewer");
+	mysql_query("SET NAMES 'utf8'");
 	$blank1 = mysql_query($query_blank1, $brewing) or die(mysql_error());
 	$row_blank1 = mysql_fetch_assoc($blank1);
 	$totalRows_blank1 = mysql_num_rows($blank1);
@@ -2578,9 +2583,10 @@ function readable_number($a){
 // http://www.iamcal.com/publish/articles/php/readable_numbers/
 
 	$bits_a = array("thousand", "million", "billion", "trillion", "quadrillion");
-	$bits_b = array("ten", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety");
-	$bits_c = array("one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen");
-
+	$bits_b = array("dez", "vinte", "trinta", "quarenta", "cinquenta", "sessenta", "setenta", "oitenta", "noventa");
+	$bits_c = array("uma", "duas", "trs", "quatro", "cinco", "seis", "sete", "oito", "nove", "dez", "onze", "doze", "treze", "quatorze", "quinze", "dezesseis", "dezessete", "dezoito", "dezenove");
+	$bits_d = array("cem", "duzentas", "trezentas", "quatrocentas", "quinhentas", "seiscentas", "setecentas", "oitocentas", "novecentas");
+	
 	if ($a==0){return 'zero';}
 
 	$out = ($a<0)?'minus ':'';
@@ -2598,7 +2604,7 @@ function readable_number($a){
 	if ($a > 100){
 		$b = floor($a/100);
 		$a -= 100 * $b;
-		$out .= readable_number($b).' hundred'.(($a)?' and ':' ');
+		$out .= $bits_d[$b-1].(($a)?' e ':' ');
 	}
 	if ($a >= 20){
 		$b = floor($a/10);
@@ -3070,6 +3076,7 @@ function judging_location_info($id) {
 	mysql_select_db($database, $brewing);
 	
 	$query_judging_loc3 = sprintf("SELECT judgingLocName,judgingDate,judgingLocation,judgingTime FROM %s WHERE id='%s'", $prefix."judging_locations", $id);
+	mysql_query("SET NAMES 'utf8'");
 	$judging_loc3 = mysql_query($query_judging_loc3, $brewing) or die(mysql_error());
 	$row_judging_loc3 = mysql_fetch_assoc($judging_loc3);
 	$totalRows_judging_loc3 = mysql_num_rows($judging_loc3);
@@ -3091,18 +3098,18 @@ function yes_no($input,$base_url,$method=0) {
 	if ($method != 3) {
 		if (($input == "Y") || ($input == 1)) { 
 			$output = "<span class='fa fa-check text-success'></span> ";
-			if ($method == 0) $output = "Yes";
+			if ($method == 0) $output = "Sim";
 			
 		}
 		else {
 			$output .= "<span class='fa fa-times text-danger'></span> ";
-			if ($method == 0) $output = "No";
+			if ($method == 0) $output = "N&atilde;o";
 			
 		}
 	}
 	if ($method == 3) {
-		if (($input == "Y") || ($input == 1)) $output = "Yes";
-		else $output = "No";
+		if (($input == "Y") || ($input == 1)) $output = "Sim";
+		else $output = "N&atilde;o";
 		
 	}
 	return $output;

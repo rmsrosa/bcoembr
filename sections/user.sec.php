@@ -14,17 +14,17 @@ $user_help_link_text = "";
 
 if ($action == "username") { 
 	$user_help_link .= "change_email_address.html";
-	$user_help_link_text .= "Change Email Address Help";
+	$user_help_link_text .= "Ajuda Mudança de Email";
 }
 
 if ($action == "password") {
 	$user_help_link .= "change_password.html";
-	$user_help_link_text .= "Change Password Help";
+	$user_help_link_text .= "Ajuda Mudança de Senha";
 }
 
 if ($action == "username") {
 	if ($filter == "admin")$current_email_msg = "You are changing ".$row_brewer['brewerFirstName']." ".$row_brewer['brewerLastName']."&rsquo;s Email Address (User Name)."; 
-	else $current_email_msg = "Your current email address is: <small class=\"text-muted\">".$_SESSION['user_name']."</small>.";
+	else $current_email_msg = "O seu endereço de email atual é <small class=\"text-muted\">".$_SESSION['user_name']."</small>.";
 }
 
 ?>
@@ -97,12 +97,12 @@ httpxml.send(null);
 
 <?php if ($action == "username") { ?>
 	<div class="form-group"><!-- Form Group REQUIRED Text Input -->
-        <label for="user_name" class="col-lg-2 col-md-3 col-sm-3 col-xs-12 control-label">New Email</label>
+        <label for="user_name" class="col-lg-2 col-md-3 col-sm-3 col-xs-12 control-label">Novo Email</label>
         <div class="col-lg-10 col-md-6 col-sm-9 col-xs-12">
             <div class="input-group has-warning">
                 <!-- Input Here -->
                 <span class="input-group-addon" id="user_name-addon1"><span class="fa fa-envelope"></span></span>
-                <input class="form-control" id="user_name" name="user_name" type="email" onBlur="checkAvailability()" onkeyup="twitter.updateUrl(this.value)" onchange="AjaxFunction(this.value);" placeholder="" data-error="Your new email address is required and must be in valid form" required>
+                <input class="form-control" id="user_name" name="user_name" type="email" onBlur="checkAvailability()" onkeyup="twitter.updateUrl(this.value)" onchange="AjaxFunction(this.value);" placeholder="" data-error="O seu novo endereço de email é necessário e deve ter um formato válido." required>
                 <span class="input-group-addon" id="user_name-addon2"><span class="fa fa-star"></span></span>
             </div>
             <div class="help-block with-errors"></div>
@@ -112,12 +112,12 @@ httpxml.send(null);
     </div><!-- ./Form Group -->
 
 	<div class="form-group"><!-- Form Group Checkbox INLINE -->
-        <label for="sure" class="col-lg-2 col-md-3 col-sm-3 col-xs-12 control-label">Are You Sure?</label>
+        <label for="sure" class="col-lg-2 col-md-3 col-sm-3 col-xs-12 control-label">Tem certeza?</label>
         <div class="col-lg-10 col-md-6 col-sm-9 col-xs-12">
             <div class="input-group">
                 <!-- Input Here -->
                 <label class="checkbox-inline">
-                    <input type="checkbox" name="sure" value="Y" id="sure_0" required> Yes
+                    <input type="checkbox" name="sure" value="Y" id="sure_0" required> Sim
                 </label>
             </div>
             <div class="help-block with-errors"></div>
@@ -127,13 +127,13 @@ httpxml.send(null);
 	<div class="form-group">
 		<div class="col-sm-offset-2 col-lg-10 col-md-6 col-sm-9 col-xs-12">
 			<!-- Input Here -->
-			<button name="submit" type="submit" class="btn btn-primary" >Change Email</button>
+			<button name="submit" type="submit" class="btn btn-primary" >Mudar Email</button>
 		</div>
 	</div><!-- Form Group -->
 <?php } ?>
 <?php if ($action == "password") { ?>
 	<div class="form-group"><!-- Form Group REQUIRED Text Input -->
-        <label for="passwordOld" class="col-lg-2 col-md-3 col-sm-3 col-xs-12 control-label">Old Password</label>
+        <label for="passwordOld" class="col-lg-2 col-md-3 col-sm-3 col-xs-12 control-label">Antiga Senha</label>
         <div class="col-lg-10 col-md-6 col-sm-9 col-xs-12">
             <div class="input-group has-warning">
                 <!-- Input Here -->
@@ -146,7 +146,7 @@ httpxml.send(null);
     </div><!-- ./Form Group -->
 
 	<div class="form-group"><!-- Form Group REQUIRED Text Input -->
-        <label for="password" class="col-lg-2 col-md-3 col-sm-3 col-xs-12 control-label">New Password</label>
+        <label for="password" class="col-lg-2 col-md-3 col-sm-3 col-xs-12 control-label">Nova Senha</label>
         <div class="col-lg-10 col-md-6 col-sm-9 col-xs-12">
             <div class="input-group has-warning">
                 <!-- Input Here -->
@@ -161,7 +161,7 @@ httpxml.send(null);
 	<div class="form-group">
 		<div class="col-sm-offset-2 col-lg-10 col-md-6 col-sm-9 col-xs-12">
 			<!-- Input Here -->
-			<button name="submit" type="submit" class="btn btn-primary" >Change Password</button>
+			<button name="submit" type="submit" class="btn btn-primary" >Mude a Senha</button>
 		</div>
 	</div><!-- Form Group -->
 

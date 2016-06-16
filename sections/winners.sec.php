@@ -52,7 +52,7 @@ $entry_count = get_table_info(1,"count_total",$row_tables['id'],$dbTable,"defaul
 
 if ($entry_count > 0) { 
 	
-	if ($entry_count > 1) $entries = "entries"; else $entries = "entry";
+	if ($entry_count > 1) $entries = "amostras"; else $entries = "amostra";
 		
 		if (score_count($row_tables['id'],"1"))	{
 			
@@ -66,17 +66,17 @@ if ($entry_count > 0) {
 			$table_body1 = "";
 			
 			// Build page headers
-			$header1_1 .= "<h3>Table ".$row_tables['tableNumber'].": ".$row_tables['tableName']." (".$entry_count." ".$entries.")</h3>";
-			$header1_2 .= "<div class=\"bcoem-winner-table\"><h3>Table ".$row_tables['tableNumber'].": ".$row_tables['tableName']." (".$entry_count." ".$entries.")</h3><p>No winners have been entered yet for this table. Please check back later.</p></div>";
+			$header1_1 .= "<h3>Categoria de Premiação ".$row_tables['tableNumber'].": ".$row_tables['tableName']." (".$entry_count." ".$entries.")</h3>";
+			$header1_2 .= "<div class=\"bcoem-winner-table\"><h3>Categoria de Premiação ".$row_tables['tableNumber'].": ".$row_tables['tableName']." (".$entry_count." ".$entries.")</h3><p>Nenhum vencedor foi informado nessa mesa. Por favor, verifique mais tarde.</p></div>";
 			
 			// Build table headers
 			$table_head1 .= "<tr>";
-			$table_head1 .= "<th width=\"1%\" nowrap>Place</th>";
-			$table_head1 .= "<th>Brewer(s)</th>";
-			$table_head1 .= "<th><span class=\"hidden-xs hidden-sm hidden-md\">Entry </span>Name</th>";
-			$table_head1 .= "<th>Style</th>";
-			$table_head1 .= "<th class=\"hidden-xs hidden-sm hidden-md\">Club</th>";
-			if ($filter == "scores") $table_head1 .= "<th class=\"hidden-xs hidden-sm hidden-md\" nowrap>Score</th>";
+			$table_head1 .= "<th width=\"1%\" nowrap>Lugar</th>";
+			$table_head1 .= "<th>Cervejeiro(a)(s)</th>";
+			$table_head1 .= "<th><span class=\"hidden-xs hidden-sm hidden-md\">Nome da </span>Amostra</th>";
+			$table_head1 .= "<th>Estilo</th>";
+			$table_head1 .= "<th class=\"hidden-xs hidden-sm hidden-md\">Clube</th>";
+			if ($filter == "scores") $table_head1 .= "<th class=\"hidden-xs hidden-sm hidden-md\" nowrap>Pontuação</th>";
 			$table_head1 .= "</tr>";
 			
 			// Build table body
