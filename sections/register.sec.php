@@ -132,6 +132,14 @@ if ($go != "default") {
 	 
 	 $random_country = array_rand($countries);
 	 $random_country = $countries[$random_country];
+
+	$acerva_select = "";	
+	foreach ($acervas as $acerva) { 
+		$acerva_select .= "<option value='".$acerva."' ";
+		if (($msg > 0) && ($_COOKIE['brewerACervA'] == $acerva)) $acerva_select .= "SELECTED";
+		$acerva_select .= ">";
+		$acerva_select .= $acerva."</option>";
+     }
 	
 	include(DB.'dropoff.db.php');
 	
@@ -544,6 +552,15 @@ if ($go == "default") { ?>
 				<!-- Input Here -->
 				<input class="form-control" name="brewerPhone2" id="brewerPhone2" type="tel" placeholder="" value="<?php if ($msg > 0) echo $_COOKIE['brewerPhone2']; ?>">
 			</div>
+		</div>
+	</div><!-- ./Form Group -->
+	<div class="form-group"><!-- Form Group REQUIRED Select -->
+		<label for="" class="col-lg-2 col-md-3 col-sm-4 col-xs-12 control-label">ACervA</label>
+		<div class="col-lg-10 col-md-9 col-sm-9 col-xs-12 has-warning">
+		<!-- Input Here -->
+		<select class="selectpicker" name="brewerACervA" id="brewerACervA" data-live-search="true" data-size="10" data-width="auto">
+    		<?php echo $acerva_select; ?>
+    	</select>
 		</div>
 	</div><!-- ./Form Group -->
 	<div class="form-group"><!-- Form Group Text Input -->

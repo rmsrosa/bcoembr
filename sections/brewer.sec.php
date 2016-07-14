@@ -133,7 +133,6 @@ if ($go != "admin") echo $info_msg;
         </div>
     </div><!-- ./Form Group -->
 
-
 	<div class="form-group"><!-- Form Group REQUIRED Select -->
         <label for="brewerCountry" class="col-lg-2 col-md-3 col-sm-4 col-xs-12 control-label">País</label>
         <div class="col-lg-10 col-md-6 col-sm-8 col-xs-12 has-warning">
@@ -177,6 +176,18 @@ if ($go != "admin") echo $info_msg;
         <?php } while ($row_dropoff = mysql_fetch_assoc($dropoff)); ?>
             <option disabled="disabled">-------------</option>
     		<option value="0" <?php if (($action == "edit") && ($row_brewer['brewerDropOff'] == "0")) echo "SELECTED"; ?>>Vou enviar por transportadora/correios</option>
+        </select>
+        </div>
+    </div><!-- ./Form Group -->
+
+	<div class="form-group"><!-- Form Group REQUIRED Text Input -->
+        <label for="brewerACervA" class="col-lg-2 col-md-3 col-sm-4 col-xs-12 control-label">ACervA</label>
+        <div class="col-lg-10 col-md-9 col-sm-8 col-xs-12 has-warning">
+        <!-- Input Here -->
+        <select class="selectpicker" name="brewerACervA" id="brewerACervA" data-live-search="true" data-size="10" data-width="auto">
+            <?php foreach ($acervas as $acerva) {  ?>
+            <option value="<?php echo $acerva; ?>" <?php if (($action == "edit") && ($row_brewer['brewerACervA'] == $acerva)) echo "selected"; ?>><?php echo $acerva; ?></option>
+            <?php } ?>
         </select>
         </div>
     </div><!-- ./Form Group -->

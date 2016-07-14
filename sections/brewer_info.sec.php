@@ -127,6 +127,7 @@ $table_body3 = "";
 $user_edit_links = "";
 $name = "";
 $cpf = "";
+$acerva = "";
 $email = "";
 $phone = "";
 $discount = "";
@@ -166,6 +167,7 @@ if ($totalRows_log > 0) $primary_page_info .= "<p class=\"lead hidden-print\"><s
 // Build User Info
 $name .= $_SESSION['brewerFirstName']." ".$_SESSION['brewerLastName'];
 $cpf .= $row_brewer['brewerCPF']; //$_SESSION['brewerCPF'];
+$acerva .= $row_brewer['brewerACervA'];
 $email .= $_SESSION['brewerEmail'];
 if (!empty($_SESSION['brewerAddress'])) $address = $_SESSION['brewerAddress']; else $address = "None entered";
 if (!empty($_SESSION['brewerCity'])) $city = $_SESSION['brewerCity']; else $city = "None entered";
@@ -181,6 +183,7 @@ if (!empty($_SESSION['brewerPhone2'])) {
 	if ($us_phone) $phone .= "<br>".format_phone_us($_SESSION['brewerPhone2'])." (2)";
 	else $phone .= "<br>".$_SESSION['brewerPhone2']." (2)";
 }
+if (!empty($_SESSION['brewerACervA'])) $acerva = $_SESSION['brewerACervA']; else $acerva = "None entered";
 if (!empty($_SESSION['brewerClubs'])) $club = $_SESSION['brewerClubs']; else $club = "None entered";
 $discount .= "Yes (".$currency_symbol.$_SESSION['contestEntryFeePasswordNum']." per entry)";
 if (!empty($_SESSION['brewerAHA'])) {
@@ -297,6 +300,10 @@ $table_body1 .= "</div>";
 $table_body1 .= "<div class=\"row bcoem-account-info\">";
 $table_body1 .= "<div class=\"col-lg-3 col-md-3 col-sm-4 col-xs-4\"><strong>Local de Entrega das Garrafas</strong></div>";
 $table_body1 .= "<div class=\"col-lg-9 col-md-9 col-sm-8 col-xs-8\">".dropoff_location($_SESSION['brewerDropOff'])."</div>";
+$table_body1 .= "</div>";
+$table_body1 .= "<div class=\"row bcoem-account-info\">";
+$table_body1 .= "<div class=\"col-lg-3 col-md-3 col-sm-4 col-xs-4\"><strong>ACervA</strong></div>";
+$table_body1 .=  "<div class=\"col-lg-9 col-md-9 col-sm-8 col-xs-8\">".$acerva."</div>";
 $table_body1 .= "</div>";
 $table_body1 .= "<div class=\"row bcoem-account-info\">";
 $table_body1 .= "<div class=\"col-lg-3 col-md-3 col-sm-4 col-xs-4\"><strong>Clube</strong></div>";

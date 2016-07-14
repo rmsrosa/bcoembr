@@ -37,13 +37,14 @@ if ($setup_free_access == TRUE) {
 		$output .= "</div>";
 		$output .= "<ul class=\"list-group\">";
 
+
 		// ------------------- 
 		// Allowed CPFs Table 
 		// -------------------
 		
 		$sql = "
 		CREATE TABLE IF NOT EXISTS `$allowedcompetidores_db_table` (
-			`allowedCPF` varchar(11) DEFAULT NULL,
+			`allowedCPF` varchar(20) DEFAULT NULL,
 			`allowedName` varchar(200) DEFAULT NULL,
 			`allowedPhone` varchar(25) DEFAULT NULL,
 			`allowedEmail` varchar(255) DEFAULT NULL,
@@ -114,6 +115,7 @@ if ($setup_free_access == TRUE) {
 		  `brewerCountry` varchar(255) DEFAULT NULL,
 		  `brewerPhone1` varchar(25) DEFAULT NULL,
 		  `brewerPhone2` varchar(25) DEFAULT NULL,
+		  `brewerACervA` varchar(50) DEFAULT NULL,
 		  `brewerClubs` text,
 		  `brewerEmail` varchar(255) DEFAULT NULL,
 		  `brewerNickname` varchar(255) DEFAULT NULL,

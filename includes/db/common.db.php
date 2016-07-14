@@ -195,6 +195,7 @@ else {
 		$_SESSION['brewerEmail'] = $row_name['brewerEmail'];
 		$_SESSION['brewerPhone1'] = $row_name['brewerPhone1'];
 		$_SESSION['brewerPhone2'] = $row_name['brewerPhone2'];
+		$_SESSION['brewerACervA'] = $row_name['brewerACervA'];
 		$_SESSION['brewerClubs'] = $row_name['brewerClubs'];
 		$_SESSION['brewerNickname'] = $row_name['brewerNickname'];
 		$_SESSION['brewerSteward'] = $row_name['brewerSteward'];
