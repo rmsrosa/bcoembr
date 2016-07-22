@@ -162,6 +162,22 @@
                                     </ul>
                                 </div>
                             </div><!-- ./row -->
+
+                            <div class="row">
+                                <div class="col col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                    <strong>Acervianos</strong>
+                                </div>
+                                <div class="col col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                    <ul class="list-inline">
+                                        <li><a href="<?php echo $base_url; ?>index.php?section=admin&amp;go=acervianos">Manage</a></li>
+                                        <li><a href="<?php echo $base_url; ?>index.php?section=admin&amp;go=acervianos&amp;action=add">Add</a></li>
+                                    </ul>
+                                    <ul class="list-inline">
+                                        <li><a href="<?php echo $base_url; ?>index.php?section=admin&amp;go=acervianos&amp;action=bulkadd">Bulk Add</a></li>
+                                        <li><a href="<?php echo $base_url; ?>index.php?section=admin&amp;go=acervianos&amp;action=bulkdelete">Bulk Delete</a></li>
+                                    </ul>
+                                </div>
+                            </div><!-- ./row -->
                             
                             <div class="row">
                                 <div class="col col-lg-4 col-md-4 col-sm-4 col-xs-4">

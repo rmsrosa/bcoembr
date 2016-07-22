@@ -2126,6 +2126,16 @@ function get_contact_count() {
 	return $contactCount;
 }
 
+function get_acervianos_count() {
+	require(CONFIG.'config.php');
+	mysql_select_db($database, $brewing);
+	$query_acervianos_count = sprintf("SELECT COUNT(*) as 'count' FROM %s",$prefix."acervianos");
+	$result = mysql_query($query_acervianos_count, $brewing) or die(mysql_error());
+	$row = mysql_fetch_assoc($result);
+	$acervianosCount = $row["count"];
+	return $acervianosCount;
+}
+
 function brewer_info($uid,$filter="default") {
 	require(CONFIG.'config.php');
 	mysql_select_db($database, $brewing);

@@ -230,7 +230,7 @@ switch($section) {
 	elseif ($msg == "7") $output = "<strong>Você se inscreveu como Juiz ou Auxiliar.</strong> Obrigado.";
 	elseif ($msg == "8") $output = "<strong>Você alcançou o limite de amostras por inscrição.</strong> Essa amostra não será incluída. ";
 	elseif ($msg == "9") $output = "<strong>Você alcançou o limite de amostras por sub-category.</strong> Essa amostra não será incluída.";
-	elseif ($msg == "10") $output = "<strong>Só é permitido o cadastro de amostras de sócios das ACervAs. A checagem é via CPF; confira o CPF informado. Caso você seja associado em dia de alguma ACervA e o sistema não está permitindo o cadastro das suas amostras, entre em contato com a Organização do Concurso, informando de qual ACervA você é membro, para verificarmos se a sua ACervA nos enviou o seu CPF na lista de sócios.  </strong>";	
+	elseif ($msg == "10") $output = "<strong>Só é permitido o cadastro de amostras de sócios das ACervAs. A checagem é via CPF. Confira o CPF informado (não precisa estar formatado, o sistema se encarrega disso). Caso você seja associado em dia de alguma ACervA e o sistema não esteja permitindo o cadastro das suas amostras, entre em contato com a sua regional da ACervA e com a Organização do Concurso, para verificarmos se os seus dados foram devidamente enviados e incluídos no sistema.</strong>";	
 	else $output = "";
 	break;
 	
@@ -464,6 +464,10 @@ switch($section) {
 			
 			case "participants":
 			$header_output .= ": Participants";
+			break;
+
+			case "acervianos":
+			$header_output .= ": ACervianos";
 			break;
 			
 			case "entrant":

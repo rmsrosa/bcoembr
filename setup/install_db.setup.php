@@ -37,40 +37,29 @@ if ($setup_free_access == TRUE) {
 		$output .= "</div>";
 		$output .= "<ul class=\"list-group\">";
 
-
 		// ------------------- 
-		// Allowed CPFs Table 
+		// Acervianos Table 
 		// -------------------
 		
 		$sql = "
-		CREATE TABLE IF NOT EXISTS `$allowedcompetidores_db_table` (
-			`allowedCPF` varchar(20) DEFAULT NULL,
-			`allowedName` varchar(200) DEFAULT NULL,
-			`allowedPhone` varchar(25) DEFAULT NULL,
-			`allowedEmail` varchar(255) DEFAULT NULL,
-			PRIMARY KEY (`allowedCPF`)
-		) ENGINE=MyISAM DEFAULT CHARSET=utf8 ;
+		CREATE TABLE IF NOT EXISTS `$acervianos_db_table` (
+			`id` int(8) NOT NULL AUTO_INCREMENT,
+			`acervianoFirstName` varchar(200) DEFAULT NULL,
+		 	`acervianoLastName` varchar(200) DEFAULT NULL,	
+			`acervianoCPF` varchar(20) DEFAULT NULL,
+			`acervianoPhone` varchar(25) DEFAULT NULL,
+			`acervianoACervA` varchar(50) DEFAULT NULL,
+			`acervianoEmail` varchar(255) DEFAULT NULL,
+			UNIQUE KEY (`acervianoCPF`, `acervianoACervA`),
+			PRIMARY KEY (`id`)
+		) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 		";
 		mysql_select_db($database, $brewing);
 		mysql_real_escape_string($sql);
 		mysql_real_escape_string($sql);
 		$result = mysql_query($sql, $brewing);
 		
-		$output .= "<li class=\"list-group-item\"><span class=\"fa fa-check text-success\"></span> The <strong>Allowed Competidores</strong> table was installed successfully.</li>";
-	
-// The following lines, adding a couple of CPFs, are for testing purposes. You may comment them out when you have the table of CPFs ready.
-		$sql = "
-		INSERT INTO `$allowedcompetidores_db_table` (`allowedCPF`, `allowedName`, `allowedPhone`, `allowedEmail`) VALUES
-		('19019019000', 'Zé das Lagers', NULL, NULL),
-		('91191191100', 'Maria das Ales', NULL, NULL);
-		";
-		mysql_select_db($database, $brewing);
-		mysql_real_escape_string($sql);
-		mysql_real_escape_string($sql);
-		$result = mysql_query($sql, $brewing);
-		 //echo "<p>".$sql."</p>";
-		
-		$output .= "<li class=\"list-group-item\"><span class=\"fa fa-check text-success\"></span> <strong>Allowed Competidores</strong> data installed successfully.</li>";
+		$output .= "<li class=\"list-group-item\"><span class=\"fa fa-check text-success\"></span> The <strong>Acervianos</strong> table was installed successfully.</li>";
 
 
 		// ------------------- 

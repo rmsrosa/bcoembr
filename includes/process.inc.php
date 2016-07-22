@@ -39,6 +39,7 @@ if ((isset($_SESSION['prefs'.$prefix_session])) || ($setup_free_access)) {
 require(INCLUDES.'scrubber.inc.php');
 require(LIB.'process.lib.php');
 
+$acervianos_db_table = $prefix."acervianos";
 $allowedcompetidores_db_table = $prefix."allowedcompetidores";
 $archive_db_table = $prefix."archive";
 $brewer_db_table = $prefix."brewer";
@@ -243,8 +244,12 @@ elseif ($action == "convert_bjcp") {
 
 else {
 
-	// --------------------------- Entries -------------------------------- //
-	
+	// --------------------------- Acervianos -------------------------------- //
+
+	if ($dbTable == $prefix."acervianos")				include_once (PROCESS.'process_acervianos.inc.php');
+
+	// --------------------------- Entries -------------------------------- //	
+
 	if ($dbTable == $prefix."brewing")				include_once (PROCESS.'process_brewing.inc.php');
 	
 	// --------------------------- Users ------------------------------- //

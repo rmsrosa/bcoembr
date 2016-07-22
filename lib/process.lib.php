@@ -71,6 +71,23 @@ function table_exists($table_name) {
 	else return FALSE;
 }
 
+function format_cpf($cpf) {
+	if ($cpf) {
+		$cpf = trim($cpf);
+//		$cpf = preg_replace('/[^0-9,]|,[0-9]*$/','',$cpf);
+		$cpf = preg_replace('/[^0-9]/','',$cpf);
+		$len_cpf = strlen($cpf);
+		if ($len_cpf < 11)	{
+			for ($i=1; $i <= 11 - $len_cpf; $i++) {
+				$cpf = "0".$cpf;
+			}
+		}
+		$newcpf = substr($cpf,0,3).".".substr($cpf,3,3).".".substr($cpf,6,3)."-".substr($cpf,9,2);
+	}
+	else $newcpf = $cpf;
+	return $newcpf;
+}
+
 function clean_up_url($referer) {
 	
 	include(CONFIG."config.php");

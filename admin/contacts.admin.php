@@ -1,15 +1,15 @@
 <?php include(DB.'contacts.db.php'); ?>
-<p class="lead"><?php echo $_SESSION['contestName']; if ($action == "add") echo ": Add a Contact"; elseif ($action == "edit") echo ": Edit a Contact"; else echo " Contacts"; ?></p>
+<p class="lead"><?php echo $_SESSION['contestName']; if ($action == "add") echo ": Add a Contact"; elseif ($action == "edit") echo ": Edit a Contact"; else echo ": Contacts"; ?></p>
 
 <!-- Button Element Container -->
 <div class="bcoem-admin-element hidden-print">
 	<?php if (($action == "add") || ($action == "edit")) { ?>
-	<!-- Postion 1: View All Button -->
+	<!-- Position 1: View All Button -->
 	<div class="btn-group" role="group" aria-label="...">
 		<a class="btn btn-default" href="<?php echo $base_url; ?>index.php?section=admin&amp;go=contacts"><span class="fa fa-eye"></span> View All Contacts</a>
     </div><!-- ./button group -->
 	<?php } else { ?>
-	<!-- Postion 1: View All Button -->
+	<!-- Position 1: View All Button -->
 	<div class="btn-group" role="group" aria-label="...">
 		<a class="btn btn-default" href="<?php echo $base_url; ?>index.php?section=admin&amp;go=contacts&amp;action=add"><span class="fa fa-plus-circle"></span> Add a Contact</a>
     </div><!-- ./button group -->

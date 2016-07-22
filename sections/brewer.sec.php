@@ -85,6 +85,7 @@ if ($go != "admin") echo $info_msg;
                 <input class="form-control" id="brewerCPF" name="brewerCPF" type="text" value="<?php if ($action == "edit") echo $row_brewer['brewerCPF']; ?>" placeholder="">
                 <span class="input-group-addon" id="brewerCPF-addon2"><span class="fa fa-star"></span></span>
             </div>
+<span id="helpBlock" class="help-block">O CPF pode ser informado com ou sem pontos, traços e zeros à esquerda. O sistema trata de padronizar a formatação.</span>
         </div>
     </div><!-- ./Form Group -->
 	<div class="form-group"><!-- Form Group REQUIRED Text Input -->

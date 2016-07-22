@@ -186,6 +186,7 @@ if (($section == "admin") && (($filter == "default") && ($bid == "default") && (
 			if ($go == "judging_scores") 	    	include (ADMIN.'judging_scores.admin.php');
 			if ($go == "judging_scores_bos")    		include (ADMIN.'judging_scores_bos.admin.php');
 			if ($go == "participants") 				include (ADMIN.'participants.admin.php');
+			if ($go == "acervianos") 				include (ADMIN.'acervianos.admin.php');
 			if ($go == "entries") 					include (ADMIN.'entries.admin.php');
 			if ($go == "contacts") 	    			include (ADMIN.'contacts.admin.php');
 			if ($go == "dropoff") 	    			include (ADMIN.'dropoff.admin.php');
