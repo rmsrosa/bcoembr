@@ -6,7 +6,8 @@ The main modifications done here were the following:
 - Include form for users to add their CPF
 - Include a database of CPFs of people allowed to enter a given competition (as it is usually done in competitions organized by the ACervAs, in which only members are allowed to enter).
 - Check whether the entrant's CPF is on the list of allowed entrants.
-- Include a php script to insert/update to the aproppriate table the list of cpfs of the members of the ACervAs (in folder /setup_cpfs)
+- Include tools for the system administrator to insert/delete/update the aproppriate table of members of the ACervAs
+- Add an action link for each brewer to view and download a pdf of their scoresheet, if available.
 - Inclusion of the option "Beer Sommelier" for the judges.
 - Translations to Portuguese of (hopefully) all the parts that an entrant will see. Most of the admin parts were not translated and some stuff for Judges might not have been translated either.
 - Fixed some bugs in the original 2.0.1 version, in particular one that allows the entrant to add more entries than the limit for entrants set for the competition, and the value for PayPal in case there are decimals in the amount (usually arising from the choice of letting the users pay the fee, which turned out is not the choice we are making, but I fixed it anyway).

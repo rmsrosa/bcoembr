@@ -223,6 +223,65 @@ do {
 	$delete_link = "<a data-toggle=\"tooltip\" title=\"".$delete_alt_title."\" href=\"".$base_url."includes/process.inc.php?section=".$section."&amp;go=".$go."&amp;dbTable=".$brewing_db_table."&amp;action=delete&amp;id=".$row_log['id']."\" data-confirm=\"Are you sure you want to delete the entry called ".$row_log['brewName']."? This cannot be undone.\"><span class=\"fa fa-trash-o\"></a>";
 	//$delete_link = build_action_link("bin_closed",$base_url,$section,$go,"delete",$filter,$row_log['id'],$brewing_db_table,"Delete ".$row_log['brewName']."? This cannot be undone. ".$warning_append,1,"Delete");
 	}
+	
+	// Display scoresheets
+	
+	$scoresheets_available = FALSE;
+	if ($show_scores) {
+		$readablejudgingnumber = readable_judging_number($row_log['brewCategory'],$row_log['brewJudgingNumber']);
+		$scoresheetsfilename = "scoresheets-".$readablejudgingnumber.".pdf";
+		$scoresheetsfile = SCORESHEETS."pdfs/".$scoresheetsfilename;
+		
+		$tempfiles = array_diff(scandir(SCORESHEETS."temp/"), array('..', '.'));
+
+		// Clean up temporary scoresheets from previous brewers, when they are at least 1 minute old, and previously created scoresheets for the same brewer, regardless of how old they are.
+		foreach ($tempfiles as $file) {
+			if ((filectime(SCORESHEETS."temp/".$file) < time() - 1*60) || ((strpos($file, $readablejudgingnumber) !== FALSE))) {
+				unlink(SCORESHEETS."temp/".$file);
+			}
+		}
+
+		// prepare action link for scoresheets if available
+		if (file_exists($scoresheetsfile)) {
+		
+			$random_num_str = str_pad(mt_rand(1,9999999999),10,'0',STR_PAD_LEFT);
+			$randomfilename = "scoresheets-".$readablejudgingnumber."-".$random_num_str."-view.pdf";
+			$scoresheetsrandomfilerelative = "scoresheets/temp/".$randomfilename;
+			$scoresheetsrandomfile = SCORESHEETS."temp/".$randomfilename;
+			$scoresheetsrandomfilehtml = $base_url.$scoresheetsrandomfilerelative;
+		
+			$scoresheets_available = TRUE;
+			$scoresheets_link = "";			
+			$scoresheets_link .= "<a id=\"modal_window_link\" href=\"".$base_url."output/scoresheets.output.php?";
+			$scoresheets_link .= "scoresheetsfilename=".$scoresheetsfilename;
+			$scoresheets_link .= "&amp;randomfilename=".$randomfilename;
+			$scoresheets_link .= "\" data-toggle=\"tooltip\" title=\"PDF das fichas de avaliação da amostra '".$row_log['brewName']."' (Entry #".$row_log['id'].", Judging #".$readablejudgingnumber.")\">";
+			$scoresheets_link .= "<span class=\"fa fa-file-text\"></a>&nbsp;&nbsp;";
+
+		}
+				
+/*		// previous version without using output/scoresheets.output.php, linking directly to pdf
+		if (file_exists($scoresheetsfile)) {
+		
+			$random_num_str = str_pad(mt_rand(1,9999999999),10,'0',STR_PAD_LEFT);
+			$randomfilename = "scoresheets-".$readablejudgingnumber."-".$random_num_str."-view.pdf";
+			$scoresheetsrandomfilerelative = "scoresheets/temp/".$randomfilename;
+			$scoresheetsrandomfile = SCORESHEETS."temp/".$randomfilename;
+			if (copy($scoresheetsfile, $scoresheetsrandomfilerelative)) {
+				$scoresheetsrandomfilehtml = $base_url.$scoresheetsrandomfilerelative;
+		
+				$scoresheets_available = TRUE;
+				$scoresheets_link = "";			
+//				$scoresheets_link .= "<a id=\"modal_window_link\" href=\"".$scoresheetsrandomfilerelative;
+				$scoresheets_link .= "<a id=\"modal_window_link\"  href=\"".$scoresheetsrandomfilehtml;
+				$scoresheets_link .= "\" data-toggle=\"tooltip\" title=\"PDF das fichas de avaliação da amostra '".$row_log['brewName']."' (Entry #".$row_log['id'].", Judging #".$readablejudgingnumber.")\">";
+				$scoresheets_link .= "<span class=\"fa fa-file-text\"></a>&nbsp;&nbsp;";
+
+			}
+		}
+*/
+
+	}
 
 	if ((judging_date_return() > 0) && ($action != "print")) {
 		
@@ -237,6 +296,7 @@ do {
 		$entry_output .= "</td>";
 		
 	}
+
 	
 	// Display the edit link for NHC final round after judging has taken place
 	// Necessary to gather recipe data for first place winners in the final round
@@ -244,6 +304,7 @@ do {
 		
 		$entry_output .= "<td nowrap class=\"hidden-print\">";
 		if ((($registration_open == 2) && ($entry_window_open == 1)) && ((NHC) && ($prefix == "final_"))) $entry_output .= $edit_link;
+		if ($scoresheets_available) $entry_output .= $scoresheets_link;
 		$entry_output .= "</td>";
 	}
 	
