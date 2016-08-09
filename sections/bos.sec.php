@@ -63,15 +63,16 @@ require(DB.'winners.db.php');
 				$table_body1 = "";
 				
 				// Build headers
-				$header1_1 .= "<h2>Best of Show &ndash; ".$row_style_type['styleTypeName']."</h2>";
+				$header1_1 .= "<h2>Best of Show &ndash; ".$row_style_type['styleTypeName']." (".get_entry_count("paid-received")." amostras)</h2>";
 				
 				// Build table headers
 				$table_head1 .= "<tr>";
-				$table_head1 .= "<th width='5%' nowrap>Place</th>";
-				$table_head1 .= "<th width='25%'>Brewer(s)</th>";
-				$table_head1 .= "<th width='25%'>Entry Name</th>";
-				$table_head1 .= "<th width='25%'>Style</th>";
-				$table_head1 .= "<th>Club</th>";
+				$table_head1 .= "<th width='5%' nowrap>Lugar</th>";
+				$table_head1 .= "<th width='25%'>Cervejeiro(a)(s)</th>";
+				$table_head1 .= "<th width='20%'>Nome da Amostra</th>";
+				$table_head1 .= "<th width='20%'>Estilo</th>";
+				$table_head1 .= "<th width='10%'>ACervA</th>";
+				$table_head1 .= "<th>Clube</th>";
 				
 				do {
 					
@@ -104,6 +105,11 @@ require(DB.'winners.db.php');
 					else $table_body1 .= "<td>";
 					$table_body1 .= $row_bos['brewCategory'].$row_bos['brewSubCategory'].": ".$row_bos['brewStyle'];
 					$table_body1 .= "</td>";
+
+					if ($action == "print") $table_body1 .= "<td>";
+					else $table_body1 .= "<td>";
+					$table_body1 .= $row_bos['brewerACervA'];
+					$table_body1 .= "</td>";
 					
 					if ($action == "print") $table_body1 .= "<td>";
 					else $table_body1 .= "<td>";
@@ -132,6 +138,7 @@ echo $header1_1; ?>
 		"aaSorting": [[0,'asc']],
 		"bProcessing" : false,
 		"aoColumns": [
+			{ "asSorting": [  ] },
 			{ "asSorting": [  ] },
 			{ "asSorting": [  ] },
 			{ "asSorting": [  ] },
@@ -172,7 +179,8 @@ if ($totalRows_sbi > 0) {
 				if ($row_sbi['sbi_display_places'] == "1") $table_head2 .= "<th width='5%'>Lugar</th>";
 				$table_head2 .= "<th width='25%'>Cervejeiro(s)</th>";
 				$table_head2 .= "<th width='20%'>Nome da Amostra</th>";
-				$table_head2 .= "<th width='25%'>Estilo</th>";
+				$table_head2 .= "<th width='20%'>Estilo</th>";
+				$table_head2 .= "<th width='10%'>ACervA</th>";
 				$table_head2 .= "<th>Clube</th>";
 				
 				// Build table body
@@ -269,6 +277,7 @@ echo $header2_1;
 	} while ($row_sbi = mysql_fetch_assoc($sbi));
 } 
 ?>
+<br><br>
 
 
 <!-- Public Page Rebuild completed 08.26.15 --> 

@@ -81,6 +81,7 @@ foreach (array_unique($a) as $style) {
 		$table_head1 .= "<th>Cervejeiro(a)(s)</th>";
 		$table_head1 .= "<th><span class=\"hidden-xs hidden-sm hidden-md\">Nome da </span>Amostra</th>";
 		$table_head1 .= "<th width=\"25%\">Estilo</th>";
+		$table_head1 .= "<th width=\"10%\">ACervA</th>";
 		$table_head1 .= "<th class=\"hidden-xs hidden-sm hidden-md\">Clube</th>";
 		if ($filter == "scores") $table_head1 .= "<th class=\"hidden-xs hidden-sm hidden-md\" nowrap>Pontuação</th>";
 		$table_head1 .= "</tr>";
@@ -120,7 +121,11 @@ foreach (array_unique($a) as $style) {
 			$table_body1 .= "<td>";
 			$table_body1 .= $style.": ".$style_long;
 			$table_body1 .= "</td>";
-			
+
+			$table_body1 .= "<td>";
+			$table_body1 .= $row_scores['brewerACervA'];
+			$table_body1 .= "</td>";			
+
 			$table_body1 .= "<td class=\"hidden-xs hidden-sm hidden-md\">";
 			$table_body1 .= $row_scores['brewerClubs'];
 			$table_body1 .= "</td>";
@@ -148,6 +153,7 @@ $random1 .= random_generator(12,1);
 		"aaSorting": [<?php if ($action == "print") { ?>[0,'asc']<?php } ?>],
 		"bProcessing" : false,
 		"aoColumns": [
+			{ "asSorting": [  ] },
 			{ "asSorting": [  ] },
 			{ "asSorting": [  ] },
 			{ "asSorting": [  ] },

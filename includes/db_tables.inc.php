@@ -7,7 +7,6 @@
 
 // echo get_suffix($dbTable);
 if ($dbTable == "default") { 
-	$allowedcompetidores_db_table = $prefix."allowedcompetidores";
 	$archive_db_table = $prefix."archive";
 	$brewer_db_table = $prefix."brewer";
 	$brewing_db_table = $prefix."brewing";
@@ -38,7 +37,6 @@ if ($dbTable == "default") {
 else {
 	$suffix = rtrim(get_suffix($dbTable), "_"); // HACK - could not isolate code where there's an extra "_"
 	$suffix = "_".$suffix;
-	$allowedcompetidores_db_table = $prefix."allowedcompetidores";
 	$archive_db_table = $prefix."archive";
 	$brewer_db_table = $prefix."brewer".$suffix;
 	$brewing_db_table = $prefix."brewing".$suffix;

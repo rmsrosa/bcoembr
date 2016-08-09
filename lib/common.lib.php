@@ -199,6 +199,11 @@ function display_array_content($arrayname,$method) {
 }
 
 function addOrdinalNumberSuffix($num) {
+	return $num.'&ordm;';
+  }
+
+/*
+function addOrdinalNumberSuffix($num) {
     if (!in_array(($num % 100),array(11,12,13))){
       switch ($num % 10) {
         // Handle 1st, 2nd, 3rd
@@ -209,6 +214,7 @@ function addOrdinalNumberSuffix($num) {
     }
     return $num.'th';
   }
+*/
 
 function purge_entries($type, $interval) {
 	
@@ -2186,6 +2192,7 @@ function get_participant_count($type) {
 	if ($type == 'default') $query_participant_count = sprintf("SELECT COUNT(*) as 'count' FROM %s",$prefix."brewer");
 	if ($type == 'judge') $query_participant_count = sprintf("SELECT COUNT(*) as 'count' FROM %s WHERE brewerJudge='Y'",$prefix."brewer");
 	if ($type == 'steward') $query_participant_count = sprintf("SELECT COUNT(*) as 'count' FROM %s WHERE brewerSteward='Y'",$prefix."brewer");
+	if ($type == 'confirmed-entrant') $query_participant_count = sprintf("SELECT COUNT(DISTINCT brewBrewerID) as 'count' FROM %s WHERE brewConfirmed='1'",$prefix."brewing");
 	$participant_count = mysql_query($query_participant_count, $brewing) or die(mysql_error());
 	$row_participant_count = mysql_fetch_assoc($participant_count);
 	
@@ -2211,7 +2218,7 @@ function display_place($place,$method) {
 			break;
 			case "4": $place = addOrdinalNumberSuffix($place);
 			break;
-			case "5": $place = "HM";
+			case "5": $place = "MH";
 			break;
 		default: $place = "N/A";
 		}
@@ -2226,7 +2233,7 @@ function display_place($place,$method) {
 			break;
 			case "4": $place = "<span class='fa fa-trophy text-purple'></span> ".addOrdinalNumberSuffix($place);
 			break;
-			case "5": $place = "<span class='fa fa-trophy text-forest-green'></span> HM";
+			case "5": $place = "<span class='fa fa-trophy text-forest-green'></span> MH";
 			break;
 			default: $place = "N/A";
 			}

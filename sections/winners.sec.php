@@ -75,6 +75,7 @@ if ($entry_count > 0) {
 			$table_head1 .= "<th>Cervejeiro(a)(s)</th>";
 			$table_head1 .= "<th><span class=\"hidden-xs hidden-sm hidden-md\">Nome da </span>Amostra</th>";
 			$table_head1 .= "<th>Estilo</th>";
+			$table_head1 .= "<th>ACervA</th>";
 			$table_head1 .= "<th class=\"hidden-xs hidden-sm hidden-md\">Clube</th>";
 			if ($filter == "scores") $table_head1 .= "<th class=\"hidden-xs hidden-sm hidden-md\" nowrap>Pontuação</th>";
 			$table_head1 .= "</tr>";
@@ -111,6 +112,10 @@ if ($entry_count > 0) {
 				$table_body1 .= "<td>";
 				$table_body1 .= $style.": ".$row_scores['brewStyle'];
 				$table_body1 .= "</td>";
+
+				$table_body1 .= "<td>";
+				$table_body1 .= $row_scores['brewerACervA'];
+				$table_body1 .= "</td>";
 				
 				$table_body1 .= "<td class=\"hidden-xs hidden-sm hidden-md\">";
 				$table_body1 .= $row_scores['brewerClubs'];
@@ -146,6 +151,7 @@ $random1 .= random_generator(12,1);
 		"aaSorting": [[0,'asc']],
 		"bProcessing" : false,
 		"aoColumns": [
+			{ "asSorting": [  ] },
 			{ "asSorting": [  ] },
 			{ "asSorting": [  ] },
 			{ "asSorting": [  ] },
