@@ -47,7 +47,7 @@ $header_jc_1 = "";
 $page_info_jc_1 = "";
 
 $header_jc_1 .= sprintf("<p class='lead'>Parabéns a todos que participaram do  %s.</p>",$_SESSION['contestName']);
-$page_info_jc_1 .= sprintf("<p class='lead'><small>Foram <strong class='text-success'>%s</strong> amostras julgadas, de <strong class='text-success'>%s</strong> competidores confirmados. No total, tivemos <strong class='text-success'>%s</strong> participantes registrados, dentre competidores, juízes e auxiliares.</small></p>",get_entry_count('received'),get_participant_count('confirmed-entrant'),get_participant_count('default'));
+$page_info_jc_1 .= sprintf("<p class='lead'><small>Foram <strong class='text-success'>%s</strong> amostras julgadas, de <strong class='text-success'>%s</strong> competidores confirmados. No total, tivemos <strong class='text-success'>%s</strong> participantes registrados, dentre competidores, juízes e auxiliares.</small></p>",get_entry_count('received'),get_participant_count('received-entrant'),get_participant_count('default'));
 
 echo $header_jc_1;
 echo $page_info_jc_1;

@@ -2024,6 +2024,89 @@ function score_count($table_id,$method) {
 	
 }
 
+function best_brewer_points($bid, $places, $entry_scores) {
+	require(CONFIG.'config.php');
+	mysql_select_db($database, $brewing);
+	$query_scores = sprintf("SELECT COUNT(*) as 'count' FROM %s WHERE scoreTable='%s'", $prefix."judging_scores", $table_id);
+	$scores = mysql_query($query_scores, $brewing) or die(mysql_error());
+	$row_scores = mysql_fetch_assoc($scores);
+
+	// Main points
+
+	$pts_gold = 6*$places[0]; // points for gold medals
+	$pts_silver = 4*$places[1]; // points for silver medals
+	$pts_bronze = 2*$places[2]; // points for bronze medals
+	$pts_fourth = 0*$places[3]; // points for fourth places
+	$pts_hm = 0*$places[4]; // points for honorable mentions
+
+	// Tie breakers
+	
+	$pts_medals = 0;
+	$pts_golds = 0;
+	$pts_num_entries = 0;
+	$pts_min_score = 0;
+	$pts_max_score= 0;
+	
+	$tiebreakers = array('total medals','gold medals','num entries','min score','max score');
+//	$tiebreakers = array('num entries','min score');
+	
+	$power = 0;
+	
+	$imax = count($tiebreakers) - 1;
+	
+	$number_of_entries = total_paid_received("",$bid);
+	
+	for ($i = 0; $i<= $imax; $i++) {
+		switch ($tiebreakers[$i]) {
+			case "total medals" : 	
+				$power  += 2;
+				$pts_medals = array_sum($places)/pow(10,$power); // points for number of medals
+				break;
+			case "gold medals" : 	
+				$power  += 2;
+				$pts_golds = $places[0]/pow(10,$power); // points for number of gold medals 
+				break;
+			case "num entries" : 	
+				$power  += 4;
+				$pts_num_entries = floor(100/$number_of_entries)/pow(10,$power); // points for the number of competing entries (the smallest the better, of course) 
+				break;
+			case "min score" : 	
+				$power  += 4;
+				$pts_low_score = floor(10*min($entry_scores))/pow(10,$power); // points for the lowest score
+				break;
+			case "max score" : 	
+				$power  += 4;
+				$pts_high_score = floor(10*max($entry_scores))/pow(10,$power); // points for the highest score
+				break;		
+			case "avg score" : 	
+				$power  += 4;
+				$pts_avg_score = floor(10*array_sum($entry_scores)/$number_of_entries)/pow(10,$power); // points for the average score
+				break;								
+		}
+	}
+	
+	$points = $pts_gold + $pts_silver + $pts_bronze + $pts_fourth + $pts_hm + $pts_medals + $pts_golds + $pts_num_entries + $pts_low_score + $pts_high_score;
+	return $points;
+}
+
+function best_brewer_points2($place) {
+	require(CONFIG.'config.php');
+	mysql_select_db($database, $brewing);
+	$query_scores = sprintf("SELECT COUNT(*) as 'count' FROM %s WHERE scoreTable='%s'", $prefix."judging_scores", $table_id);
+	$scores = mysql_query($query_scores, $brewing) or die(mysql_error());
+	$row_scores = mysql_fetch_assoc($scores);
+	
+	switch($place) {
+		case "1": return 6.0102; 
+		break;	
+		case "2": return 4.0101; 
+		break;
+		case "3": return 2.0100;
+		break;
+	}
+	
+}
+
 function bjcp_rank($rank,$method) {
     if ($method == "1") {
 		switch($rank) {
@@ -2132,16 +2215,6 @@ function get_contact_count() {
 	return $contactCount;
 }
 
-function get_acervianos_count() {
-	require(CONFIG.'config.php');
-	mysql_select_db($database, $brewing);
-	$query_acervianos_count = sprintf("SELECT COUNT(*) as 'count' FROM %s",$prefix."acervianos");
-	$result = mysql_query($query_acervianos_count, $brewing) or die(mysql_error());
-	$row = mysql_fetch_assoc($result);
-	$acervianosCount = $row["count"];
-	return $acervianosCount;
-}
-
 function brewer_info($uid,$filter="default") {
 	require(CONFIG.'config.php');
 	mysql_select_db($database, $brewing);
@@ -2192,12 +2265,49 @@ function get_participant_count($type) {
 	if ($type == 'default') $query_participant_count = sprintf("SELECT COUNT(*) as 'count' FROM %s",$prefix."brewer");
 	if ($type == 'judge') $query_participant_count = sprintf("SELECT COUNT(*) as 'count' FROM %s WHERE brewerJudge='Y'",$prefix."brewer");
 	if ($type == 'steward') $query_participant_count = sprintf("SELECT COUNT(*) as 'count' FROM %s WHERE brewerSteward='Y'",$prefix."brewer");
-	if ($type == 'confirmed-entrant') $query_participant_count = sprintf("SELECT COUNT(DISTINCT brewBrewerID) as 'count' FROM %s WHERE brewConfirmed='1'",$prefix."brewing");
+	if ($type == 'received-entrant') $query_participant_count = sprintf("SELECT COUNT(DISTINCT brewBrewerID) as 'count' FROM %s WHERE brewReceived='1'",$prefix."brewing");
 	$participant_count = mysql_query($query_participant_count, $brewing) or die(mysql_error());
 	$row_participant_count = mysql_fetch_assoc($participant_count);
 	
 	return $row_participant_count['count'];
 
+}
+
+
+function get_acervianos_count($type,$regional=NULL) {
+	require(CONFIG.'config.php');
+	mysql_select_db($database, $brewing);
+	if (($type == 'system') || ($type == 'system-unique') || ($type == 'system-regionais')) {
+		if ($type == 'system') $query_acervianos = sprintf("SELECT COUNT(*) as 'count' FROM %s",$prefix."acervianos");	
+		if ($type == 'system-unique') $query_acervianos = sprintf("SELECT COUNT(DISTINCT acervianoCPF) as 'count' FROM %s",$prefix."acervianos");
+		if ($type == 'system-regionais') $query_acervianos = sprintf("SELECT COUNT(DISTINCT acervianoACervA) as 'count' FROM %s",$prefix."acervianos");
+		if ($regional) $query_acervianos .= sprintf(" WHERE acervianoACervA='%s'",$regional);
+	}
+	elseif (($type == 'stewards') || ($type == 'judges')) {
+		$query_acervianos = sprintf("SELECT COUNT(*) as 'count' FROM %s",$prefix."brewer");	
+		if ($type == 'stewards') $query_acervianos .= " WHERE brewerSteward='Y'";			
+		if ($type == 'judges') $query_acervianos .= " WHERE brewerJudge='Y'";
+		if ($regional) $query_acervianos .= sprintf(" AND brewerACervA='%s'",$regional);
+		else $query_acervianos .= " AND brewerACervA IS NOT NULL";
+	}	
+	elseif (($type == 'confirmed') || ($type == 'paid-received')) {
+		$query_acervianos = sprintf("SELECT COUNT(DISTINCT a.uid) as 'count' FROM %s a, %s b WHERE a.uid = b.brewBrewerID", $prefix."brewer", $prefix."brewing");	
+		if ($type == 'confirmed') $query_acervianos .= " AND brewConfirmed='1'";			
+		if ($type == 'paid-received') $query_acervianos .= " AND brewPaid='1' AND brewReceived='1'";
+		if ($regional) $query_acervianos .= sprintf(" AND brewerACervA='%s'",$regional);
+		else $query_acervianos .= " AND brewerACervA IS NOT NULL";
+	}
+	elseif (($type == 'confirmed-regionais') || ($type == 'paid-received-regionais')) {
+		$query_acervianos = sprintf("SELECT COUNT(DISTINCT a.brewerACervA) as 'count' FROM %s a, %s b WHERE a.uid = b.brewBrewerID", $prefix."brewer", $prefix."brewing");
+		if ($type == 'confirmed-regionais') $query_acervianos .= " AND brewConfirmed='1'";
+		if ($type == 'paid-received') $query_acervianos .= " AND brewPaid='1' AND brewReceived='1'";
+	}
+
+	mysql_query("SET NAMES 'utf8'");
+	$result_acervianos = mysql_query($query_acervianos, $brewing) or die(mysql_error());
+	$row_acervianos = mysql_fetch_assoc($result_acervianos);	
+	
+	return $row_acervianos['count'];
 }
 
 function display_place($place,$method) {

@@ -22,7 +22,7 @@
 	<?php } ?>
 </div>
 
-<?php if (get_acervianos_count() > 0) { ?>
+<?php if (get_acervianos_count('system') > 0) { ?>
 <?php if ($action == "default") { ?>
 <script type="text/javascript" language="javascript">
 	 $(document).ready(function() {
