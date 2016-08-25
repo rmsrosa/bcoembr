@@ -2025,85 +2025,71 @@ function score_count($table_id,$method) {
 }
 
 function best_brewer_points($bid, $places, $entry_scores) {
-	require(CONFIG.'config.php');
-	mysql_select_db($database, $brewing);
-	$query_scores = sprintf("SELECT COUNT(*) as 'count' FROM %s WHERE scoreTable='%s'", $prefix."judging_scores", $table_id);
-	$scores = mysql_query($query_scores, $brewing) or die(mysql_error());
-	$row_scores = mysql_fetch_assoc($scores);
 
 	// Main points
 
-	$pts_gold = 6*$places[0]; // points for gold medals
-	$pts_silver = 4*$places[1]; // points for silver medals
-	$pts_bronze = 2*$places[2]; // points for bronze medals
-	$pts_fourth = 0*$places[3]; // points for fourth places
-	$pts_hm = 0*$places[4]; // points for honorable mentions
+	$pts_first = $_SESSION['prefsFirstPlacePts']*$places[0]; // points for each first place position
+	$pts_second = $_SESSION['prefsSecondPlacePts']*$places[1]; // points for each secon place position
+	$pts_third = $_SESSION['prefsThirdPlacePts']*$places[2]; // points for each third place position
+	$pts_fourth = $_SESSION['prefsFourthPlacePts']*$places[3]; // points for each fourth place position
+	$pts_hm = $_SESSION['prefsHMPts']*$places[4]; // points for each honorable mention
 
 	// Tie breakers
 	
-	$pts_medals = 0;
-	$pts_golds = 0;
-	$pts_num_entries = 0;
-	$pts_min_score = 0;
-	$pts_max_score= 0;
-	
-	$tiebreakers = array('total medals','gold medals','num entries','min score','max score');
-//	$tiebreakers = array('num entries','min score');
+	$pts_tb_num_places = 0;
+	$pts_tb_first_places = 0;
+	$pts_tb_num_entries = 0;
+	$pts_tb_min_score = 0;
+	$pts_tb_max_score = 0;
+	$pts_tb_avg_score = 0;
+	$pts_tb_bos = 0;
+
+	$tiebreaker= array($_SESSION['prefsTieBreakRule1'],$_SESSION['prefsTieBreakRule2'],$_SESSION['prefsTieBreakRule3'],$_SESSION['prefsTieBreakRule4'],$_SESSION['prefsTieBreakRule5'],$_SESSION['prefsTieBreakRule6']);
 	
 	$power = 0;
 	
-	$imax = count($tiebreakers) - 1;
+	$imax = count($tiebreaker) - 1;
 	
 	$number_of_entries = total_paid_received("",$bid);
 	
 	for ($i = 0; $i<= $imax; $i++) {
-		switch ($tiebreakers[$i]) {
-			case "total medals" : 	
+		switch ($tiebreaker[$i]) {
+			case "TBTotalPlaces" : 	
 				$power  += 2;
-				$pts_medals = array_sum($places)/pow(10,$power); // points for number of medals
+				$pts_tb_num_places = array_sum(array_slice($places,0,3))/pow(10,$power); // points for the number of 1st, 2nd, and 3rd places
 				break;
-			case "gold medals" : 	
+			case "TBTotalExtendedPlaces" : 	
 				$power  += 2;
-				$pts_golds = $places[0]/pow(10,$power); // points for number of gold medals 
+				$pts_tb_num_places = array_sum($places)/pow(10,$power); // points for the number of 1st, 2nd, 3rd, 4th, HM places
 				break;
-			case "num entries" : 	
-				$power  += 4;
-				$pts_num_entries = floor(100/$number_of_entries)/pow(10,$power); // points for the number of competing entries (the smallest the better, of course) 
+			case "TBFirstPlaces" : 	
+				$power  += 2;
+				$pts_tb_first_places = $places[0]/pow(10,$power); // points for number of first places
 				break;
-			case "min score" : 	
+			case "TBNumEntries" : 	
 				$power  += 4;
-				$pts_low_score = floor(10*min($entry_scores))/pow(10,$power); // points for the lowest score
+				$pts_tb_num_entries = floor(100/$number_of_entries)/pow(10,$power); // points for the number of competing entries (the smallest the better, of course)
 				break;
-			case "max score" : 	
+			case "TBMinScore" : 	
 				$power  += 4;
-				$pts_high_score = floor(10*max($entry_scores))/pow(10,$power); // points for the highest score
+				$pts_tb_min_score = floor(10*min($entry_scores))/pow(10,$power); // points for the minimum score
+				break;
+			case "TBMaxScore" : 	
+				$power  += 4;
+				$pts_tb_max_score = floor(10*max($entry_scores))/pow(10,$power); // points for the maximum score
 				break;		
-			case "avg score" : 	
+			case "TBAvgScore" : 	
 				$power  += 4;
 				$pts_avg_score = floor(10*array_sum($entry_scores)/$number_of_entries)/pow(10,$power); // points for the average score
+			case "TBRandom" :
+				// need to implement points for a pseudo-random tiebreak
 				break;								
 		}
 	}
 	
-	$points = $pts_gold + $pts_silver + $pts_bronze + $pts_fourth + $pts_hm + $pts_medals + $pts_golds + $pts_num_entries + $pts_low_score + $pts_high_score;
+	$points = $pts_first + $pts_second + $pts_third + $pts_fourth + $pts_hm + $pts_tb_num_places + $pts_tb_first_places + $pts_tb_num_entries + $pts_tb_min_score + $pts_tb_max_score + $pts_tb_avg_score + $pts_tb_random;
 	return $points;
-}
-
-function best_brewer_points2($place) {
-	require(CONFIG.'config.php');
-	mysql_select_db($database, $brewing);
-	$query_scores = sprintf("SELECT COUNT(*) as 'count' FROM %s WHERE scoreTable='%s'", $prefix."judging_scores", $table_id);
-	$scores = mysql_query($query_scores, $brewing) or die(mysql_error());
-	$row_scores = mysql_fetch_assoc($scores);
-	
-	switch($place) {
-		case "1": return 6.0102; 
-		break;	
-		case "2": return 4.0101; 
-		break;
-		case "3": return 2.0100;
-		break;
-	}
+	break;
 	
 }
 
@@ -2282,6 +2268,7 @@ function get_acervianos_count($type,$regional=NULL) {
 		if ($type == 'system-unique') $query_acervianos = sprintf("SELECT COUNT(DISTINCT acervianoCPF) as 'count' FROM %s",$prefix."acervianos");
 		if ($type == 'system-regionais') $query_acervianos = sprintf("SELECT COUNT(DISTINCT acervianoACervA) as 'count' FROM %s",$prefix."acervianos");
 		if ($regional) $query_acervianos .= sprintf(" WHERE acervianoACervA='%s'",$regional);
+		else $query_acervianos .= " WHERE acervianoACervA IS NOT NULL";
 	}
 	elseif (($type == 'stewards') || ($type == 'judges')) {
 		$query_acervianos = sprintf("SELECT COUNT(*) as 'count' FROM %s",$prefix."brewer");	
@@ -2294,8 +2281,15 @@ function get_acervianos_count($type,$regional=NULL) {
 		$query_acervianos = sprintf("SELECT COUNT(DISTINCT a.uid) as 'count' FROM %s a, %s b WHERE a.uid = b.brewBrewerID", $prefix."brewer", $prefix."brewing");	
 		if ($type == 'confirmed') $query_acervianos .= " AND brewConfirmed='1'";			
 		if ($type == 'paid-received') $query_acervianos .= " AND brewPaid='1' AND brewReceived='1'";
-		if ($regional) $query_acervianos .= sprintf(" AND brewerACervA='%s'",$regional);
-		else $query_acervianos .= " AND brewerACervA IS NOT NULL";
+		if ($regional) $query_acervianos .= sprintf(" AND a.brewerACervA='%s'",$regional);
+		else $query_acervianos .= " AND a.brewerACervA IS NOT NULL";
+	}
+	elseif (($type == 'confirmed-entries') || ($type == 'paid-received-entries')) {
+		$query_acervianos = sprintf("SELECT COUNT(DISTINCT b.id) as 'count' FROM %s a, %s b WHERE a.uid = b.brewBrewerID", $prefix."brewer", $prefix."brewing");	
+		if ($type == 'confirmed-entries') $query_acervianos .= " AND brewConfirmed='1'";			
+		if ($type == 'paid-received-entries') $query_acervianos .= " AND brewPaid='1' AND brewReceived='1'";
+		if ($regional) $query_acervianos .= sprintf(" AND a.brewerACervA='%s'",$regional);
+		else $query_acervianos .= " AND a.brewerACervA IS NOT NULL";
 	}
 	elseif (($type == 'confirmed-regionais') || ($type == 'paid-received-regionais')) {
 		$query_acervianos = sprintf("SELECT COUNT(DISTINCT a.brewerACervA) as 'count' FROM %s a, %s b WHERE a.uid = b.brewBrewerID", $prefix."brewer", $prefix."brewing");

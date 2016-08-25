@@ -77,7 +77,7 @@ if (!$display_bestbrewer) {
 		}
 	
 	} while ($bb_row_scores = mysql_fetch_assoc($bb_scores));
-
+	
 	foreach (array_keys($bestbrewer) as $key) {
 		$points = best_brewer_points($key,$bestbrewer[$key]['Places'],$bestbrewer[$key]['Scores']);
 		$bestbrewer[$key]['Points'] = $points;
@@ -111,7 +111,8 @@ $show_HM = FALSE;
 $ba_count = 0;
 $ba_position = 0;
 $ba_previouspoints = 0;
-$ba_max_position = 10;
+if ($_SESSION['prefsShowACervA'] == -1) $ba_max_position = count(array_keys($ba_sorter));
+else $ba_max_position = $_SESSION['prefsShowACervA'];
 
 foreach (array_keys($ba_sorter) as $key) {
 	$ba_count += 1;
@@ -138,12 +139,15 @@ foreach (array_keys($ba_sorter) as $key) {
 
 $ba_name = "ACervAs";
 
-$header1_1 .= "<h2>".$ba_name." (".get_acervianos_count('paid-received-regionais')." estaduais)</h2>";
+$header1_1 .= "<h2>".$ba_name." (".get_acervianos_count('paid-received-regionais')." estaduais/regionais)</h2>";
 
 $table_head1 .= "<tr>
 			<th width=\"1%\" nowrap>Colocação</th>
 			<th>ACervA</th>";
+$table_head1 .= "<th>Cervejeiros<br>Habilitados</th>";
+$table_head1 .= "<th>Cervejeiros<br>Inscritos</th>";
 $table_head1 .= "<th>Cervejeiros<br>Premiados</th>";
+$table_head1 .= "<th>Cervejas<br>Inscritas</th>";
 $table_head1 .= "<th>Ouros</th>";
 $table_head1 .= "<th>Pratas</th>";
 $table_head1 .= "<th>Bronzes</th>";
@@ -169,7 +173,10 @@ foreach (array_keys($ba_sorter) as $key) {
 		$table_body1 .= "<tr>";
 		$table_body1 .= "<td>".$ba_display_position."</td>";
 		$table_body1 .= "<td>".$key."</td>";
+		$table_body1 .= "<td>".get_acervianos_count("system-unique", $key)."</td>";
+		$table_body1 .= "<td>".get_acervianos_count("paid-received", $key)."</td>";
 		$table_body1 .= "<td>".$bestacerva[$key]['Winners']."</td>";
+		$table_body1 .= "<td>".get_acervianos_count("paid-received-entries", $key)."</td>";
 		$table_body1 .= "<td>".$bestacerva[$key]['Places'][0]."</td>";
 		$table_body1 .= "<td>".$bestacerva[$key]['Places'][1]."</td>";
 		$table_body1 .= "<td>".$bestacerva[$key]['Places'][2]."</td>";
@@ -182,8 +189,7 @@ foreach (array_keys($ba_sorter) as $key) {
 	else break;
 }
 
-
-$page_info_1 = sprintf("<p class='lead'><small>Foram <strong class='text-success'>%s</strong> acervianos incluídos no sistema e habilitados a participar. Tivemos <strong class='text-success'>%s</strong> acervianos com amostras confirmadas e <strong class='text-success'>%s</strong> com amostras efetivamente pagas e recebidas. Tivemos <strong class='text-success'>%s</strong> acervianos participando como juízes e <strong class='text-success'>%s</strong> acervianos participando como auxiliares.</small></p>", get_acervianos_count('system-unique'),get_acervianos_count('confirmed'),get_acervianos_count('paid-received'),get_acervianos_count('judges'),get_acervianos_count('stewards'));
+$page_info_1 .= "Os critérios de desempate, conforme definidos pelo regulamento da competição para ordenar os melhores cervejeiros, foram aplicados automaticamente e de maneira cumulativa entre os cervejeiros de cada ACervA.";
 
 // --------------------------------------------------------------
 // Display

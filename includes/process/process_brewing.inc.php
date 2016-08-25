@@ -53,40 +53,21 @@ if ((isset($_SESSION['loginUsername'])) && (isset($_SESSION['userLevel']))) {
 //		$cpf_exists = mysql_query($query_cpf_exists, $brewing) or die(mysql_error());
 //		$row_cpf_exists = mysql_fetch_assoc($cpf_exists);
 
-		$cpf = $_SESSION['brewerCPF'];
-		$acerva = $_SESSION['brewerACervA'];
-		$query_cpf_exists = "SELECT * FROM acervianos WHERE acervianoCPF  = '$cpf' AND acervianoACervA = '$acerva'";
-		$cpf_exists = mysql_query($query_cpf_exists, $brewing) or die(mysql_error());
-		$row_cpf_exists = mysql_fetch_assoc($cpf_exists);	
+		if ($_SESSION['prefsRestrictedACervA'] == 'Y') {
 
-// The following echos were used for debugging purposes. Apparently the variable $section is not defined or is not set to "admin" when the administrator is managing the entries (sometimes it shows as "default"), so I first removed the condition && $section != "admin", which apparently was okay even if section should be admin because in this case the row_cpf_exists apparently doesn't work either, so the conditions fail anyway. Actually, the row_cpf_exists was zero because the administror's cpf (Ricardo Rosa) was not yet in the list of allowed cpfs, so I included this cpf and went back with the original condition && $section != "admin"
-//		if ($row_cpf_exists['count']  == 0 && $section != "admin" && $go != "entrant") {
-//			echo "<p> action = ".$action."</p><br>";
-//			echo "<p> row_cpf_exists = ".$row_cpf_exists['count']."</p><br>";
-//			echo "<p> section = ".$section."</p><br>";
-//			echo "<p> go = ".$go."</p><br>";
-//			echo "<p> user = ".$user."</p><br>";
-//			exit();
-//		}
-		
-//		echo $cpf;
-//		echo $row_cpf_exists['acervianoCPF'];
-//		echo $acerva;
-//		echo $row_cpf_exists['acervianoACervA'];
-//		if ($row_cpf_exists['acervianoACervA'] || $go == "entrant") echo "  ok!";
+			$cpf = $_SESSION['brewerCPF'];
+			$acerva = $_SESSION['brewerACervA'];
+			$query_cpf_exists = "SELECT * FROM acervianos WHERE acervianoCPF  = '$cpf' AND acervianoACervA = '$acerva'";
+			$cpf_exists = mysql_query($query_cpf_exists, $brewing) or die(mysql_error());
+			$row_cpf_exists = mysql_fetch_assoc($cpf_exists);	
 					 
-		if (!$row_cpf_exists['acervianoACervA'] && $go != "entrant") {
-//			echo "<p> action = ".$action."</p><br>";
-//			echo "<p> row_cpf_exists = ".$row_cpf_exists['count']."</p><br>";
-//			echo "<p> section = ".$section."</p><br>";
-//			echo "<p> go = ".$go."</p><br>";
-//			echo "<p> user = ".$user."</p><br>";
-//			exit();
-			$location = $base_url."index.php?section=".$section."&go=".$go."&msg=10";
-			$pattern = array('\'', '"');
-			$insertGoTo = str_replace($pattern, "", $location); 
-			header(sprintf("Location: %s", stripslashes($insertGoTo)));
-			exit();
+			if (!$row_cpf_exists['acervianoACervA'] && $go != "entrant") {
+				$location = $base_url."index.php?section=".$section."&go=".$go."&msg=10";
+				$pattern = array('\'', '"');
+				$insertGoTo = str_replace($pattern, "", $location); 
+				header(sprintf("Location: %s", stripslashes($insertGoTo)));
+				exit();
+			}
 		}
 		
 		if (($action == "add") || ($action == "edit")) {

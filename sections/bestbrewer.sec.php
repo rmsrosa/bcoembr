@@ -59,9 +59,6 @@ do {
 		$place = floor($bb_row_scores['scorePlace']);
 		if (($place == $bb_row_scores['scorePlace']) && ($place >= 1) && ($place <= 5))			$bestbrewer[$bb_row_scores['uid']]['Places'][$place-1] += 1;
 		$bestbrewer[$bb_row_scores['uid']]['Scores'][] = $bb_row_scores['scoreEntry'];
-//		$entry_info = array('Place'=>$bb_row_scores['scorePlace'], 'Score'=>$bb_row_scores['scoreEntry']);
-//		$bestbrewer[$bb_row_scores['uid']]['Entries'][] = $entry_info;
-//		$bestbrewer[$bb_row_scores['uid']]['Points'] += best_brewer_points2($bb_row_scores['scorePlace']);
 	} 
 	else {
 		$bestbrewer[$bb_row_scores['uid']]['Name'] = $bb_row_scores['brewerFirstName']." ".$bb_row_scores['brewerLastName'];
@@ -75,13 +72,9 @@ do {
 		
 		$bestbrewer[$bb_row_scores['uid']]['Scores'] = array();
 		$bestbrewer[$bb_row_scores['uid']]['Scores'][0] = $bb_row_scores['scoreEntry'];
-//		$entry_info = array('Place'=>$bb_row_scores['scorePlace'], 'Score'=>$bb_row_scores['scoreEntry']);
-//		$bestbrewer[$bb_row_scores['uid']]['Entries'][] = $entry_info;		
-//		$bestbrewer[$bb_row_scores['uid']]['Points'] = best_brewer_points2($bb_row_scores['scorePlace']);
 	}
 	
 } while ($bb_row_scores = mysql_fetch_assoc($bb_scores));
-
 
 foreach (array_keys($bestbrewer) as $key) {
 	$points = best_brewer_points($key,$bestbrewer[$key]['Places'],$bestbrewer[$key]['Scores']);
@@ -97,7 +90,8 @@ $show_HM = FALSE;
 $bb_count = 0;
 $bb_position = 0;
 $bb_previouspoints = 0;
-$bb_max_position = 10;
+if ($_SESSION['prefsShowBestBrewer'] == -1) $bb_max_position = count(array_keys($bb_sorter));
+else $bb_max_position = $_SESSION['prefsShowBestBrewer'];
 
 foreach (array_keys($bb_sorter) as $key) {
 	$bb_count += 1;
@@ -179,6 +173,8 @@ foreach (array_keys($bb_sorter) as $key) {
 	else break;
 }
 
+$page_info_1 .= "Os critérios de desempate foram aplicados automaticamente de acordo com o regulamento da competição.";
+
 // --------------------------------------------------------------
 // Display
 // --------------------------------------------------------------
@@ -195,6 +191,7 @@ foreach (array_keys($bb_sorter) as $key) {
         <?php echo $table_body1; ?>
     </tbody>
     </table>
+    <?php echo $page_info_1; ?>
 </div>
 
 

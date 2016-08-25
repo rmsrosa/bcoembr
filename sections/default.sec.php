@@ -138,8 +138,7 @@ if ((judging_date_return() == 0) && ($registration_open == "2")) {
 		
 		if (judging_winner_display($delay)) {
 			
-			$display_bestbrewer = TRUE;
-			if ($display_bestbrewer) include (SECTIONS.'bestbrewer.sec.php');
+			if ($_SESSION['prefsShowBestBrewer'] != 0) include (SECTIONS.'bestbrewer.sec.php');
 			
 			if (((NHC) && ($prefix == "final_")) || (!NHC)) { 
 				include (SECTIONS.'bos.sec.php');  
@@ -150,8 +149,7 @@ if ((judging_date_return() == 0) && ($registration_open == "2")) {
 			elseif ($_SESSION['prefsWinnerMethod'] == "2") include (SECTIONS.'winners_subcategory.sec.php'); 
 			else include (SECTIONS.'winners.sec.php'); 
 			
-			$display_bestacerva = TRUE;
-			if ($display_bestacerva) include (SECTIONS.'bestacerva.sec.php');
+			if ($_SESSION['prefsShowACervA'] != 0) include (SECTIONS.'bestacerva.sec.php');
 			
 		}
 		

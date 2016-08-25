@@ -49,6 +49,12 @@ $page_info_jc_1 = "";
 $header_jc_1 .= sprintf("<p class='lead'>Parabéns a todos que participaram do  %s.</p>",$_SESSION['contestName']);
 $page_info_jc_1 .= sprintf("<p class='lead'><small>Foram <strong class='text-success'>%s</strong> amostras julgadas, de <strong class='text-success'>%s</strong> competidores confirmados. No total, tivemos <strong class='text-success'>%s</strong> participantes registrados, dentre competidores, juízes e auxiliares.</small></p>",get_entry_count('received'),get_participant_count('received-entrant'),get_participant_count('default'));
 
+if ($_SESSION['prefsShowACervA'] != 0) {
+
+	$page_info_jc_1 .= sprintf("<p class='lead'><small>Tivemos <strong class='text-success'>%s</strong> estaduais/regionais da ACervA habilitadas a participar, sendo que <strong class='text-success'>%s</strong> tiveram amostras confirmadas e <strong class='text-success'>%s</strong> tiveram amostras pagas e recebidas. Tivemos um total de <strong class='text-success'>%s</strong> acervianos habilitados no sistema, sendo que <strong class='text-success'>%s</strong> com amostras confirmadas e <strong class='text-success'>%s</strong> com amostras efetivamente pagas e recebidas. Tivemos <strong class='text-success'>%s</strong> acervianos participando como juízes e <strong class='text-success'>%s</strong> acervianos participando como auxiliares.</small></p>", get_acervianos_count('system-regionais'), get_acervianos_count('confirmed-regionais'), get_acervianos_count('paid-received-regionais'), get_acervianos_count('system-unique'),get_acervianos_count('confirmed'),get_acervianos_count('paid-received'),get_acervianos_count('judges'),get_acervianos_count('stewards'));
+
+}
+
 echo $header_jc_1;
 echo $page_info_jc_1;
 ?>
