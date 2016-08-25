@@ -125,9 +125,7 @@ echo "</pre>";
 
 <?php
 
-$bb_name = "Panela de Ouro";
-
-$header1_1 .= "<h2>".$bb_name." (".get_participant_count('received-entrant')." cervejeiros)</h2>";
+$header1_1 .= "<h2>".$_SESSION['prefsBestBrewerTitle']." (".get_participant_count('received-entrant')." cervejeiros)</h2>";
 
 $table_head1 .= "<tr>
 			<th width=\"1%\" nowrap>Colocação</th>
