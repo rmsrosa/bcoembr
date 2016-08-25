@@ -7,10 +7,10 @@ The biggest challenges of organizing a homebrewing competition is knowing who ha
 
 The best part: *BCOE&M is free and open-source*, and so is *BCOE&M-BR*!
 
-[Version BCOE&M-BR 2.0.1.1 is available for download] (https://github.com/rmsrosa/bcoembr/releases). If you need help, [installation] (http://www.brewcompetition.com/install-instructions) and [upgrade] (http://www.brewcompetition.com/upgrade-instructions) instructions are available for the original BCOE&M. Instructions for the Brazilian version are being planned.
+[Version BCOE&M-BR 2.0.1.2 is available for download] (https://github.com/rmsrosa/bcoembr/releases). If you need help, [installation] (http://www.brewcompetition.com/install-instructions) and [upgrade] (http://www.brewcompetition.com/upgrade-instructions) instructions are available for the original BCOE&M. Instructions for the Brazilian version are being planned.
 
 **Upcoming Changes**
 **********************************************************************
-Completar as informações na lista dos resultados, incluindo o campo sobre a regional ACervA de cada cervejeiro, a lista dos colocados no Panela de Ouro, a lista de pontuações das regionais e outras estatísticas.
+Incluir pagamento via PagSeguro.
 
 Implementar as alterações feitas na versão original, do BCOE&M 2.0.0 para a versão atual.
